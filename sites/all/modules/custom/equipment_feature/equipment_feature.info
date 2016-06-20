@@ -1,0 +1,13 @@
+name = Equipment feature
+core = 7.x
+package = Entities
+version = 7.x-1.0
+project = equipment_feature
+dependencies[] = common_field_bases_feature
+dependencies[] = features
+dependencies[] = image
+dependencies[] = media
+features[features_api][] = api:2
+features[field_instance][] = taxonomy_term-equipment-field_image
+features[image][] = equipment
+project path = sites/all/modules/custom

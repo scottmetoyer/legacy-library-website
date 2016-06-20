@@ -1,0 +1,14 @@
+name = Database views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = database_views_feature
+dependencies[] = better_exposed_filters
+dependencies[] = ctools
+dependencies[] = database_feature
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = database_blocks
+features[views_view][] = databases
+project path = sites/all/modules/custom

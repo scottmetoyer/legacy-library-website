@@ -1,0 +1,14 @@
+name = Date settings feature
+core = 7.x
+package = Configurations
+version = 7.x-1.0
+project = date_settings_feature
+dependencies[] = ctools
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = date_format_long
+features[variable][] = date_format_medium
+features[variable][] = date_format_short
+features[variable][] = date_format_short_date
+project path = sites/all/modules/custom

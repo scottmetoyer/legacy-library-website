@@ -1,0 +1,5 @@
+name = UCR Library Custom
+description = This module provides the option to put a website alert and the table for the opening hours.
+core = 7.x
+package = UCR Library
+dependencies[] = opening_hours

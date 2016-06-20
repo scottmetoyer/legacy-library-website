@@ -1,0 +1,13 @@
+name = Quicktabs feature
+core = 7.x
+package = Other
+version = 7.x-1.0
+project = quicktabs_feature
+dependencies[] = ctools
+dependencies[] = quicktabs
+features[ctools][] = quicktabs:quicktabs:1
+features[features_api][] = api:2
+features[quicktabs][] = collections
+features[quicktabs][] = collections_subject_areas
+features[quicktabs][] = directory
+project path = sites/all/modules/custom

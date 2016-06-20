@@ -1,0 +1,119 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.subject-guide__content {
+  @include clearfix;
+
+  @include media('>=large') {
+    @include span(8);
+
+    .one-sidebar.sidebar-first & {
+      @include span(6 of 9);
+    }
+  }
+}
+
+.subject-guide__sidebar-second {
+  @include clearfix;
+
+  @include media('<large') {
+    margin-top: 50px;
+  }
+
+  @include media('>=large') {
+    @include span(3 wide last);
+
+    .one-sidebar.sidebar-first & {
+      @include span(2 of 9 wider last);
+    }
+  }
+}
+
+.subject-guide__section-title {
+  font-size: 18px;
+  font-family: $trade-gothic;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-bottom: 5px;
+  border-bottom: 1px solid palette(grey, -2);
+  margin-bottom: 10px;
+}
+
+.subject-guide__sidebar-second {
+  ul {
+    @include bulleted-list;
+  }
+}
+
+.subject-guide--full__body {
+  ul {
+    @include regular-bulleted-list;
+  }
+}
+
+.subject-guide__carousel {
+  ul li {
+    padding-left: 0;
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.subject-guide__databases {
+  position: relative;
+
+  .database__title {
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .read-more {
+    position: absolute;
+    right: 0;
+    top: -4px;
+  }
+
+  .database__description {
+    font-size: 13px;
+    line-height: 1.3;
+    margin-top: 3px;
+  }
+}
+
+.subject-guide__subject-specialists,
+.subject-guide__course-guides,
+.subject-guide__databases,
+.subject-guide__topic-guides,
+.subject-guide__research-tool-guides {
+  margin-bottom: 35px;
+}
+
+.subject-guide__related {
+  clear: both;
+  margin-top: 50px;
+  float: left;
+  width: 100%;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.view-subject-guides {
+  @include clearfix;
+
+  .view-content {
+    @include media('>=medium') {
+      columns: 2;
+      column-gap: 2em;
+    }
+
+    @include media('>=large') {
+      columns: 3;
+    }
+  }
+}

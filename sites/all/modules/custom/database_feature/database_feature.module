@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Database feature feature.
+ */
+
+include_once 'database_feature.features.inc';

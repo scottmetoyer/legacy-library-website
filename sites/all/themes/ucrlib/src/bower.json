@@ -1,0 +1,15 @@
+{
+  "name": "ucrlib",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "susy": "~2.2.2",
+    "include-media": "~1.1.2",
+    "slicknav": "~1.0.1",
+    "fontawesome": "~4.3.0",
+    "bxslider-4": "~4.2.3"
+  },
+  "scripts": {
+    "postinstall": "find bower_components/ -name '*.info' -type f -delete"
+  }
+}

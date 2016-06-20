@@ -1,0 +1,5 @@
+name = Dedup Views
+description = Adds the ability to dedup multiple Views on a single page.
+core = 7.x
+package = Views
+dependencies[] = views

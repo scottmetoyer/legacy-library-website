@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Collection views feature feature.
+ */
+
+include_once 'collection_views_feature.features.inc';

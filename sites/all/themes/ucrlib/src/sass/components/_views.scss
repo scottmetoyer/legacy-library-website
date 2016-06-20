@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+// Only generic views styles live here!
+////////////////////////////////////////////////////////////////////////////////
+
+.views-exposed-widget {
+  margin-bottom: 35px;
+
+  > label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .form-item {
+    margin-top: 0;
+  }
+}

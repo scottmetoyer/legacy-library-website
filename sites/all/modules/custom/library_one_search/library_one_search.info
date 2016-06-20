@@ -1,0 +1,6 @@
+name = UCR Libraries Digital Collection Onesearch
+description = UCR Libraries Digital Collection Onesearch.  The module is used to scrape different resources and return to a commen view.  The resutls are used in the the main search of the library website.
+core = 7.x
+stylesheets[all][] = library_one_search.css
+php =  5.6.8
+project path = sites/all/modules/custom

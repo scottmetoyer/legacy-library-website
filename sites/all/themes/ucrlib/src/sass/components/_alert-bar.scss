@@ -1,0 +1,39 @@
+.alert-bar {
+  min-height: 40px;
+  width: 100%;
+  background-color: palette(red);
+  padding: 9px 0 7px 0;
+
+  body.admin-menu & {
+    top: 29px;
+  }
+}
+
+.alert-bar__text,
+.alert-bar__close {
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.1;
+  font-size: 17px;
+}
+
+.alert-bar__text {
+  padding-right: 85px;
+}
+
+.alert-bar__close {
+  text-transform: uppercase;
+  position: absolute;
+  right: 0;
+  top: -1px;
+
+  @include fontcustom-after($fa-var-close) {
+    color: #fff;
+    font-size: 20px;
+    top: 1px;
+  }
+
+  &:hover:after {
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,21 @@
+span.ext {
+  @include fontcustom-after($fa-var-external-link) {
+    top: 0px;
+    font-size: 13px;
+  }
+  padding-right: 12px;
+  text-decoration: none;
+}
+// span.mailto {
+//   @include fontcustom-after($fa-var-envelope);
+//   padding-right: 12px;
+//   text-decoration: none;
+// }
+
+/* Hide the extra spans when printing. */
+@media print {
+  span.ext, span.mailto {
+    display: none;
+    padding: 0;
+  }
+}

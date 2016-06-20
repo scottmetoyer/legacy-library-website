@@ -1,0 +1,85 @@
+.person__content {
+  @include media('>medium') {
+    @include span(9 at 4 last);
+  }
+}
+
+.person__sidebar-first {
+  margin-top: 35px;
+
+  @include media('>medium') {
+    margin-top: 0;
+    @include span(2 wide at 1);
+  }
+}
+
+.person__name {
+  border-bottom-width: 0;
+  margin-bottom: 0;
+}
+
+.person__job-title {
+  font-size: 24px;
+  font-weight: 300;
+  color: #1f1f1f;
+}
+
+.person__contact-info {
+  border-top: 1px solid palette(grey, -2);
+  border-bottom: 1px solid palette(grey, -2);
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.person__email {
+  white-space: nowrap;
+
+  a {
+    @include email-link;
+    margin-right: 35px;
+  }
+}
+
+.person__phone {
+  white-space: nowrap;
+
+  a {
+    @include phone-link;
+    margin-right: 35px;
+  }
+}
+
+.person__suggest-purchase {
+  white-space: nowrap;
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+
+    @include fontcustom-before($fa-var-book) {
+      color: palette(grey, 2);
+    }
+  }
+}
+
+.person--full__body {
+  margin-top: 30px;
+
+  ul {
+    @include regular-bulleted-list;
+  }
+}
+
+.person__subjects {
+  margin-top: 40px;
+
+  ul {
+    @include bulleted-list;
+  }
+}
+
+.person__section-label {
+  font-size: 19px;
+  font-weight: 600;
+}

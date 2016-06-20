@@ -1,0 +1,14 @@
+name = Search views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = search_views_feature
+dependencies[] = better_exposed_filters
+dependencies[] = search_api_views
+dependencies[] = search_feature
+dependencies[] = seven_tweaks
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = search_page
+features_exclude[dependencies][views] = views
+project path = sites/all/modules/custom

@@ -1,0 +1,24 @@
+#ucrlib-custom-images-settings img {
+  float: left;
+  margin-right: 20px;
+}
+
+#ucrlib-custom-images-settings .form-type-managed-file label {
+  display: none;
+}
+
+body.page-admin .alert-bar {
+  display: none;
+}
+
+.odd_first{
+	font-weight: bold;
+}
+
+.table_header_bold{
+	font-weight: bold;
+}
+.table_header{
+font-weight: 400;
+}
+

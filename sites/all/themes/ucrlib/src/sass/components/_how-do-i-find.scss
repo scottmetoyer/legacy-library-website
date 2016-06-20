@@ -1,0 +1,12 @@
+.page-id-research-services-how-do-i-find {
+  .region-content .nav-item {
+
+    @include media('>=small') {
+      @include gallery(3 of 6);
+    }
+
+    @include media('>=medium') {
+      @include gallery(3 of 9);
+    }
+  }
+}

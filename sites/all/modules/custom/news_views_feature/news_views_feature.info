@@ -1,0 +1,16 @@
+name = News views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = news_views_feature
+dependencies[] = ctools
+dependencies[] = image
+dependencies[] = news_feature
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[image][] = news_list_featured
+features[image][] = news_list_home_thumb
+features[image][] = news_list_thumb
+features[views_view][] = news
+project path = sites/all/modules/custom

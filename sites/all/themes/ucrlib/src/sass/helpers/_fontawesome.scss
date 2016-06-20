@@ -1,0 +1,35 @@
+@import 'fontawesome/font-awesome';
+
+
+//
+// Only use this mixin from within a breakpoint since you can't use @extend in
+// a breakpoint.
+@mixin fontcustom() {
+  @include fa-icon;
+  line-height: 1;
+  text-decoration: inherit;
+  text-transform: none;
+}
+
+// :before & :after pseudo element mixins
+// Use the "$fa-var-" variable from "fontawesome/_variables.scss"
+@mixin fontcustom-before($fontawesome-icon, $margin: 5px) {
+  &:before {
+    @include fontcustom;
+    content: $fontawesome-icon;
+    position: relative;
+    margin-right: $margin;
+
+    @content;
+  }
+}
+@mixin fontcustom-after($fontawesome-icon, $margin: 5px) {
+  &:after {
+    @include fontcustom;
+    content: $fontawesome-icon;
+    position: relative;
+    margin-left: $margin;
+
+    @content;
+  }
+}

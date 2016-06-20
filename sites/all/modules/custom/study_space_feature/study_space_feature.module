@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Study space feature feature.
+ */
+
+include_once 'study_space_feature.features.inc';

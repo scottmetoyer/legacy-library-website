@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Departments views feature feature.
+ */
+
+include_once 'departments_views_feature.features.inc';

@@ -1,0 +1,4 @@
+name = Seven Tweaks
+description = Tweak the Seven theme.
+core = 7.x
+package = Administration

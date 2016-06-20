@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file seven_tweaks.module
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function seven_tweaks_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['#form_id'] == 'page_node_form') {
+    $form['#attached']['css'][] = drupal_get_path('module', 'seven_tweaks') . '/seven_tweaks.css';
+  }
+}

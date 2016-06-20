@@ -1,0 +1,54 @@
+// Based on http://coding.smashingmagazine.com/2013/02/14/setting-weights-and-styles-at-font-face-declaration/
+@mixin font-face($font-family, $file-path, $font-weight, $font-style, $svg-hash) {
+  @font-face {
+    font-family: $font-family;
+    src: url('#{$file-path}.eot');
+    src: url('#{$file-path}.eot?#iefix')       format('embedded-opentype'),
+        //  url('#{$file-path}.woff2')            format('woff2'),
+         url('#{$file-path}.woff')             format('woff'),
+         url('#{$file-path}.ttf')              format('truetype'),
+         url('#{$file-path}.svg##{$svg-hash}') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+      font-family: $font-family;
+      src: url('#{$file-path}.svg##{$svg-hash}') format('svg');
+      font-weight: $font-weight;
+      font-style: $font-style;
+    }
+  }
+}
+
+
+//
+// Print out the @font-face
+// Order of the includes matters, and it is: normal, bold, italic, bold+italic.
+// @include font-face('Source Sans Pro', '../fonts/sourcesanspro-regular-webfont', normal, normal, 'source_sans_proregular');
+// @include font-face('Source Sans Pro', '../fonts/sourcesanspro-semibold-webfont', bold, normal, 'source_sans_prosemibold');
+// @include font-face('Source Sans Pro', '../fonts/sourcesanspro-it-webfont', normal, italic, 'source_sans_proitalic');
+// @include font-face('Source Sans Pro', '../fonts/sourcesanspro-semiboldit-webfont', bold, italic, 'source_sans_proSBdIt');
+// @include font-face('Trade Gothic', '../fonts/TradeGothicLTStd-BdCn20', normal, normal, 'TradeGothicLTStd-BdCn20');
+
+
+//
+// Font stacks
+$times-new-roman:  "Times New Roman", Times, Georgia, "DejaVu Serif", serif;
+$times:            Times, "Times New Roman", Georgia, "DejaVu Serif", serif;
+$georgia:          Georgia, "Times New Roman", "DejaVu Serif", serif;
+
+$verdana:          Verdana, Tahoma, "DejaVu Sans", sans-serif;
+$tahoma:           Tahoma, Verdana, "DejaVu Sans", sans-serif;
+$helvetica:        Helvetica, Arial, "Nimbus Sans L", sans-serif;
+$arial:            Arial, Helvetica, "Nimbus Sans L", sans-serif;
+
+// For an explanation of why "sans-serif" is at the end of this list, see
+// http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/
+$courier:          "Courier New", "DejaVu Sans Mono", monospace, sans-serif;
+
+$source-sans-pro:  "Source Sans Pro", $arial;
+$trade-gothic:     "Trade Gothic W02", $arial;
+
+$base-font-family: $source-sans-pro;

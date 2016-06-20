@@ -1,0 +1,89 @@
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.view-equipment,
+.view-library-equipment {
+  .bulleted {
+    @include bulleted-item;
+    line-height: 1.1;
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.equipment-filter-checkboxes {
+  margin-top: -35px;
+}
+
+.view-equipment {
+  .view-header {
+    @include media('<large') {
+      display: none;
+    }
+
+    @include media('>=large') {
+      @include span(9 last of 12);
+    }
+  }
+
+  .equipment-term {
+    display: none;
+    @include clearfix;
+    background-color: palette(grey, -3);
+    margin-bottom: 25px;
+  }
+
+  .equipment-term__image {
+    float: left;
+    line-height: 0;
+  }
+
+  .equipment-term__title {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 300px;
+    padding-top: 25px;
+    padding-right: 25px;
+  }
+
+  .equipment-term__description {
+    margin-left: 300px;
+    padding-right: 25px;
+
+    p {
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+
+  .views-field-field-floor {
+    width: 30%;
+  }
+}
+
+// Type radios
+.views-widget-filter-field_equipment_type_tid {
+  .form-radios {
+    overflow: hidden;
+  }
+}
+
+.equipment-type-list-toggle {
+  font-weight: 600;
+
+  @include fontcustom-before($fa-var-plus) {
+    top: 1px;
+  }
+
+  &:hover:before {
+    text-decoration: none;
+  }
+
+  &.expanded:before {
+    content: $fa-var-minus;
+  }
+}

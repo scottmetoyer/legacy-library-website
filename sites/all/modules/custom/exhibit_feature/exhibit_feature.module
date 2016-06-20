@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Exhibit feature feature.
+ */
+
+include_once 'exhibit_feature.features.inc';

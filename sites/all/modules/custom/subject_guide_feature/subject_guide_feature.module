@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Subject guide feature feature.
+ */
+
+include_once 'subject_guide_feature.features.inc';

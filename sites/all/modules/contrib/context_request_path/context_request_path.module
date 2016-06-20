@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * A Context condition module to match the actual request URL
+ */
+
+/**
+ * Implements hook_path_init().
+ */
+function context_request_path_init() {
+  $plugin = context_get_plugin('condition', 'request_path');
+  if ($plugin) {
+    $plugin->execute();
+  }
+}
+
+/**
+ * Implements hook_context_plugins().
+ */
+function context_request_path_context_plugins() {
+  $plugins = array();
+  $plugins['context_request_path'] = array(
+    'handler' => array(
+      'path' => drupal_get_path('module', 'context_request_path'),
+      'file' => 'context_request_path.inc',
+      'class' => 'contextRequestPath',
+      'parent' => 'context_condition_path',
+    ),
+  );
+  return $plugins;
+}
+
+/**
+ * Implements hook_context_registry().
+ */
+function context_request_path_context_registry() {
+  return array(
+    'conditions' => array(
+      'request_path' => array(
+        'title' => t('Request path'),
+        'description' => t('Set this context when any of the paths above match the page path. Put each path on a separate line. You can use the * character as a wildcard and <code>~</code> to exclude one or more paths. Use &lt;front&gt; for the site front page.'),
+        'plugin' => 'context_request_path',
+      ),
+    ),
+  );
+}

@@ -1,0 +1,13 @@
+diff --git a/masked_input.module b/masked_input.module
+index cd95c48..c6f228e 100644
+--- a/masked_input.module
++++ b/masked_input.module
+@@ -128,7 +128,7 @@ function masked_input_field_widget_info() {
+   return array(
+     'masked_input' => array(
+       'label' => t('Masked Input'),
+-      'field types' => array('text', 'text_long', 'number_integer', 'number_decimal', 'number_float'),
++      'field types' => array('text', 'text_long', 'number_integer', 'number_decimal', 'number_float', 'phone', 'telephone'),
+       'settings' => array(
+         'size' => 60,
+         'mask' => isset($element['#mask']) ? $element['#mask'] : '',

@@ -1,0 +1,231 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.collection__content {
+  @include media('>medium') {
+    @include span(9 at 4 last);
+  }
+}
+
+.collection__sidebar-first {
+  margin-top: 35px;
+
+  @include media('>medium') {
+    margin-top: 0;
+    @include span(2 wide at 1);
+  }
+}
+
+.collection__content-inner {
+  @include media('>large') {
+    @include span(5 of 9 wide);
+  }
+}
+
+.collection__sidebar-second {
+  margin-top: 35px;
+
+  @include media('>large') {
+    margin-top: 0;
+    @include span(3 of 9 last);
+  }
+}
+
+.collection__header {
+  border-bottom: 1px solid palette(grey, -2);
+  margin-bottom: 30px;
+}
+
+.collection__title {
+  border-bottom-width: 0;
+  margin-bottom: 0;
+}
+
+.collection__library {
+  font-weight: 300;
+}
+
+.collection__section-title {
+  font-size: 18px;
+  font-family: $trade-gothic;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-bottom: 5px;
+  border-bottom: 1px solid palette(grey, -2);
+  margin-bottom: 10px;
+}
+
+.collection__sidebar-first,
+.collection__sidebar-second {
+  ul {
+    @include bulleted-list;
+  }
+}
+
+.collection--full__body {
+  ul {
+    @include regular-bulleted-list;
+  }
+}
+
+.collection__body-tabs {
+  margin-bottom: 50px;
+}
+
+.collection__body-tabs-tabs {
+  @include clearfix;
+  border-bottom: 1px solid palette(grey, 1);
+  margin-bottom: 20px;
+}
+
+.collection__body-tabs-tab {
+  @extend %in-page-tab;
+
+  a {
+    @extend %in-page-tab__link;
+
+    &.active {
+      @extend %in-page-tab__link--active;
+    }
+  }
+}
+
+.collection__body-tabs-pane {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.collection__image,
+.collection__subject-areas,
+.collection__related-resources,
+.collection__related-collections,
+.collection__related-guides,
+.collection__access-collection,
+.collection__contact-person {
+  margin-bottom: 35px;
+}
+
+.collection__contact-person-photo {
+  width: 50%;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.view-collections,
+.view-library-collections {
+  .views-field-field-image {
+    float: left;
+    padding-top: 5px;
+  }
+
+  .views-field-title,
+  .views-field-field-short-description {
+    margin-left: 125px;
+  }
+
+  .views-row {
+    margin-bottom: 40px;
+
+    @include media('>medium') {
+      @include span(2 of 3);
+    }
+  }
+}
+
+.view-collections {
+  .views-row {
+    margin-bottom: 40px;
+
+    @include media('>large') {
+      @include gallery(2 of 4);
+    }
+  }
+}
+
+.page-id-collections {
+  .title--page {
+    border-bottom-width: 0;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+  }
+
+  .region-content > .block-system {
+    margin-bottom: 30px;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Tabs
+////////////////////////////////////////////////////////////////////////////////
+
+.collections-list__tabs {
+  .quicktabs-tabs {
+    border-bottom: 1px solid palette(grey, 1);
+    @include clearfix;
+    margin-bottom: 15px;
+
+    li {
+      padding: 0;
+      @extend %in-page-tab;
+
+      a {
+        @extend %in-page-tab__link;
+      }
+
+      &.active {
+        a {
+          @extend %in-page-tab__link--active;
+        }
+      }
+    }
+  }
+
+  .quicktabs_main {
+    margin-top: 25px;
+
+    .quicktabs-tabs {
+      margin-top: -10px;
+      border-bottom-width: 0;
+
+      li {
+        text-transform: none;
+        margin-right: 8px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        text-align: center;
+
+        &.last {
+          margin-right: 0;
+        }
+
+        &.active {
+          a,
+          a:hover {
+            background-color: palette(grey, 2);
+            color: #fff;
+          }
+        }
+
+        a {
+          display: inline-block;
+          font-size: 14px;
+          padding: 8px 10px;
+          border-bottom-width: 0;
+          opacity: 1;
+          border-radius: 3px;
+          background-color: palette(grey, -3);
+
+          &:hover {
+            background-color: darken(palette(grey, -3), 7%);
+          }
+        }
+      }
+    }
+  }
+}

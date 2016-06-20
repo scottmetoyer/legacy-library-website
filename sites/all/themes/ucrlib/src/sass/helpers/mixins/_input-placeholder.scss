@@ -1,0 +1,10 @@
+// https://css-tricks.com/snippets/css/style-placeholder-text/
+// When a browser doesn’t understand a selector, it invalidates the entire line
+// of selectors.
+@mixin input-placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; } // Firefox ≤ 18
+  &::-moz-placeholder { opacity: 1; @content; } // Firefox ≥ 19
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}

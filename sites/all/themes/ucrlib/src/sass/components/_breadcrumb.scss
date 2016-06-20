@@ -1,0 +1,29 @@
+.breadcrumb {
+  text-align: right;
+  font-size: 12px;
+
+  @include media('<=small') {
+    display: none;
+  }
+
+  @include media('>small') {
+    padding-top: 10px;
+  }
+}
+
+.breadcrumb__page-title,
+.breadcrumb__link a {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: palette(grey, 1);
+  opacity: 0.7;
+}
+
+.breadcrumb__separator {
+  padding: 0 1px;
+  color: palette(yellow, 0);
+  opacity: 0.7;
+  position: relative;
+  top: -1px;
+  font-size: 11px;
+}

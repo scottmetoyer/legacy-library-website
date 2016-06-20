@@ -1,0 +1,78 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.conference-room__content {
+  @include media('>medium') {
+    @include span(7.5 of 10);
+
+    .one-sidebar.sidebar-first & {
+      @include span(6 of 9);
+    }
+  }
+}
+
+.conference-room__sidebar-second {
+  margin-top: 40px;
+
+  @include media('>medium') {
+    margin-top: 10px;
+
+    @include span(2.5 of 10 last);
+
+    .one-sidebar.sidebar-first & {
+      @include span(2 of 9 wide last);
+    }
+  }
+}
+
+.conference-room__description {
+  margin-bottom: 25px;
+}
+
+.conference-room__attributes {
+  margin-top: 25px;
+
+  th, td {
+    line-height: 1.1;
+  }
+
+  .item-list {
+    ul {
+      @include bulleted-list;
+
+      .last {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+.conference-room__reserve-room-button {
+  @extend a.button;
+  margin-right: 0;
+  width: 100%;
+  margin-top: 15px;
+
+  .ext {
+    display: none;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.view-conference-rooms {
+  .views-row {
+    padding-bottom: 50px;
+    border-bottom: 1px solid palette(grey, -2);
+    margin-bottom: 40px;
+  }
+
+  .views-row-last {
+    padding-bottom: 0;
+    border-bottom-width: 0;
+    margin-bottom: 0;
+  }
+}

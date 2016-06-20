@@ -1,0 +1,59 @@
+$breakpoints: (
+  'small': 450px,
+  'medium': 768px,
+  'large': 1024px,
+  'wide': 1250px,
+  'max': 1500px
+);
+
+@import '../vendor/include-media/dist/include-media';
+
+@import "vendor/susy/sass/_susy.scss";
+@include border-box-sizing;
+
+$susy: (
+  columns: 12,
+  gutters: .5
+);
+
+// Create the Susy container
+.container {
+  @include container;
+}
+
+
+//
+// Display the active breakpoint in the bottom right of the viewport.
+$display-breakpoints: false;
+
+@mixin display-breakpoints {
+  body:before {
+    background-color: palette(grey, 2);
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 6px;
+    position: fixed;
+    right: 3px;
+    bottom: 3px;
+    z-index: z('dropdown');
+    border-radius: 3px;
+    opacity: 0.35;
+
+
+    // Loop through the breakpoints that should be shown
+    $previous: '0px';
+    @each $bp-name, $bp-width in $breakpoints {
+      @include media(">#{$previous}", "<=#{$bp-name}") {
+        content: "> #{$previous} and ≤ #{$bp-name}";
+      }
+      $previous: #{$bp-name};
+    }
+    @include media(">#{$previous}") {
+      content: "> #{$previous}";
+    }
+  }
+}
+
+@if variable-exists(display-breakpoints) and $display-breakpoints == true {
+  @include display-breakpoints;
+}

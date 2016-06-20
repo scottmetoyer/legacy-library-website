@@ -1,0 +1,110 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.study-space__content {
+  @include clearfix;
+
+  @include media('>medium') {
+    @include span(8 last);
+  }
+
+  @include media('>large') {
+    @include span(9 last);
+  }
+}
+
+.study-space__sidebar-first {
+  @include clearfix;
+
+  @include media('>medium') {
+    @include span(3 wide);
+  }
+
+  @include media('>large') {
+    @include span(2 wide);
+  }
+}
+
+.study-space__attribute {
+  float: left;
+  margin-right: 9.5%;
+  width: 27%;
+  margin-top: 15px;
+
+  @include media('<=small') {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+  }
+
+  &.study-space__capacity {
+    margin-right: 0;
+  }
+}
+
+.study-space__attribute-title {
+  font-size: 18px;
+  font-family: $trade-gothic;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-bottom: 5px;
+  border-bottom: 1px solid palette(grey, -2);
+  margin-bottom: 10px;
+}
+
+.study-space__attribute-content {
+  padding-right: 25px;
+
+  ul {
+    @include bulleted-list;
+  }
+}
+
+.study-space__body {
+  clear: both;
+  margin-top: 20px;
+  padding-top: 25px;
+  float: left;
+  width: 100%;
+  border-top: 1px solid palette(grey, -2);
+
+  ul {
+    @include regular-bulleted-list;
+  }
+}
+
+.study-space__reserve-space-button {
+  @extend a.button;
+  margin-right: 0;
+  width: 100%;
+  margin-top: 15px;
+
+  .ext {
+    display: none;
+  }
+}
+
+.study-space__all-spaces-link {
+  clear: both;
+  padding-top: 20px;
+
+  a {
+    font-weight: 600;
+
+    @include fontcustom-after($fa-var-long-arrow-right) {
+      top: 1px;
+    }
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.view-study-spaces {
+  .views-field-field-floor {
+    width: 30%;
+  }
+}

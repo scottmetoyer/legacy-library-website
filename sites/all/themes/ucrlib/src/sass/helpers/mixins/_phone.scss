@@ -1,0 +1,10 @@
+@mixin phone-link {
+  &:hover {
+    text-decoration: none;
+  }
+
+  @include fontcustom-before($fa-var-phone) {
+    color: palette(grey, 2);
+    top: 1px;
+  }
+}

@@ -1,0 +1,17 @@
+diff --git a/link.diff.inc b/link.diff.inc
+index 9e34123..0d761c1 100644
+--- a/link.diff.inc
++++ b/link.diff.inc
+@@ -11,6 +11,12 @@
+ function link_field_diff_view($items, $context) {
+   $diff_items = array();
+   foreach ($items as $delta => $item) {
++    // Title does not exist as an array element when the "No Title" option is
++    // chosen in the field settings.
++    if (!isset($item['title'])) {
++      $item['title'] = '';
++    }
++
+     if ($item['url'] && $item['title']) {
+       $diff_items[$delta] = $item['title'] . ' (' . $item['url'] . ')';
+     }

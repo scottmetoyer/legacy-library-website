@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Conference room views feature feature.
+ */
+
+include_once 'conference_room_views_feature.features.inc';

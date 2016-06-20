@@ -1,0 +1,40 @@
+$palettes: (
+  grey: (
+    3: #1e1e1e,
+    2: #202020,
+    1: #3f3f3f,
+    0: #7a6e67,
+    -1: #c1bbab,
+    -2: #d8d8d8,
+    -3: #f0f0f0,
+    -4: #f9f9f9
+  ),
+  blue: (
+    0: #2d6cc0,
+    -1: #6cd6ff
+  ),
+  green: (
+    0: #6f8135,
+    -1: #1d9b1d
+  ),
+  yellow: (
+    0: #f1ab00
+  ),
+  red: (
+    0: #b50100
+  )
+);
+
+
+@function palette($palette, $tone: 0) {
+  @return map-get(map-get($palettes, $palette), $tone);
+}
+
+
+//
+// Usage:
+
+// .selector {
+//   color: palette(yellow);
+//   background-color: palette(grey, -1);
+// }

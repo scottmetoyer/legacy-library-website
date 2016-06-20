@@ -1,0 +1,12 @@
+name = Context Request Path
+description = Check for matches in the request path
+package = Context
+core = 7.x
+dependencies[] = context
+
+; Information added by drupal.org packaging script on 2013-07-24
+version = "7.x-1.0"
+core = "7.x"
+project = "context_request_path"
+datestamp = "1374678968"
+

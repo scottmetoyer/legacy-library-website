@@ -1,0 +1,62 @@
+name =  UCR Library Theme
+description =  A theme for the UCR Library.
+core = 7.x
+
+; ========================================
+; Regions
+; ========================================
+
+regions[header_content]  = 'Header'
+regions[main_nav]        = 'Main Nav'
+regions[banner]          = 'Banner'
+regions[content_top]     = 'Content Top'
+regions[content_prefix]  = 'Content Prefix'
+regions[content]         = 'Main Content'
+regions[sidebar_first]   = 'Left Sidebar'
+regions[sidebar_second]  = 'Right Sidebar'
+regions[footer_one]      = 'Footer One'
+regions[footer_two]      = 'Footer Two'
+regions[footer_three]    = 'Footer Three'
+regions[footer_four]     = 'Footer Four'
+regions[hidden]          = 'Hidden'
+
+; ========================================
+; Stylesheets
+; ========================================
+stylesheets[all][] = css/ckeditor.css
+; See HOOK_preprocess_html() in inc/html.php
+
+; ========================================
+; Scripts
+; ========================================
+
+; See HOOK_preprocess_html() in inc/html.php
+; Also see the README.md in src/js
+
+; ========================================
+; Breakpoints
+; ========================================
+
+; Add breakpoints here, and they'll automatically get picked up by the breakpoints
+; module when it's enabled.
+
+breakpoints[mobile] = (min-width: 0px)
+breakpoints[tablet_vertical] = (min-width: 601px)
+breakpoints[tablet_horizontal] = (min-width: 769px)
+breakpoints[desktop] = (min-width: 1000px)
+
+; ========================================
+; Settings
+; ========================================
+
+settings[ucrlib_minified_css] = '0'
+settings[ucrlib_minified_js] = '0'
+settings[default_favicon] = '1'
+settings[default_logo] = '1'
+settings[favicon_path] = ''
+settings[favicon_upload] = ''
+settings[logo_path] = ''
+settings[logo_upload] = ''
+settings[toggle_comment_user_picture] = '1'
+settings[toggle_comment_user_verification] = '1'
+settings[toggle_node_user_picture] = '1'

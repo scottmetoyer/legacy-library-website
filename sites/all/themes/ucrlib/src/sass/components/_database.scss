@@ -1,0 +1,303 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.database--teaser {
+  padding: 20px 0;
+}
+
+.database__bools {
+  @include media('<medium') {
+    margin-bottom: 10px;
+  }
+
+  @include media('>=medium') {
+    float: left;
+    padding-top: 5px;
+  }
+}
+
+.database__content {
+  @include media('>=medium') {
+    margin-left: 94px;
+    border-left: 1px solid palette(grey, -2);
+    padding-left: 10px;
+  }
+}
+
+.database__title {
+  margin-bottom: 0;
+}
+
+.database__trial-end-date {
+  text-transform: uppercase;
+  color: palette(red);
+}
+
+.database__require-logged-in {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  background-color: palette(green);
+  border-radius: 3px;
+  text-align: center;
+
+  @include fontcustom-after($fa-var-user, 0) {
+    color: #fff;
+    font-size: 18px;
+    top: 5px;
+  }
+}
+
+.database__trial-database {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-color: palette(red);
+  border-radius: 3px;
+  text-align: center;
+
+  @include fontcustom-after($fa-var-bell, 0) {
+    color: #fff;
+    font-size: 18px;
+    top: 5px;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.page-research-services-databases {
+  .title--page {
+    @include media('>=medium') {
+      @include span(8 last of 12);
+    }
+
+    @include media('>=large') {
+      @include span(8 wider last of 12);
+    }
+  }
+}
+
+.view-database__filters-block {
+  @include clearfix;
+
+  @include media('>=medium') {
+    @include span(8 last of 12);
+  }
+
+  @include media('>=large') {
+    @include span(8 wider last of 12);
+  }
+
+  .block-content {
+    position: relative;
+    z-index: z(default);
+  }
+
+  .views-exposed-widget {
+    display: none;
+  }
+
+  .views-widget-filter-title,
+  .views-submit-button,
+  .views-widget-filter-field_is_featured_value {
+    display: block;
+  }
+
+  .views-widget-filter-title {
+    float: right;
+  }
+
+  .form-text {
+    width: 100%;
+    border-width: 0;
+    border-radius: 0;
+    height: 40px;
+    width: 210px;
+    padding: 2px 55px 2px 12px;
+    font-size: 15px;
+    border: 1px solid palette(grey, -2);
+    background-color: palette(grey, -3);
+    color: palette(grey, 2);
+
+    @include media('>=small') {
+      width: 270px;
+    }
+  }
+
+  .views-submit-button {
+    background-color: palette(blue);
+    position: absolute;
+    right: 0;
+    top: 31px;
+
+    @include fontcustom-before($fa-var-search, 0) {
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+      font-size: 20px;
+    }
+  }
+
+  .placeholderized .views-submit-button {
+    top: 0;
+  }
+
+  .form-submit {
+    border-width: 0;
+    color: transparent;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      background-color: transparent;
+      color: transparent;
+    }
+  }
+
+  .views-exposed-widget {
+    margin-bottom: 0;
+  }
+
+  .form-item {
+    margin-bottom: 0;
+  }
+
+  .views-widget-filter-field_is_featured_value {
+    @include clearfix;
+    border-bottom: 1px solid palette(grey, 2);
+    clear: both;
+    margin-bottom: 40px;
+
+    @include media('<medium') {
+      margin-bottom: 0;
+    }
+
+    @include media('<large') {
+      padding-top: 20px;
+    }
+
+    .form-item-edit-popular-0,
+    label {
+      display: none;
+    }
+
+    .form-type-bef-link {
+      @extend %in-page-tab;
+
+      a {
+        @extend %in-page-tab__link;
+
+        &.active {
+          @extend %in-page-tab__link--active;
+        }
+      }
+    }
+  }
+}
+
+// Databases page
+.view-databases {
+  @include media('<medium') {
+    padding-top: 20px;
+  }
+
+  .view-empty,
+  .view-content {
+    border-top: 1px solid palette(grey, -2);
+  }
+
+  &.view .view-filters + .view-content {
+    @include clearfix;
+
+    @include media('>=medium') {
+      @include span(8 last of 12);
+    }
+
+    @include media('>=large') {
+      @include span(8 wider last of 12);
+    }
+  }
+
+  .view-empty {
+    padding: 20px 0;
+    border-bottom: 1px solid palette(grey, -2);
+  }
+
+  .views-row {
+    border-bottom: 1px solid palette(grey, -2);
+  }
+
+  .view-header {
+    @include media('>=medium') {
+      @include span(3 wide of 12);
+    }
+
+    @include media('>=large') {
+      @include span(2 wider of 12);
+    }
+  }
+
+  &.view .view-filters {
+    // clear: left;
+    @include media('>=medium') {
+      @include span(3 wide of 12);
+    }
+
+    @include media('>=large') {
+      @include span(2 wider of 12);
+    }
+  }
+
+  .views-widget-filter-title,
+  .views-widget-filter-field_is_featured_value {
+    display: none;
+  }
+
+  .item-list {
+    clear: both;
+  }
+}
+
+.database__bool-legend {
+  background-color: palette(grey, -3);
+  margin-bottom: 30px;
+  padding: 11px 0 8px 0;
+
+  @include media('>=medium') {
+    margin-top: -50px;
+  }
+
+  .database__require-logged-in {
+    margin-right: 0;
+    float: left;
+  }
+
+  .database__trial-database {
+    float: left;
+  }
+}
+
+.database__bool-legend-row {
+  @include clearfix;
+  padding: 7px 10px;
+}
+
+.database__bool-description {
+  font-size: 13px;
+  line-height: 1;
+  font-style: italic;
+  margin-left: 40px;
+  display: block;
+  padding-top: 2px;
+}

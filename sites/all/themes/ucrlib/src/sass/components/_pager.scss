@@ -1,0 +1,108 @@
+.pager {
+  @include clearfix;
+  clear: both;
+  padding-top: 30px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 0; // Kills spacing between <li> elements
+};
+
+.pager-item {
+  display: none; // Hide all items, then show some/all depending on breakpoint
+  padding: 0;
+  border: 1px solid palette(grey, -2);
+  border-left-width: 0;
+  height: 50px;
+  min-width: 50px;
+  position: relative;
+
+  &.first {
+    border-left-width: 1px;
+  }
+
+  &.pager-current,
+  &.pager-previous,
+  &.pager-next,
+  &.pager-item-minus-1,
+  &.pager-item-plus-1,
+  .pager-at-first &.pager-item-plus-2,
+  .pager-at-last &.pager-item-minus-2 {
+    display: inline-block;
+  }
+
+  @include media('>medium') {
+    &.pager-item-minus-2,
+    &.pager-item-plus-2,
+    .pager-at-first &.pager-item-plus-3,
+    .pager-at-first &.pager-item-plus-2,
+    .pager-at-last &.pager-item-minus-2,
+    .pager-at-last &.pager-item-minus-3 {
+      display: inline-block;
+    }
+  }
+
+  @include media('>large') {
+    display: inline-block;
+  }
+
+  &,
+  a {
+    text-align: center;
+    line-height: 50px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  a {
+    display: block;
+    height: 48px;
+    background-color: #fff;
+
+    &:hover {
+      background-color: palette(grey, -3);
+      text-decoration: none;
+    }
+  }
+
+  &.pager-first,
+  &.pager-last {
+    min-width: 70px;
+  }
+
+  &.pager-current {
+    color: #777;
+    background-color: palette(grey, -3);
+  }
+
+  &.pager-previous {
+    a {
+      color: transparent;
+      text-indent: -999em;
+
+      @include fontcustom-before($fa-var-angle-left, 0) {
+        color: palette(blue);
+        font-size: 24px;
+        position: absolute;
+        top: 12px;
+        left: 20px;
+        text-indent: 0px;
+      }
+    }
+  }
+
+  &.pager-next {
+    a {
+      color: transparent;
+      text-indent: -999em;
+
+      @include fontcustom-before($fa-var-angle-right, 0) {
+        color: palette(blue);
+        font-size: 24px;
+        position: absolute;
+        top: 12px;
+        left: 22px;
+        text-indent: 0px;
+      }
+    }
+  }
+}

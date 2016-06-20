@@ -1,0 +1,40 @@
+.page__content {
+  @include clearfix;
+
+  @include media('>medium') {
+    @include span(8);
+
+    .one-sidebar.sidebar-first & {
+      @include span(6 of 9);
+    }
+  }
+}
+
+.page__cta {
+  @include clearfix;
+
+  @include media('<=medium') {
+    margin-top: 50px;
+  }
+
+  @include media('>medium') {
+    @include span(3 last);
+
+    .one-sidebar.sidebar-first & {
+      @include span(2 of 9 wide last);
+    }
+  }
+}
+
+.page__related {
+  clear: both;
+  margin-top: 50px;
+  float: left;
+  width: 100%;
+}
+
+.page--full__body {
+  ul {
+    @include regular-bulleted-list;
+  }
+}

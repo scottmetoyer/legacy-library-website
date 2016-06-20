@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Misc settings feature feature.
+ */
+
+include_once 'misc_settings_feature.features.inc';

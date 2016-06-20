@@ -1,0 +1,254 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.library__content {
+  @include clearfix;
+
+  @include media('>=large') {
+    @include span(8);
+
+    .one-sidebar.sidebar-first & {
+      @include span(6 of 9);
+    }
+  }
+}
+
+.library__sidebar-second {
+  @include clearfix;
+
+  @include media('<large') {
+    margin-top: 50px;
+  }
+
+  @include media('>=large') {
+    @include span(3 wide last);
+
+    .one-sidebar.sidebar-first & {
+      @include span(2 of 9 wider last);
+    }
+  }
+
+  ul {
+    @include bulleted-list;
+  }
+}
+
+.library__section-title {
+  font-size: 18px;
+  font-family: $trade-gothic;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-bottom: 5px;
+  border-bottom: 1px solid palette(grey, -2);
+  margin-bottom: 10px;
+}
+
+.library--full__body,
+.library--full__body2 {
+  ul {
+    @include regular-bulleted-list;
+  }
+}
+
+.library__image {
+  margin-bottom: 20px;
+}
+
+.library__phone,
+.library__subjects,
+.library__body,
+.library__map-directions,
+.library__hours,
+.library__address {
+  margin-bottom: 35px;
+}
+
+.library__map-directions {
+  @include clearfix;
+
+  @include media('>620px', '<medium') {
+    background-color: palette(grey, -3);
+    height: 270px;
+    overflow: hidden;
+  }
+
+  @include media('>940px') {
+    background-color: palette(grey, -3);
+    height: 270px;
+    overflow: hidden;
+  }
+}
+
+.library__map {
+  @include media('>620px', '<medium') {
+    float: left;
+  }
+
+  @include media('>940px') {
+    float: left;
+  }
+
+  .simple-gmap-link {
+    display: none;
+  }
+}
+
+.library__directions-title {
+  margin: 19px 0 2px 0;
+}
+
+.library__directions-label {
+  font-weight: bold;
+  font-size: 15px;
+  margin: 19px 0 2px 0;
+}
+
+.library__directions-wrapper {
+  @include media('>620px', '<medium') {
+    margin-left: 270px;
+    padding: 0 30px;
+  }
+
+  @include media('>940px') {
+    margin-left: 270px;
+    padding: 0 30px;
+  }
+}
+
+.library__address {
+  h3 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+}
+
+.library__hours {
+  position: relative;
+
+  .title {
+    display: none;
+  }
+
+  .status {
+    float: right;
+  }
+
+  .hours {
+    line-height: 16px;
+    margin-right: 75px;
+  }
+
+  .read-more {
+    position: absolute;
+    right: 0;
+    top: -4px;
+  }
+}
+
+.library--map {
+  .library__directions-title {
+    margin-top: 15px;
+  }
+
+  .library__directions-label {
+    margin-top: 9px;
+  }
+
+  @include media('>=large') {
+  .library__directions-title,
+  .library__directions-label {
+    margin-top: 19px;
+  }
+
+    .library__directions-google,
+    .library__directions-public-transit {
+      float: left;
+      width: 45%;
+    }
+    .library__directions-parking,
+    .library__directions-ada {
+      float: right;
+      width: 45%;
+    }
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.libraries-page {
+  .views-field-field-image {
+    float: left;
+    padding-top: 5px;
+  }
+
+  .views-field-title,
+  .views-field-field-short-description {
+    margin-left: 125px;
+  }
+
+  .views-row {
+    margin-bottom: 40px;
+    @include clearfix;
+
+    @include media('>large') {
+      @include gallery(2 of 4);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Libraries section
+////////////////////////////////////////////////////////////////////////////////
+
+// Only show the current library menu and hide the rest
+.section-libraries .sidebar-first-nav {
+  .nav-item--level-2 {
+    display: none;
+
+    &.active,
+    &.active-trail {
+      display: list-item;
+
+      .ec-trigger {
+        display: none;
+      }
+
+      .nav {
+        display: block !important; // EEK!
+      }
+    }
+  }
+}
+
+.libraries-return-link {
+  border-bottom: 1px solid palette(grey, -2);
+  margin-bottom: 15px;
+  padding: 0 10px;
+  padding-top: 19px;
+
+  .block-content {
+    p {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: palette(grey, 1);
+      font-weight: 600;
+      font-size: 13px;
+
+      @include fontcustom-before($fa-var-angle-left, 10px) {
+        color: palette(yellow);
+        font-size: 20px;
+        top: 2px;
+      }
+
+      &:hover:before {
+        text-decoration: none;
+      }
+    }
+  }
+}

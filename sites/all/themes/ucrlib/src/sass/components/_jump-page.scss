@@ -1,0 +1,26 @@
+.jump-page__jump-item {
+  padding-left: 25px;
+  margin-bottom: 40px;
+
+  @include media('>=medium') {
+    @include gallery(3 of 6);
+  }
+
+  @include media('>=large') {
+    @include gallery(3 of 9);
+  }
+}
+
+.jump-page__item-title {
+  position: relative;
+  margin-bottom: 5px;
+  font-size: 17px;
+
+  .fa {
+    position: absolute;
+    left: -25px;
+    top: 0px;
+    font-size: 20px;
+    color: #aaa;
+  }
+}

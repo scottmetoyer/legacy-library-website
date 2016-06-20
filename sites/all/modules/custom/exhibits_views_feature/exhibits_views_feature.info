@@ -1,0 +1,14 @@
+name = Exhibits views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = exhibits_views_feature
+dependencies[] = ctools
+dependencies[] = exhibit_feature
+dependencies[] = image
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[image][] = exhibits_list
+features[views_view][] = exhibits
+project path = sites/all/modules/custom

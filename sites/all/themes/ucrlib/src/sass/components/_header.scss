@@ -1,0 +1,35 @@
+.header__wrapper {
+  background-color: palette(grey, -3);
+  position: relative;
+
+  @include media('>large') {
+    background-color: transparent;
+  }
+}
+
+.header {
+  position: relative;
+  height: 55px;
+
+  @include media('>large') {
+    height: 104px;
+  }
+}
+
+// logo
+.header__logo {
+  padding: 16px 0 0 0;
+  float: left;
+  position: relative;
+  z-index: z('dropdown') + 2;
+
+  @include media('>large') {
+    padding: 30px 0 0 0;
+  }
+
+  img {
+    @include media('<=large') {
+      height: 30px;
+    }
+  }
+}

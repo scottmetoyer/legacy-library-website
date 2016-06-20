@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Exhibits views feature feature.
+ */
+
+include_once 'exhibits_views_feature.features.inc';

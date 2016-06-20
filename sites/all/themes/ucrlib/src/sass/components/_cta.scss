@@ -1,0 +1,17 @@
+.cta {
+  background-color: palette(grey, -3);
+  padding: 25px 20px;
+  border-top: 8px solid palette(yellow);
+
+  h3 {
+    font-size: 18px;
+    font-family: $trade-gothic;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-bottom: 5px;
+  }
+
+  ul {
+    @include bulleted-list;
+  }
+}

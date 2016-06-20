@@ -1,0 +1,142 @@
+.l-general {
+  position: relative;
+  @include clearfix;
+  margin: 0 10px;
+
+  @include media('>=small', '<medium') {
+    margin: 0 20px;
+
+    .page-title__wrapper &,
+    .content-top__wrapper &,
+    .main-content-prefix__wrapper &,
+    .main-content__wrapper &,
+    .footer__wrapper & {
+      margin: 0 35px;
+    }
+  }
+
+  @include media('>=medium', '<large') {
+    margin: 0 30px;
+
+    .page-title__wrapper &,
+    .content-top__wrapper &,
+    .main-content-prefix__wrapper &,
+    .main-content__wrapper &,
+    .footer__wrapper & {
+      margin: 0 90px;
+    }
+  }
+
+  @include media('>=large', '<wide') {
+    margin: 0 30px;
+  }
+
+  @include media('>=wide') {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Sidebars
+//
+// Note that some nodes implement their own right sidebar, and the css for that
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// Left sidebar only
+.one-sidebar.sidebar-first {
+  .main-content__wrapper-inner {
+    @include media('>=medium') {
+      @include span(9 last of 12);
+    }
+  }
+
+  .sidebar--first {
+    @include media('>=medium') {
+      @include span(2 wide of 12);
+    }
+  }
+}
+
+// Pseudo left sidebar
+.no-sidebars .view {
+  .view-filters + .view-content,
+  .view-filters + .view-empty {
+    @include media('>=medium') {
+      @include span(9 last of 12);
+    }
+  }
+
+  .view-filters {
+    @include media('>=medium') {
+      @include span(2 wide of 12);
+    }
+  }
+}
+
+// Right sidebar only
+.one-sidebar.sidebar-second {
+  .main-content {
+    @include media('>=medium') {
+      @include span(9 of 12);
+    }
+  }
+
+  .sidebar--second {
+    @include media('>=medium') {
+      @include span(2 wide last of 12);
+    }
+  }
+}
+
+// Both sidebars
+.two-sidebars {
+  .main-content__wrapper-inner {
+    @include media('>=medium') {
+      @include span(9 last of 12);
+    }
+  }
+
+  .sidebar--first {
+    @include media('>=medium') {
+      @include span(2 wide first of 12);
+    }
+  }
+
+  .main-content {
+    @include media('>=large') {
+      @include span(6 wide of 9);
+    }
+  }
+
+  .sidebar--second {
+    margin-top: 40px;
+
+    @include media('>=large') {
+      margin-top: 0;
+      @include span(2 wide last of 9);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Misc layouts
+////////////////////////////////////////////////////////////////////////////////
+
+.l-66-33 {
+  @include clearfix;
+
+  @include media('>=medium') {
+    .first {
+      float: left;
+      width: 64%;
+    }
+
+    .second {
+      float: right;
+      width: 33%;
+    }
+  }
+}

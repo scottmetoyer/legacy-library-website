@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Entity view modes feature feature.
+ */
+
+include_once 'entity_view_modes_feature.features.inc';

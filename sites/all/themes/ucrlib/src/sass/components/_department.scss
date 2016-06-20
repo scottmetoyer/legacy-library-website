@@ -1,0 +1,50 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+
+.department__contact-info {
+  border-bottom: 1px solid palette(grey, -2);
+  padding-bottom: 10px;
+  margin-top: -5px;
+}
+
+.department__email {
+  white-space: nowrap;
+
+  a {
+    @include email-link;
+    margin-right: 35px;
+  }
+}
+
+.department__phone {
+  white-space: nowrap;
+
+  a {
+    @include phone-link;
+    margin-right: 35px;
+  }
+}
+
+.department__fax {
+  @include fax-link;
+  white-space: nowrap;
+}
+
+.department__contact-info,
+.department__description,
+.department__staff,
+.department__hours {
+  margin-bottom: 40px;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.view-departments {
+  .email-link {
+    @include email-link;
+  }
+}

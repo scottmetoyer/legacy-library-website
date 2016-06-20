@@ -1,0 +1,366 @@
+//
+// In header
+.search--header {
+  display: none;
+
+  @include media('>=medium') {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    z-index: z('dropdown') + 1;
+  }
+
+  @include media('>large') {
+    margin-right: 0;
+    margin-top: 40px;
+    float: right;
+  }
+
+  form {
+    position: relative;
+  }
+
+  .form-text {
+    height: 37px;
+    width: 263px;
+    font-size: 16px;
+    font-weight: normal;
+    border-radius: 0;
+    padding: 5px 10px;
+    @include input-placeholder {
+      color: #fff;
+
+      @include media('>large') {
+        color: #777;
+      }
+    }
+  }
+
+  .form-actions,
+  .views-submit-button {
+    position: absolute;
+    width: 37px;
+    height: 37px;
+    top: 0;
+    right: 0;
+    @extend .fa;
+    @extend .fa-search;
+    background-color: palette(grey, 2);
+
+    &:before {
+      color: #fff;
+      position: absolute;
+      z-index: z('default') + 1;
+      top: 8px;
+      right: 8px;
+      font-size: 20px;
+    }
+  }
+
+  .form-submit {
+    width: 37px;
+    height: 37px;
+    font-size: 0;
+    background-color: transparent;
+    color: transparent;
+    position: relative;
+    z-index: z('default') + 2;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+//
+// In the mobile nav
+.search--mobile-nav {
+  padding: 6px;
+  position: relative;
+
+  .form-text {
+    width: 100%;
+    height: 55px;
+    font-size: 24px;
+    padding-left: 10px;
+    padding-right: 65px;
+  }
+
+  .form-actions,
+  .views-submit-button {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    top: 6px;
+    right: 6px;
+    @extend .fa;
+    @extend .fa-search;
+    background-color: transparent;
+
+    &:before {
+      color: palette(grey, 2);
+      position: absolute;
+      z-index: z('default') + 1;
+      top: 18px;
+      right: 18px;
+      font-size: 20px;
+    }
+  }
+
+  .form-submit {
+    width: 55px;
+    height: 55px;
+    font-size: 0;
+    background-color: transparent;
+    color: transparent;
+    position: relative;
+    z-index: z('default') + 2;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border-width: 0;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .views-exposed-widget {
+    margin-bottom: 0;
+  }
+
+  .form-item {
+    margin-bottom: 0;
+  }
+}
+
+//
+// In the [homepage] banner
+.search--banner {
+  margin: 0 auto;
+
+  .block-content {
+    position: relative;
+  }
+
+  .form-text {
+    width: 100%;
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  label {
+    display: none;
+  }
+
+  .form-actions,
+  .views-submit-button {
+    background-color: palette(blue);
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-bottom: 0;
+
+    @include fontcustom-before($fa-var-search, 0) {
+      color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  }
+
+  .form-submit {
+    border-width: 0;
+    color: transparent;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+
+    &:hover {
+      background-color: transparent;
+      color: transparent;
+    }
+  }
+
+  @include media('<small') {
+    display: none;
+  }
+
+  @include media('>=small') {
+    width: 400px;
+    padding-top: 45px;
+
+    .form-text {
+      height: 40px;
+      padding: 5px 55px 5px 10px;
+      font-size: 18px;
+    }
+
+    .form-actions,
+    .views-submit-button,
+    .form-submit {
+      width: 40px;
+      height: 40px;
+    }
+
+    .form-actions,
+    .views-submit-button {
+      &:before {
+        top: 10px;
+        left: 12px;
+        font-size: 21px;
+      }
+    }
+  }
+
+  @include media('>=medium') {
+    width: 700px;
+    padding-top: 90px;
+
+    .form-text {
+      height: 60px;
+      padding: 5px 75px 5px 20px;
+      font-size: 24px;
+    }
+
+    .form-actions,
+    .views-submit-button,
+    .form-submit {
+      width: 60px;
+      height: 60px;
+    }
+
+    .form-actions,
+    .views-submit-button {
+      &:before {
+        top: 17px;
+        left: 19px;
+        font-size: 27px;
+      }
+    }
+  }
+
+  @include media('>=large') {
+    width: 950px;
+    padding-top: 150px;
+
+    .form-text {
+      height: 80px;
+      padding: 5px 95px 5px 20px;
+      font-size: 28px;
+    }
+
+    .form-actions,
+    .views-submit-button,
+    .form-submit {
+      width: 80px;
+      height: 80px;
+    }
+
+    .form-actions,
+    .views-submit-button {
+      &:before {
+        top: 20px;
+        left: 22px;
+        font-size: 40px;
+      }
+    }
+  }
+}
+
+//
+// On the search results page
+.search--results-page {
+  form {
+    position: relative;
+    width: 360px;
+    max-width: 100%;
+  }
+
+  .views-exposed-widget {
+    margin-bottom: 0;
+
+    label {
+      font-weight: 400;
+      font-size: 15px;
+      text-transform: none;
+      margin: 0 0 8px 0;
+
+      @include media('>=small') {
+        float: left;
+        margin: 0 15px 0 0;
+        padding-top: 8px;
+      }
+    }
+  }
+
+  .form-item {
+    margin-bottom: 0;
+  }
+
+  .form-text {
+    height: 37px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: normal;
+    border-radius: 0;
+    padding: 5px 45px 5px 10px;
+    background-color: palette(grey, -3);
+
+    @include media('>=small') {
+      width: 263px;
+    }
+
+    @include input-placeholder {
+      color: #777;
+    }
+  }
+
+  .views-submit-button {
+    position: absolute;
+    width: 37px;
+    height: 37px;
+    bottom: 0;
+    right: 0;
+    @extend .fa;
+    @extend .fa-search;
+    background-color: palette(blue);
+
+    &:before {
+      color: #fff;
+      position: absolute;
+      z-index: z('default') + 1;
+      top: 8px;
+      right: 8px;
+      font-size: 20px;
+    }
+  }
+
+  .form-submit {
+    width: 37px;
+    height: 37px;
+    font-size: 0;
+    background-color: transparent;
+    color: transparent;
+    position: relative;
+    z-index: z('default') + 2;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border-width: 0;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Subject specialists views feature feature.
+ */
+
+include_once 'subject_specialists_views_feature.features.inc';

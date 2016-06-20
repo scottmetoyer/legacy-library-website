@@ -1,0 +1,71 @@
+.page-id-research-services-ask-a-librarian.one-sidebar.sidebar-first {
+  .main-content__wrapper-inner {
+    @include media('>medium') {
+      @include span(7 last of 12);
+    }
+  }
+
+  .sidebar--first {
+    @include media('>medium') {
+      @include span(4 wide of 12);
+    }
+  }
+}
+
+.page-id-research-services-ask-a-librarian {
+  h1 {
+    margin-bottom: 40px;
+
+    .fa:before {
+      color: #aaa;
+    }
+  }
+
+  .sidebar--first {
+    .block {
+      margin-bottom: 35px;
+    }
+
+    .block-title {
+      font-size: 18px;
+      font-family: $trade-gothic;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding-bottom: 5px;
+      border-bottom: 1px solid palette(grey, -2);
+      margin-bottom: 10px;
+    }
+
+    .block-content {
+      ul {
+        @include bulleted-list;
+      }
+    }
+  }
+
+  .sidebar-libraries {
+    table {
+      border-width: 0;
+    }
+
+    tr.odd,
+    tr.even {
+      background-color: transparent;
+      border-width: 0;
+    }
+
+    td {
+      padding: 5px 0 10px 0;
+      line-height: 1;
+    }
+
+    .views-field-title {
+    }
+
+    .views-field-field-phone {
+      text-align: right;
+      white-space: nowrap;
+      vertical-align: top;
+    }
+  }
+}

@@ -1,0 +1,410 @@
+////////////////////////////////////////////////////////////////////////////////
+// Shared hours styles
+////////////////////////////////////////////////////////////////////////////////
+
+.ucrlib-opening-hours-open {
+  .status {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 60px;
+    height: 21px;
+    border-radius: 3px;
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  .status--open {
+    background-color: palette(green, -1);
+  }
+
+  .status--closed {
+    background-color: palette(red);
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Hours page main block
+////////////////////////////////////////////////////////////////////////////////
+
+.ucrlib-opening-hours-week-block {
+  margin-top: -25px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid palette(grey, -2);
+  border-right: 1px solid palette(grey, -2);
+  border-left: 1px solid palette(grey, -2);
+  position: relative;
+  @include clearfix;
+
+  @include media('>=large') {
+    .block-content {
+      float: left;
+      width: 300px;
+    }
+
+  }
+}
+
+// A row or individual library
+.ucrlib-opening-hours-tab {
+
+  // A tab
+  .ucrlib-opening-hours-open {
+    position: relative;
+    min-height: 70px;
+    background-color: palette(grey, -3);
+    cursor: pointer;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid palette(grey, -2);
+    padding-left: 10px;
+    overflow: hidden;
+
+    @include media('>large') {
+      width: 300px;
+
+      &:after {
+        content: '';
+        background-color: palette(grey, -2);
+        display: block;
+        width: 4px;
+        height: 1000px;
+        position: absolute;
+        left: 0;
+        top: -1px;
+        z-index: 1;
+      }
+
+      &:hover:after {
+        background-color: palette(grey, 2);
+      }
+    }
+
+    .title {
+      font-size: 17px;
+      font-weight: 600;
+      padding-right: 90px;
+      line-height: 1.2;
+      padding-top: 10px;
+      padding-bottom: 3px;
+    }
+
+    .hours {
+      font-size: 15px;
+      padding-right: 90px;
+      line-height: 1.2;
+      padding-bottom: 10px;
+    }
+
+    .status {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      margin-top: -11px;
+    }
+  }
+
+  &.active {
+    .ucrlib-opening-hours-open {
+      background-color: #fff;
+
+      &:after {
+        background-color: palette(grey, 2);
+      }
+    }
+  }
+
+  &:last-child {
+    .ucrlib-opening-hours-open {
+      border-bottom-width: 0;
+    }
+  }
+}
+
+.ucrlib-opening-hours-week-container {
+  height: 0;
+  overflow: hidden;
+}
+
+.ucrlib-opening-hours-week {
+  overflow: auto;
+
+  @include media('>=large') {
+    display: none;
+  }
+}
+
+.ucrlib-opening-hours-table-container {
+  margin-left: 320px;
+  display: none;
+
+  @include media('>=large') {
+    display: block;
+  }
+
+  .ucrlib-opening-hours-week {
+    display: block;
+  }
+}
+
+.ucrlib-opening-hours-table {
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  @include media('<medium') {
+    padding: 0;
+  }
+
+  tr {
+    @include media('<medium') {
+      &:first-child {
+        border-top-width: 0;
+      }
+    }
+
+    &.odd {
+      background-color: #fff;
+    }
+  }
+
+  th, td {
+    text-align: center;
+  }
+
+  thead {
+    th {
+      text-transform: uppercase;
+      font-weight: 700;
+      background-color: palette(grey, -3);
+      padding-top: 10px;
+      line-height: 1.1;
+
+      @include media('<medium') {
+        display: none;
+      }
+
+      &.today {
+        border: 2px solid palette(yellow);
+
+        @include media('>=medium') {
+          border-bottom-width: 0;
+        }
+      }
+    }
+
+    .week {
+      color: #999;
+      position: relative;
+      white-space: nowrap;
+      background-color: #fff;
+      text-align: left;
+
+      @include media('<medium') {
+        display: block;
+        border-bottom: 1px solid palette(grey, -2);
+      }
+    }
+
+    .prev {
+      margin-right: 5px;
+      @include fontcustom-before($fa-var-arrow-circle-left, 0);
+    }
+
+    .next {
+      margin-left: 5px;
+      @include fontcustom-before($fa-var-arrow-circle-right, 0);
+    }
+
+    .prev, .next {
+      display: inline-block;
+      height: 18px;
+      width: 18px;
+      overflow: hidden;
+      position: relative;
+      top: 4px;
+
+      &:before {
+        color: palette(blue);
+        font-size: 19px;
+        display: block;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  tbody {
+    th, td {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      line-height: 1.1;
+
+      @include media('<medium') {
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+    }
+
+    th {
+      font-weight: 400;
+      text-align: left;
+
+      @include media('<medium') {
+        display: block;
+        font-weight: 700;
+      }
+    }
+
+    tr:last-child {
+      td.today {
+        &.today {
+          border-bottom: 2px solid palette(yellow);
+        }
+      }
+    }
+  }
+
+  td {
+    @include media('<medium') {
+      display: block;
+      text-align: left;
+    }
+
+    &:before {
+      @include media('<medium') {
+        content: attr(data-label);
+        float: left;
+        width: 50%;
+        font-weight: 700;
+      }
+    }
+
+    &.today {
+      border: 2px solid palette(yellow);
+
+      @include media('>=medium') {
+        border-top-width: 0;
+        border-bottom-width: 0;
+      }
+    }
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Homepage block
+////////////////////////////////////////////////////////////////////////////////
+
+.ucrlib-opening-hours-today-block {
+  &.block .block-content { // add another class for specificity
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .read-more {
+    position: absolute;
+    top: 16px;
+    right: 15px;
+  }
+
+  .ucrlib-opening-hours-open {
+    position: relative;
+    border-bottom: 1px solid palette(grey, -2);
+    padding: 10px 0;
+    min-height: 45px;
+    @include clearfix;
+
+    &:last-child {
+      border-bottom-width: 0;
+    }
+  }
+
+  .status {
+    position: absolute;
+    left: 0;
+    top: 11px;
+  }
+
+  .title,
+  .hours {
+    line-height: 16px;
+  }
+
+  .title {
+    margin-left: 75px;
+    padding-top: 4px;
+
+    @include media('>=large') {
+      margin-right: 165px;
+      float: left;
+    }
+  }
+
+  .hours {
+    margin-left: 75px;
+    margin-top: 5px;
+
+    @include media('>=large') {
+      padding-top: 0;
+      margin: 0;
+      width: 150px;
+      position: absolute;
+      top: 15px;
+      right: 0;
+      text-align: right;
+    }
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Ask a librarian block
+////////////////////////////////////////////////////////////////////////////////
+
+.ucrlib-opening-hours-ask-librarians-block {
+  .ucrlib-opening-hours-open {
+    position: relative;
+    padding: 5px 0;
+    min-height: 35px;
+    @include clearfix;
+  }
+
+  .status {
+    position: absolute;
+    left: 0;
+    top: 6px;
+  }
+
+  .title,
+  .hours {
+    line-height: 16px;
+  }
+
+  .title {
+    margin-left: 75px;
+    padding-top: 4px;
+
+    @include media('>=large') {
+      margin-right: 165px;
+      float: left;
+    }
+  }
+
+  .hours {
+    margin-left: 75px;
+    margin-top: 5px;
+
+    @include media('>=large') {
+      padding-top: 0;
+      margin: 0;
+      width: 150px;
+      position: absolute;
+      top: 10px;
+      right: 0;
+      text-align: right;
+    }
+  }
+}

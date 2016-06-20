@@ -1,0 +1,17 @@
+.field-type-field-collection.field-name-field-links .field-type-text {
+  float: left;
+  margin-right: 25px;
+}
+
+.field-type-field-collection.field-name-field-links tr.draggable:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.field-type-field-collection.field-name-field-links tr .form-submit {
+  margin-bottom: 0;
+  margin-top: 17px;
+}

@@ -1,0 +1,28 @@
+.directory-list__tabs {
+  margin-top: 45px;
+
+  .quicktabs-tabs {
+    border-bottom: 1px solid palette(grey, 1);
+    @include clearfix;
+
+    li {
+      padding: 0;
+      @extend %in-page-tab;
+
+      a {
+        @extend %in-page-tab__link;
+      }
+
+      &.active {
+        a {
+          @extend %in-page-tab__link--active;
+        }
+      }
+    }
+  }
+}
+
+// Staff table is too wide for mobile, so allow it to scroll
+.view-staff {
+  overflow: auto;
+}

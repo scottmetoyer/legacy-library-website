@@ -1,0 +1,12 @@
+name = Subject specialists views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = subject_specialists_views_feature
+dependencies[] = ctools
+dependencies[] = person_feature
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = subject_specialists
+project path = sites/all/modules/custom

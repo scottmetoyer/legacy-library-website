@@ -1,0 +1,53 @@
+// Drupal admin tabs
+ul.primary {
+  border-width: 0;
+  margin: 15px 0 0 0;
+  padding-left: 0;
+  @include clearfix;
+
+  li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    float: left;
+    margin-bottom: 15px;
+
+    a {
+      @extend a.button;
+      display: inline-block;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &.active a {
+      @extend a.button:hover;
+      // border-width: 0;
+    }
+  }
+}
+
+ul.secondary {
+  font-size: 14px;
+}
+
+ul.action-links {
+  margin: 15px 0;
+  padding: 0;
+
+  li {
+    padding: 5px;
+    display: inline-block;
+
+    a {
+      color: palette(grey, 2);
+      text-decoration: underline;
+
+      &:hover {
+        color: palette(grey, 0);
+        text-decoration: none;
+      }
+    }
+  }
+}

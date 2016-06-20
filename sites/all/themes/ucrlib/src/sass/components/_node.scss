@@ -1,0 +1,13 @@
+.page-node-delete {
+  #tabs {
+    display: none;
+  }
+
+  .confirmation {
+    .form-actions {
+      a {
+        @extend a.button;
+      }
+    }
+  }
+}

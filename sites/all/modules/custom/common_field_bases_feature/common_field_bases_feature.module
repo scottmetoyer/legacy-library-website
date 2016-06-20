@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Common field bases feature feature.
+ */
+
+include_once 'common_field_bases_feature.features.inc';

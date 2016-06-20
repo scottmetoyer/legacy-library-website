@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * Implements hook_ckeditor_plugin().
+ */
+function wysiwyg_widgets_ckeditor_plugin() {
+  $plugins = array();
+
+  $plugins['fontawesome'] = array(
+    'name' => 'fontawesome',
+    'desc' => t('WYSIWYG Widget: Insert a Font Awesome icon.'),
+    'path' => drupal_get_path('module', 'wysiwyg_widgets') . '/plugins/fontawesome/',
+    'buttons' => array(
+      'wysiwyg-widget-fontawesome' => array(
+        'label' => 'fontawesome',
+        'icon' => 'icons/fontawesome.png',
+      ),
+    ),
+  );
+
+  $plugins['abbr'] = array(
+    'name' => 'abbr',
+    'desc' => t('WYSIWYG Widget: Insert an abbreviation.'),
+    'path' => drupal_get_path('module', 'wysiwyg_widgets') . '/plugins/abbr/',
+    'buttons' => array(
+      'wysiwyg-widget-abbr' => array(
+        'label' => 'Insert abbreviation',
+        'icon' => 'icons/abbr.png'
+      ),
+    ),
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function wysiwyg_widgets_page_build(&$page) {
+  // dpm($page);
+  // drupal_add_css('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', 'external');
+}
+
+function wysiwyg_widgets_preprocess_html(&$vars) {
+  // dpm($vars);
+}

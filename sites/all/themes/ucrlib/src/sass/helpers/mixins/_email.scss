@@ -1,0 +1,9 @@
+@mixin email-link {
+  &:hover {
+    text-decoration: none;
+  }
+
+  @include fontcustom-before($fa-var-envelope) {
+    color: palette(grey, 2);
+  }
+}

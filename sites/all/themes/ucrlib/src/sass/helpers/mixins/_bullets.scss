@@ -1,0 +1,41 @@
+// Render a bullet.
+@mixin bulleted-item {
+  position: relative;
+  padding-left: 8px;
+  list-style-type: none;
+
+  &:before {
+    content: '\00b7';
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    font-size: 25px;
+    line-height: 0;
+  }
+
+}
+
+// Include this mixin directly to a <ul> element.
+@mixin bulleted-list {
+  li {
+    @include bulleted-item;
+  }
+}
+
+@mixin regular-bulleted-list {
+  margin: 15px 0;
+  padding-left: 20px;
+
+  li {
+    @include bulleted-item;
+    line-height: 1.6;
+    padding-bottom: 0;
+
+    &:before {
+      top: 12px;
+    }
+  }
+}

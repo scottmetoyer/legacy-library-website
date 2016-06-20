@@ -1,0 +1,15 @@
+name = Event views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = event_views_feature
+dependencies[] = better_exposed_filters
+dependencies[] = ctools
+dependencies[] = event_feature
+dependencies[] = image
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[image][] = event_list_thumb
+features[views_view][] = events
+project path = sites/all/modules/custom

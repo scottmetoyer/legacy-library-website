@@ -1,0 +1,124 @@
+////////////////////////////////////////////////////////////////////////////////
+// Node
+////////////////////////////////////////////////////////////////////////////////
+.exhibit__content {
+  @include clearfix;
+  width: 100%;
+}
+
+.exhibit__related {
+  clear: both;
+  margin-top: 50px;
+  float: left;
+  width: 100%;
+}
+
+.exhibit--full__paragraphs-body {
+  ul {
+    @include regular-bulleted-list;
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Views
+////////////////////////////////////////////////////////////////////////////////
+
+.page-id-about-exhibits {
+  .main-content__wrapper {
+    margin-top: 0;
+    padding-bottom: 50px;
+  }
+
+  .block-system {
+    margin-top: 50px;
+  }
+
+  .footer__wrapper {
+    margin-top: 0;
+  }
+}
+
+.view-exhibits {
+  .views-row {
+    @include clearfix;
+    margin-bottom: 40px;
+  }
+
+  .views-field-field-image {
+    line-height: 0;
+
+    @include media('>=475px') {
+      float: left;
+      width: 180px;
+      padding-top: 3px;
+      margin-bottom: 10px;
+    }
+
+    @include media('>=medium') {
+      width: auto;
+      margin-bottom: 0;
+    }
+  }
+
+  .views-field-title {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 10px;
+
+    @include media('>=475px') {
+      margin-left: 200px;
+    }
+
+    @include media('>=medium') {
+      margin-left: 300px;
+    }
+
+    a {
+      color: palette(grey, 2);
+    }
+  }
+
+  .views-field-nothing {
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 10px;
+
+    @include media('>=475px') {
+      margin-left: 200px;
+    }
+
+    @include media('>=medium') {
+      margin-left: 300px;
+    }
+  }
+
+  .views-field-field-library {
+    line-height: 1.1;
+    margin-bottom: 20px;
+
+    @include media('>=475px') {
+      margin-left: 200px;
+    }
+
+    @include media('>=medium') {
+      margin-left: 300px;
+    }
+
+    a {
+      color: palette(grey, 2);
+    }
+  }
+
+  .views-field-field-short-description {
+    @include media('>=475px') {
+      clear: both;
+    }
+
+    @include media('>=medium') {
+      clear: none;
+      margin-left: 300px;
+    }
+  }
+}

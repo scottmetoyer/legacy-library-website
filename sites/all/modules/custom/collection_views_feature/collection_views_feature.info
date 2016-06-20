@@ -1,0 +1,14 @@
+name = Collection views feature
+core = 7.x
+package = Views
+version = 7.x-1.0
+project = collection_views_feature
+dependencies[] = collection_feature
+dependencies[] = ctools
+dependencies[] = image
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[image][] = collection_list_thumb
+features[views_view][] = collections
+project path = sites/all/modules/custom
