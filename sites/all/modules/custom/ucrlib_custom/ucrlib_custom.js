@@ -8,8 +8,8 @@
 
     	var digiref = document.getElementById("node-1089");
     	var external_footer = document.getElementsByClassName("page-node-1113").length;
-
-    	if(digiref===null && external_footer==0)//We want to show alerts all except for the said node, 
+    	var external_header = document.getElementsByClassName("page-node-1130").length;
+    	if(digiref===null && external_footer==0 && external_header==0)//We want to show alerts all except for the said node, 
     	{											//which is view/digiref and the external footer.  The external footer is being iframed to other sites.
     	      if (sessionStorage.getItem('ucrlib_custom_alerts')) {
     	          if (sessionStorage.getItem('ucrlib_custom_alerts') == 'enabled') {
