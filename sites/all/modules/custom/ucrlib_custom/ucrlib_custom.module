@@ -368,6 +368,11 @@ function ucrlib_custom_preprocess_page(&$vars) {
   		array(
   				'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
   		));
+  drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/external_header.js',
+  		array(
+  				'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+  		));
+
 
   // Inject alerts.
   global $theme;
