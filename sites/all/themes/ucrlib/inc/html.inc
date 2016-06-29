@@ -137,10 +137,6 @@ function _ucrlib_add_css(&$vars) {
     'every_page' => TRUE,
     'weight' => 9999,
     'preprocess' => FALSE,
-    'browsers' => array(
-      'IE' => '(gte IE 9)|(gt IEMobile 7)|(!IE)',
-      '!IE' => TRUE,
-    ),
   );
   // IE 8 options
   $css_ie_options = array(
@@ -148,10 +144,6 @@ function _ucrlib_add_css(&$vars) {
     'every_page' => TRUE,
     'weight' => 9999,
     'preprocess' => FALSE,
-    'browsers' => array(
-      'IE' => 'lte IE 8',
-      '!IE' => FALSE,
-    ),
   );
 
   // Add CSS files
