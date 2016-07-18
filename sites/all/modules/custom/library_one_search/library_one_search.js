@@ -24,10 +24,9 @@
 
                 //Checking to see if the enduser has put something in the search.
                 if ("" != search && null != search) {
-                    console.log(settings);
                     url = getUrl();
 
-                    //There are four call backs because I am scrapping Melvyl, Scotty, Libapps & the drupal site.
+                    //There are four call backs because I am scraping Melvyl, Scotty, Libapps & the drupal site.
                     var requestCallback = new MyRequestsCompleted({
                         numRequest: 6
                     });

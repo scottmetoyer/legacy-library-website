@@ -1,20 +1,11 @@
 <?php
 /**
  *
- * Hello World!
- *
- */
-
-/**
- *
  * @file
  * Drupal Onesearch
  * Searches external sites give an Onesearch Description Document
  */
 
-/**
- * Module Root
- */
 define("LIBRARY_ONE_SEARCH_ROOT", drupal_get_path('module', 'library_one_search'));
 define("SCRAPPER", LIBRARY_ONE_SEARCH_ROOT .'/scrapper');
 require_once SCRAPPER.'/scrapper.php';
@@ -93,21 +84,7 @@ function library_one_search_preprocess(&$variables, $hook)
 	}
 }
 
-/**
- * Implements hook_init().
- */
 function library_one_search_init()
-{
-	// We add the library_one_search JavaScript on every page.
-	// If it's not necessary it is removed in hook_js_alter.
-	add_library_one_search();
-}
-
-/**
- * This function will add anything I need to for the module.
- *
- */
-function add_library_one_search()
 {
 	drupal_add_js(drupal_get_path('module', 'library_one_search') . '/library_one_search.js',
 			array(
@@ -115,13 +92,7 @@ function add_library_one_search()
 			));
 }
 
-/**
- *The hook_menu() tells drupal the links we would like to use and
- *what actions we want to use.  The pages that I have created is for the
- *ajax callback.  The information is scrapped and put in webpage then later on,
- *javascript will get the data and display on the main page.
- *
- */
+// Set up module routes
 function library_one_search_menu()
 {
 	$items = array();
@@ -176,14 +147,104 @@ function library_one_search_menu()
 			'weight'=>3,
 	);
 
-
 	return $items;
 }
 
-/**
- * Puts all of the information I need from the drupal website into a format which I can manipulate eaiser with
- * javascripts.
- */
+// *** AJAX callback functions ***/
+// *** These output raw HTML directly to the requester, bypassing the Drupal page construction mechanisms ***/
+function ajax_melvyl($search)
+{
+	$melvyl = new scrapper($search,"melvyl");
+	$numberOfResults = $melvyl->getMelvylNumberOfResults();
+	$html = $melvyl->getMelvylContents();
+	$url = $melvyl->getUrl();
+	printRawHtmlResponse($numberOfResults, $url, $html);
+}
+
+function ajax_libguide($search)
+{
+	$libguide = new scrapper($search,"libguide");
+	$numberOfResults = $libguide->getLibGuideNumberOfResults();
+	$html = $libguide->getLibGuideContents();
+	$url = $libguide->getUrl();
+	printRawHtmlResponse($numberOfResults, $url, $html);
+}
+
+function ajax_scotty($search) {
+	$scotty = new scrapper($search,"scotty");
+	$numberOfResults = $scotty->getScottyNumberOfResults();
+	$html = $scotty->getScottyContents();
+	$url = $scotty->getUrl();
+	printRawHtmlResponse($numberOfResults, $url, $html);
+}
+
+function ajax_course_reserves($search) {
+	$htmlCode = "";
+	$countCourse 		= 0;
+	$countInstructor 	= 0;
+	$numberOfResults 	= 0;
+	$urlCourse = "";
+	$urlInstructor = "";
+
+	$arrCourseContent = array();$arrInstructorContent = array();
+
+	$course = new scrapper($search,"course_reserves_course");
+	$instructor = new scrapper($search,"course_reserves_instructor");
+
+	$arrCourseContent = $course->getCourseReservesContentsArr();
+	$arrInstructorContent = $instructor->getCourseReservesContentsArr();
+
+	$countCourse = $course->getCourseReservesNumberOfResults();
+	$countInstructor =$instructor->getCourseReservesNumberOfResults();
+
+	$urlCourse = $course->getUrl();
+	$urlInstructor = $instructor->getUrl();
+	$htmlCode = formatToHTML($arrCourseContent,$arrInstructorContent);
+
+	$output = "<div id=\"numberOfResultsCourse\">$countCourse</div>
+			<div id=\"urlCourse\">$urlCourse</div>
+			<div id=\"numberOfResultsInstructor\">$countInstructor</div>
+			<div id=\"urlInstructor\">$urlInstructor</div>
+			$htmlCode";
+	print $output;
+}
+
+function ajax_calisphere($search)
+{
+	$html = "";
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	//The url address below was provided by calisphere
+	curl_setopt($curl, CURLOPT_URL, "https://solr.calisphere.org/solr/query/?q=".urlencode($search)."&rows=5&wt=json&indent=true&mm=100%25&pf3=title&pf=text,title&qs=12&ps=12");
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-Authentication-Token: 82dbd622-32c4-4169-b25f-5435ef337a93')); //setting custom header, furthermore the security key was given by Calisphere
+	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,  0);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
+	$result = curl_exec($curl);
+	if($result===false)
+	{
+		$result = curl_error($curl);
+
+		// Need to put error handling
+		curl_close($curl);
+	}
+	else
+	{
+		curl_close($curl);
+		$calisphere = new scrapper("","");
+		$json = json_decode($result, true);
+		$numberOfResults = $calisphere->formatNumber($json["response"]["numFound"]);
+
+		if($numberOfResults >0)
+		{
+			$html = parse_JSON_Calisphere_Return_HTML($json);
+		}
+
+		$url = "https://calisphere.org/search/?q=".urlencode($search);
+
+		printRawHtmlResponse($numberOfResults, $url, $html);
+	}
+}
+
 function ajax_thiswebsite($search)
 {
 	global $base_url;
@@ -208,6 +269,7 @@ function ajax_thiswebsite($search)
 
 	$str = $thiswebsite->getThiswebsiteContents();
 	$strURL= $thiswebsite->getUrl().'/search?search_api_views_fulltext='.$searchEncoded;
+
 	//	I am putting back the beta otherwise the public won't be able to access the data.
 	if("http://betalib.ucr.edu"==$base_url)
 	{
@@ -220,245 +282,14 @@ function ajax_thiswebsite($search)
 		$url = $strURL;
 	}
 
-	$form['myDivTag'] = array(
-			'#markup'=>"<div id=\"numberOfResults\">$numberOfResults</div>
-			<div id=\"url\">$url</div>$html" ,
-	);
-	return $form;
+	printRawHtmlResponse($numberOfResults, $url, $html);
 }
+// *** *** //
 
-/**
- * Puts all of the information I need from the calisphere website into a format which I can manipulate eaiser with
- * javascripts.
- */
-function ajax_calisphere($search)
-{
-	$html = "";
-	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-	//The url address below was provided by calisphere
-	curl_setopt($curl, CURLOPT_URL, "https://solr.calisphere.org/solr/query/?q=".urlencode($search)."&rows=5&wt=json&indent=true&mm=100%25&pf3=title&pf=text,title&qs=12&ps=12");
-	curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-Authentication-Token: 82dbd622-32c4-4169-b25f-5435ef337a93')); //setting custom header, furthermore the security key was given by Calisphere
-	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,  0);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
-	$result = curl_exec($curl);
-	if($result===false)
-	{
-		$result = curl_error($curl);
-		//need to put error handling
-		curl_close($curl);
-	}
-	else
-	{
-		curl_close($curl);
-		$calisphere = new scrapper("","");
-		$json = json_decode($result, true);
-		$numberOfResults = $calisphere->formatNumber($json["response"]["numFound"]);
-
-		if($numberOfResults >0)
-		{
-			$html = parse_JSON_Calisphere_Return_HTML($json);
-		}
-
-		$url = "https://calisphere.org/search/?q=".urlencode($search);
-
-		$form['myDivTag'] = array(
-				'#markup'=>'<div id="numberOfResults">'.$numberOfResults.'</div>
-			<div id="url">'.$url.'</div>'.$html,
-		);
-
-	}
-	return $form;
-}
-/**
- * The purpose of the function is to extract what I need in the json object and put in a format which I can easily manipulate.
- * @param strin -  $json - The string will be in a format of JavaScript Object Notation.
- * @return string - The string will be formatted in a html code so that I can later extract when I make an ajax call.
- */
-function parse_JSON_Calisphere_Return_HTML($json)
-{
-	$numberOfResults = $json["response"]["numFound"];
-	$link = "";
-	$title = "";
-	$size = 0;
-	$htmlCode = "";
-	if($numberOfResults>0 && $numberOfResults<5)
-	{
-		$size = $numberOfResults;
-	}
-	else if($numberOfResults>0)
-	{
-		$size = 5;
-	}
-	else
-	{
-		$size = 0;
-	}
-	for($i=0; $i<$size; $i++)
-	{
-		$link = $json["response"]["docs"][$i]["url_item"];//This is my url link
-		$title =$json["response"]["docs"][$i]["title_ss"][0]; //This returns the title that is displayed in calisphere.
-		$htmlCode .=  "<div id='calisphere_".$i."'> <a target='_blank' href='".$link."'>".$title."</a></div>";
-	}
-	return  $htmlCode;
-
-}
-
-/**
- * Puts all of the information I need from the melvyl website into a format which I can manipulate eaiser with
- * javascripts.
- */
-function ajax_melvyl($search)
-{
-	$melvyl = new scrapper($search,"melvyl");
-	$numberOfResults = $melvyl->getMelvylNumberOfResults();
-	$html = $melvyl->getMelvylContents();
-	$url = $melvyl->getUrl();
-	$form['myDivTag'] = array(
-			'#markup'=>"<div id=\"numberOfResults\">$numberOfResults</div>
-			<div id=\"url\">$url</div>$html",
-	);
-	return $form;
-}
-
-/**
- * Puts all of the information I need from the libguide website into a format which I can manipulate eaiser with
- * javascripts.
- */
-function ajax_libguide($search)
-{
-	$libguide = new scrapper($search,"libguide");
-	$numberOfResults = $libguide->getLibGuideNumberOfResults();
-	$html = $libguide->getLibGuideContents();
-	$url = $libguide->getUrl();
-	$form['myDivTag'] = array(
-			'#markup'=>'<div id="numberOfResults">'.$numberOfResults.'</div>
-			<div id="url">'.$url.'</div>'.$html,
-	);
-	return $form;
-}
-
-/**
- * Puts all of the information I need from the scotty website into a format which I can manipulate eaiser with
- * javascripts.
- */
-function ajax_scotty($search) {
-	$scotty = new scrapper($search,"scotty");
-	$numberOfResults = $scotty->getScottyNumberOfResults();
-	$html = $scotty->getScottyContents();
-	$url = $scotty->getUrl();
-	$form['myDivTag'] = array(
-			'#markup'=>"<div id=\"numberOfResults\">$numberOfResults</div>
-			<div id=\"url\">$url</div>$html",
-	);
-	return $form;
-}
-/**
- * Puts all of the information I need from the course reserves website into a format which I can manipulate eaiser with
- * javascripts.
- */
-
-function ajax_course_reserves($search) {
-	$htmlCode = "";
-	$countCourse 		= 0;
-	$countInstructor 	= 0;
-	$numberOfResults 	= 0;
-	$urlCourse = "";
-	$urlInstructor = "";
-
-	$arrCourseContent = array();$arrInstructorContent = array();
-
-	$course = new scrapper($search,"course_reserves_course");
-	$instructor = new scrapper($search,"course_reserves_instructor");
-
-	$arrCourseContent = $course->getCourseReservesContentsArr();
-	$arrInstructorContent = $instructor->getCourseReservesContentsArr();
-
-	$countCourse = $course->getCourseReservesNumberOfResults();
-	$countInstructor =$instructor->getCourseReservesNumberOfResults();
-
-
-	$urlCourse = $course->getUrl();
-	$urlInstructor = $instructor->getUrl();
-	$htmlCode = formatToHTML($arrCourseContent,$arrInstructorContent);
-
-
-
-	$form['myDivTag'] = array(
-			'#markup'=>"<div id=\"numberOfResultsCourse\">$countCourse</div>
-			<div id=\"urlCourse\">$urlCourse</div>
-			<div id=\"numberOfResultsInstructor\">$countInstructor</div>
-			<div id=\"urlInstructor\">$urlInstructor</div>
-			$htmlCode",
-	);
-	return $form;
-}
-/**
- *
- * @param $arrCourseContent - 2d array  index [0] contains url; [1] contains
- * @param $arrInstructorContent - 2d array index [0] contains url; [1] contains
- * @return htmlCode  = string returns the html code in a format which i can manipulate easy.
- */
-function formatToHTML($arrCourseContent,$arrInstructorContent)
-{
-	$htmlCode = "";
-	$i=0;			$sizeOfCourse = 0;	$sizeOfInstructor = 0;
-	$count = 0;		$countCourse = 0;	$countInstructor = 0;
-
-	$sizeOfCourse = sizeof($arrCourseContent);
-	$sizeOfInstructor = sizeof($arrInstructorContent);
-
-	if($sizeOfCourse>5)//I want to get the first five should there be more entries
-	{
-		$countCourse = 5;
-	}
-	else
-	{
-		$countCourse = $sizeOfCourse;//If there is less than 5 entries, we'll go from entres.
-	}
-
-	if($sizeOfInstructor>5)//I want to get the first five should there be more entries
-	{
-		$countInstructor = 5;
-	}
-	else//If there is less than 5 entries, we'll go from entres.
-	{
-		$countInstructor = $sizeOfInstructor;
-	}
-
-	for($i=0; $i<$countInstructor; $i++)
-	{
-		$htmlCode .= "<div id=\"coursereservesinstructor_".$i."\"><a target='_blank' href='".$arrInstructorContent[$i][0]."'>".$arrInstructorContent[$i][1]."</a> </div>";
-	}
-	for($i=0; $i<$countCourse; $i++)
-	{
-		$htmlCode .= "<div id=\"coursereservescourse_".$i."\"><a target='_blank' href='".$arrCourseContent[$i][0]."'>".$arrCourseContent[$i][1]."</a> </div>";
-	}
-
-	return $htmlCode;
-}
-
-function coreTags($resource)
-{
-	global $base_url;
-	$htmlCode = "";
-	$url =$base_url."\\";
-	$href = $url."research-services\ask-a-librarian";
-	$htmlCode =  "<div class=\"progress\"  id=\"".$resource."_progress\">
-	<div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\" style=\"width: 100%\">Loading ...
-	</div>
-	</div>
-	<div style=\"display: none;\" id=\"".$resource."_disabled\"  class=\"disabled\"><ul><li>Sorry, results for this category have been temporarily disabled.</li></ul>
-	</div>
-	<div class=\"results\" style=\"display: none;\" id=\"".$resource."_results\">
-	</div>
-	<div class=\"no-results\" style=\"display: none;\" id=\"".$resource."_no-results\"><ul><li><a href=$href>No results - Ask a Librarian</a></li></ul>
-	</div>
-	<div class=\"problem\" style=\"display:none;\" id=\"".$resource."_problem\"><ul><li>
-	Sorry, there was an error retrieving results for this category! Please try reloading the page.</li></ul>
-	</div>";
-
-	return $htmlCode;
+function printRawHtmlResponse($resultCount, $requestedUrl, $html) {
+	$output = "<div><div id=\"numberOfResults\">$resultCount</div>
+			<div id=\"url\">$requestedUrl</div>$html</div>";
+	print($output);
 }
 
 function block($search)
@@ -584,4 +415,101 @@ function block($search)
 			'#markup'=>$html,
 	);
 	return $form;
+}
+
+/**
+ *
+ * @param $arrCourseContent - 2d array  index [0] contains url; [1] contains
+ * @param $arrInstructorContent - 2d array index [0] contains url; [1] contains
+ * @return htmlCode  = string returns the html code in a format which i can manipulate easy.
+ */
+function formatToHTML($arrCourseContent,$arrInstructorContent)
+{
+	$htmlCode = "";
+	$i=0;			$sizeOfCourse = 0;	$sizeOfInstructor = 0;
+	$count = 0;		$countCourse = 0;	$countInstructor = 0;
+
+	$sizeOfCourse = sizeof($arrCourseContent);
+	$sizeOfInstructor = sizeof($arrInstructorContent);
+
+	if($sizeOfCourse>5)//I want to get the first five should there be more entries
+	{
+		$countCourse = 5;
+	}
+	else
+	{
+		$countCourse = $sizeOfCourse;//If there is less than 5 entries, we'll go from entres.
+	}
+
+	if($sizeOfInstructor>5)//I want to get the first five should there be more entries
+	{
+		$countInstructor = 5;
+	}
+	else//If there is less than 5 entries, we'll go from entres.
+	{
+		$countInstructor = $sizeOfInstructor;
+	}
+
+	for($i=0; $i<$countInstructor; $i++)
+	{
+		$htmlCode .= "<div id=\"coursereservesinstructor_".$i."\"><a target='_blank' href='".$arrInstructorContent[$i][0]."'>".$arrInstructorContent[$i][1]."</a> </div>";
+	}
+	for($i=0; $i<$countCourse; $i++)
+	{
+		$htmlCode .= "<div id=\"coursereservescourse_".$i."\"><a target='_blank' href='".$arrCourseContent[$i][0]."'>".$arrCourseContent[$i][1]."</a> </div>";
+	}
+
+	return $htmlCode;
+}
+
+function coreTags($resource)
+{
+	global $base_url;
+	$htmlCode = "";
+	$url =$base_url."\\";
+	$href = $url."research-services\ask-a-librarian";
+	$htmlCode =  "<div class=\"progress\"  id=\"".$resource."_progress\">
+	<div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\" style=\"width: 100%\">Loading ...
+	</div>
+	</div>
+	<div style=\"display: none;\" id=\"".$resource."_disabled\"  class=\"disabled\"><ul><li>Sorry, results for this category have been temporarily disabled.</li></ul>
+	</div>
+	<div class=\"results\" style=\"display: none;\" id=\"".$resource."_results\">
+	</div>
+	<div class=\"no-results\" style=\"display: none;\" id=\"".$resource."_no-results\"><ul><li><a href=$href>No results - Ask a Librarian</a></li></ul>
+	</div>
+	<div class=\"problem\" style=\"display:none;\" id=\"".$resource."_problem\"><ul><li>
+	Sorry, there was an error retrieving results for this category! Please try reloading the page.</li></ul>
+	</div>";
+
+	return $htmlCode;
+}
+
+function parse_JSON_Calisphere_Return_HTML($json)
+{
+	$numberOfResults = $json["response"]["numFound"];
+	$link = "";
+	$title = "";
+	$size = 0;
+	$htmlCode = "";
+	if($numberOfResults>0 && $numberOfResults<5)
+	{
+		$size = $numberOfResults;
+	}
+	else if($numberOfResults>0)
+	{
+		$size = 5;
+	}
+	else
+	{
+		$size = 0;
+	}
+	for($i=0; $i<$size; $i++)
+	{
+		$link = $json["response"]["docs"][$i]["url_item"];//This is my url link
+		$title =$json["response"]["docs"][$i]["title_ss"][0]; //This returns the title that is displayed in calisphere.
+		$htmlCode .=  "<div id='calisphere_".$i."'> <a target='_blank' href='".$link."'>".$title."</a></div>";
+	}
+	return  $htmlCode;
+
 }

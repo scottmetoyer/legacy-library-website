@@ -13,11 +13,11 @@ class scrapper
 	private $urlPageContents; //This is used for the libguides, this is the link to the webpage
 	private $urlNumberOfResults;//This is the number of resources found when give the the $search.
 	private $url;//This is the url to be scrapped.
-/**
- * The function below is the constructor for the class scrapper,
- * $search -> is the resource to be found
- * $selector -> is the site that shall be scrapped.
- */
+	/**
+	 * The function below is the constructor for the class scrapper,
+	 * $search -> is the resource to be found
+	 * $selector -> is the site that shall be scrapped.
+	 */
 	public function __construct($search, $selector)
 	{
 		$this->search = $search;
@@ -51,17 +51,17 @@ class scrapper
 
 	}
 
-/**
- * Accessor function to get the url.
- */
+	/**
+	 * Accessor function to get the url.
+	 */
 	public function getUrl()
 	{
 		return $this->url;
 	}
-/**
- * Sets the attribute url
- * @param string $url
- */
+	/**
+	 * Sets the attribute url
+	 * @param string $url
+	 */
 	public function setDrupalUrl($url)
 	{
 		$searchEncoded = urlencode($this->search);
@@ -70,11 +70,11 @@ class scrapper
 		$this->htmlPage = file_get_html($completeURL);
 	}
 
-/**
- *
- * @param string  $str -> this is the div or element tag that needs to be extracted.
- * Here I need to get the author.  Returns a string the authors name.
- */
+	/**
+	 *
+	 * @param string  $str -> this is the div or element tag that needs to be extracted.
+	 * Here I need to get the author.  Returns a string the authors name.
+	 */
 	private function extractAuthor($str)
 	{
 		$findStarting = "class=\"author\">";
@@ -120,7 +120,7 @@ class scrapper
 	}
 
 	/**
-	 * The function below gets the number of results when Course Reserves is scrapped.  Returns a string.
+	 * The function below gets the number of results when Course Reserves is scraped.  Returns a string.
 	 */
 	public function getCourseReservesNumberOfResults()
 	{
@@ -195,9 +195,9 @@ class scrapper
 		return $arr;
 	}
 
-/**
- * The function below gets the number of results when Scotty is scrapped.  Returns a string.
- */
+	/**
+	 * The function below gets the number of results when Scotty is scrapped.  Returns a string.
+	 */
 	public function getScottyNumberOfResults()
 	{
 		$totalResultsOfSearch = 0;
@@ -231,11 +231,11 @@ class scrapper
 		}
 		return $this->formatNumber($totalResultsOfSearch);
 	}
-/**
- * The function below gets the scotty contents.  The contents are returned as a string.
- * Inside the string, the results are in html format.
- */
-	 public function getScottyContents()
+	/**
+	 * The function below gets the scotty contents.  The contents are returned as a string.
+	 * Inside the string, the results are in html format.
+	 */
+	public function getScottyContents()
 	{
 		$i = 0;
 		$htmlCode = "";
@@ -266,8 +266,8 @@ class scrapper
 		{
 			if('Author'==$this->htmlPage->find('td.bibInfoLabel')[0]->plaintext)
 			{
- 				$author = $htmlCode=$this->htmlPage->find('td.bibInfoData')[0]->plaintext;
- 				$title = $htmlCode=$this->htmlPage->find('td.bibInfoData')[1]->plaintext;
+				$author = $htmlCode=$this->htmlPage->find('td.bibInfoData')[0]->plaintext;
+				$title = $htmlCode=$this->htmlPage->find('td.bibInfoData')[1]->plaintext;
 				$htmlCode ="<div id=\"scotty_0\"> <a target='_blank' href=\"".$this->url."\">" . $title . " " . $author."</a></div>";
 			}
 			else
@@ -305,16 +305,16 @@ class scrapper
 		}
 		return $totalResultsOfSearch;
 	}
-/**
- * The purpose of this function is to eliminate the forward slash
- * at the end of the hyperlink.  Having this hyperlink causes problems
- * displaying the hyperlink in the onesearch.
- *
- * @param  $str - The hyperlink that needs to be formatted
- * @return string - returns the string that has been formatted
- *
- *
- */
+	/**
+	 * The purpose of this function is to eliminate the forward slash
+	 * at the end of the hyperlink.  Having this hyperlink causes problems
+	 * displaying the hyperlink in the onesearch.
+	 *
+	 * @param  $str - The hyperlink that needs to be formatted
+	 * @return string - returns the string that has been formatted
+	 *
+	 *
+	 */
 	private function formatHyperLink($str)
 	{
 		$size = 0;
