@@ -15,17 +15,13 @@
 /**
  * Module Root
  */
-
 define("LIBRARY_ONE_SEARCH_ROOT", drupal_get_path('module', 'library_one_search'));
-
-
-define("SCRAPPER",LIBRARY_ONE_SEARCH_ROOT .'/scrapper');
+define("SCRAPPER", LIBRARY_ONE_SEARCH_ROOT .'/scrapper');
 require_once SCRAPPER.'/scrapper.php';
 
 //$url and $entity are a link list
 $url; //This is an array that contains all the URL that I plan to replace in the search results block
 $entity;//This is the really the node id.  So instead of the page going to the node, I want to replace with the correct link.
-
 
 /**
  * The function below basically changes the hyperlink to the actual database.
@@ -36,19 +32,19 @@ function library_one_search_block_view_alter(&$data, $block)
 {
 	global $url;
 	global $entity;
-	// 	dpm($block);
 
-	if(54==$block->bid && sizeof($url)!=0)
+	if(54==$block->bid && sizeof($url) != 0)
 	{
 		$size = count($url);
 		$html = "";
 		$final_html = "";
+
 		for($i=0; $i<$size; $i++)
 		{
 			$html = $data['content']['main']['#markup'];
 			$search = "href=\"/node/".$entity[$i]."\"";
 			$replace = "href=\"".$url[$i]."\"";
-			$final_html  = str_replace($search, $replace,$html);
+			$final_html  = str_replace($search, $replace, $html);
 			$data['content']['main']['#markup'] = $final_html;
 		}
 	}
@@ -61,7 +57,6 @@ function library_one_search_block_view_alter(&$data, $block)
  */
 function library_one_search_preprocess(&$variables, $hook)
 {
-
 	global $url;
 	global $entity;
 	//dpm($variables);
@@ -93,11 +88,8 @@ function library_one_search_preprocess(&$variables, $hook)
 						}
 					}
 				}
-
 			}
-
 		}
-
 	}
 }
 
@@ -106,10 +98,11 @@ function library_one_search_preprocess(&$variables, $hook)
  */
 function library_one_search_init()
 {
-  // We add the library_one_search JavaScript on every page.
-  // If it's not necessary it is removed in hook_js_alter.
-  add_library_one_search();
+	// We add the library_one_search JavaScript on every page.
+	// If it's not necessary it is removed in hook_js_alter.
+	add_library_one_search();
 }
+
 /**
  * This function will add anything I need to for the module.
  *
@@ -118,7 +111,7 @@ function add_library_one_search()
 {
 	drupal_add_js(drupal_get_path('module', 'library_one_search') . '/library_one_search.js',
 			array(
-				  'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+				  'scope' => 'footer', //If this isn't here, then the slicknav_menu won't work with my javascripts
 			));
 }
 
@@ -213,9 +206,9 @@ function ajax_thiswebsite($search)
 	$thiswebsite->setDrupalUrl($b_url);
 	$numberOfResults = $thiswebsite->getThiswebsiteNumberOfResults();
 
-	 $str = $thiswebsite->getThiswebsiteContents();
-	 $strURL= $thiswebsite->getUrl().'/search?search_api_views_fulltext='.$searchEncoded;
-//	I am putting back the beta otherwise the public won't be able to access the data.
+	$str = $thiswebsite->getThiswebsiteContents();
+	$strURL= $thiswebsite->getUrl().'/search?search_api_views_fulltext='.$searchEncoded;
+	//	I am putting back the beta otherwise the public won't be able to access the data.
 	if("http://betalib.ucr.edu"==$base_url)
 	{
 		$html = str_replace("http://ul-lib.ul.ucr.edu", "http://betalib.ucr.edu", $str);
@@ -242,12 +235,12 @@ function ajax_calisphere($search)
 {
 	$html = "";
 	$curl = curl_init();
- 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
- 	//The url address below was provided by calisphere
- 	curl_setopt($curl, CURLOPT_URL, "https://solr.calisphere.org/solr/query/?q=".urlencode($search)."&rows=5&wt=json&indent=true&mm=100%25&pf3=title&pf=text,title&qs=12&ps=12");
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	//The url address below was provided by calisphere
+	curl_setopt($curl, CURLOPT_URL, "https://solr.calisphere.org/solr/query/?q=".urlencode($search)."&rows=5&wt=json&indent=true&mm=100%25&pf3=title&pf=text,title&qs=12&ps=12");
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-Authentication-Token: 82dbd622-32c4-4169-b25f-5435ef337a93')); //setting custom header, furthermore the security key was given by Calisphere
- 	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,  0);
- 	curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,  0);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
 	$result = curl_exec($curl);
 	if($result===false)
 	{
@@ -317,7 +310,7 @@ function parse_JSON_Calisphere_Return_HTML($json)
  */
 function ajax_melvyl($search)
 {
- 	$melvyl = new scrapper($search,"melvyl");
+	$melvyl = new scrapper($search,"melvyl");
 	$numberOfResults = $melvyl->getMelvylNumberOfResults();
 	$html = $melvyl->getMelvylContents();
 	$url = $melvyl->getUrl();
@@ -467,7 +460,6 @@ function coreTags($resource)
 
 	return $htmlCode;
 }
-
 
 function block($search)
 {
