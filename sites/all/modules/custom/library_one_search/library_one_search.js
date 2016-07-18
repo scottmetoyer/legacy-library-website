@@ -22,6 +22,7 @@
     		if(""!=search && null!=search)
     		{
 	           	url = window.location.protocol + "//"+window.location.host;
+
 	           	//There are four call backs because I am scrapping Melvyl, Scotty, Libapps & the drupal site.
 	       	    var requestCallback = new MyRequestsCompleted({
 	       	        numRequest: 6

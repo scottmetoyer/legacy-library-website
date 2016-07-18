@@ -7,70 +7,72 @@
 /**
  * Implements hook_menu().
  */
-function ucrlib_custom_menu() {
-  $items = array();
+function ucrlib_custom_menu()
+{
+    $items = array();
 
-  $items['admin/config/ucrlib'] = array(
-    'title' => t('UCR Library'),
-    'description' => t('UCR Library settings.'),
-    'position' => 'right',
-    'weight' => -1,
-    'page callback' => 'system_admin_menu_block_page',
-    'access arguments' => array('access administration pages'),
-    'file' => 'system.admin.inc',
-    'file path' => drupal_get_path('module', 'system'),
-  );
+    $items['admin/config/ucrlib'] = array(
+        'title' => t('UCR Library'),
+        'description' => t('UCR Library settings.'),
+        'position' => 'right',
+        'weight' => -1,
+        'page callback' => 'system_admin_menu_block_page',
+        'access arguments' => array('access administration pages'),
+        'file' => 'system.admin.inc',
+        'file path' => drupal_get_path('module', 'system'),
+    );
 
-  $items['admin/config/ucrlib/ucrlib_custom_images'] = array(
-    'title' => t('UCR Library Image Settings'),
-    'description' => t('Configure image settings.'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('ucrlib_custom_images_settings'),
-    'access arguments' => array('administer site configuration'),
-    'type' => MENU_NORMAL_ITEM,
-    'file' => 'inc/ucrlib_custom_images.admin.inc',
-    'file path' => drupal_get_path('module', 'ucrlib_custom'),
-  );
+    $items['admin/config/ucrlib/ucrlib_custom_images'] = array(
+        'title' => t('UCR Library Image Settings'),
+        'description' => t('Configure image settings.'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('ucrlib_custom_images_settings'),
+        'access arguments' => array('administer site configuration'),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'inc/ucrlib_custom_images.admin.inc',
+        'file path' => drupal_get_path('module', 'ucrlib_custom'),
+    );
 
-  $items['admin/config/ucrlib/ucrlib_custom_alerts'] = array(
-    'title' => t('UCR Library Alert Settings'),
-    'description' => t('Configure alert settings.'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('ucrlib_custom_alert_settings'),
-    'access arguments' => array('administer site configuration'),
-    'type' => MENU_NORMAL_ITEM,
-    'file' => 'inc/ucrlib_custom_alerts.admin.inc',
-    'file path' => drupal_get_path('module', 'ucrlib_custom'),
-  );
+    $items['admin/config/ucrlib/ucrlib_custom_alerts'] = array(
+        'title' => t('UCR Library Alert Settings'),
+        'description' => t('Configure alert settings.'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('ucrlib_custom_alert_settings'),
+        'access arguments' => array('administer site configuration'),
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'inc/ucrlib_custom_alerts.admin.inc',
+        'file path' => drupal_get_path('module', 'ucrlib_custom'),
+    );
 
-  $items['ucrlib/hours/nojs/%node'] = array(
-    'page callback' => 'ucrlib_custom_ajax_callback',
-    'page arguments' => array(2, 3),
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-  $items['ucrlib/hours/ajax/%node'] = $items['ucrlib/hours/nojs/%node'];
+    $items['ucrlib/hours/nojs/%node'] = array(
+        'page callback' => 'ucrlib_custom_ajax_callback',
+        'page arguments' => array(2, 3),
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+    $items['ucrlib/hours/ajax/%node'] = $items['ucrlib/hours/nojs/%node'];
 
-  $items['library_hours/hours'] = array(
-  		'page callback' => 'redirect_lib_hours',
-  		'page arguments' => array(2),
-  		'access callback'=>TRUE,
-  		'weight'=>3,
-  );
+    $items['library_hours/hours'] = array(
+        'page callback' => 'redirect_lib_hours',
+        'page arguments' => array(2),
+        'access callback' => TRUE,
+        'weight' => 3,
+    );
 
 
-  return $items;
+    return $items;
 }
+
 //The function below is to set the cookie that way I can alter the hours page based on the cookie.
 //The cookie will send the name of the library that way I know what to set as the default when the page loads.
 function redirect_lib_hours($library)
 {
-	Global $base_url;
+    Global $base_url;
 
-	$valueOfCookie = $library;
-	$int = 5;
-	setcookie('library',$valueOfCookie,time()+$int,'/');
-	drupal_goto($base_url."/about/hours", array('external' => TRUE));
+    $valueOfCookie = $library;
+    $int = 5;
+    setcookie('library', $valueOfCookie, time() + $int, '/');
+    drupal_goto($base_url . "/about/hours", array('external' => TRUE));
 }
 
 /**
@@ -85,13 +87,11 @@ function redirect_lib_hours($library)
  */
 function ucrlib_custom_form_node_form_alter(&$form, $form_state)
 {
-	if(isset($form['#attributes']['class'][1]))
-	{
-		if($form['#attributes']['class'][1]=="node-calendar_item-form")
-		{
-			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/calendar.js');
-		}
-	}
+    if (isset($form['#attributes']['class'][1])) {
+        if ($form['#attributes']['class'][1] == "node-calendar_item-form") {
+            drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/calendar.js');
+        }
+    }
 }
 
 
@@ -101,150 +101,127 @@ function ucrlib_custom_form_node_form_alter(&$form, $form_state)
  * The purpose of this function is to link the title to the event and not to the view that corrsponse
  * to the the field collection.
  */
-function ucrlib_custom_views_pre_render(&$view) {
-		// I want to make sure we are in the calendar.
+function ucrlib_custom_views_pre_render(&$view)
+{
+    // I want to make sure we are in the calendar.
 
-	if($view->name=="calendar")
-	{
-		$size = 0;
-		if(isset($view->result))//I want to make sure we have result have been set
-		{
-			$size = sizeof($view->result);
-		}
-		if($size!=0)//I want to make sure that we do have resutls before running the below code
-		{
-			$title = "";
-			$href = "";
-			$id    = new SplFixedArray($size);
-			$url   = new SplFixedArray($size);
-			$linkList = array(array());
-			$index = 0;
-			$linkListIndex = 0;
-			$count = 0;
-			//I am going to get the ids so that I know what node this id corresponse to.
-			for($i=0; $i<$size; $i++)
-			{
-				if (isset($view->result[$i]->date_id_field_date))//This is for the month and week view.
-				{
-					$id[$i] = $view->result[$i]->date_id_field_date;
-				}
-				else if(isset($view->result[$i]->item_id))//This is for the day view
-				{
-					$id[$i] = $view->result[$i]->item_id;
-				}
-			}
-			$query = db_select("field_data_field_event_date_links", "n");
-			$query->fields("n");
-			$or = db_or();
-			for($i=0; $i<$size; $i++)
-			{
-				$or->condition("field_event_date_links_value",$id[$i],"=");
-			}
-			$query->condition($or);
-			$result = $query->execute();
+    if ($view->name == "calendar") {
+        $size = 0;
+        if (isset($view->result))//I want to make sure we have result have been set
+        {
+            $size = sizeof($view->result);
+        }
+        if ($size != 0)//I want to make sure that we do have resutls before running the below code
+        {
+            $title = "";
+            $href = "";
+            $id = new SplFixedArray($size);
+            $url = new SplFixedArray($size);
+            $linkList = array(array());
+            $index = 0;
+            $linkListIndex = 0;
+            $count = 0;
+            //I am going to get the ids so that I know what node this id corresponse to.
+            for ($i = 0; $i < $size; $i++) {
+                if (isset($view->result[$i]->date_id_field_date))//This is for the month and week view.
+                {
+                    $id[$i] = $view->result[$i]->date_id_field_date;
+                } else if (isset($view->result[$i]->item_id))//This is for the day view
+                {
+                    $id[$i] = $view->result[$i]->item_id;
+                }
+            }
+            $query = db_select("field_data_field_event_date_links", "n");
+            $query->fields("n");
+            $or = db_or();
+            for ($i = 0; $i < $size; $i++) {
+                $or->condition("field_event_date_links_value", $id[$i], "=");
+            }
+            $query->condition($or);
+            $result = $query->execute();
 
-			//Below I am getting the url of the node and setting the array.
-			while($record = $result->fetchAssoc())
-			{
-				if($record["bundle"]=="event")//Making sure its an event to get the correct url
-				{
-					$url[$index] = "/node/".$record["entity_id"];
-				}
-				else//the link list is there incase for the calendar type there is a link
-				{
-					$linkList[$linkListIndex][0]=$index;//I am keeping the index of url because we are going to put the calendar url back
-					$linkList[$linkListIndex][1]=$record["field_event_date_links_value"];//THis is the id that I will use to query the database so that I can get the title
-					$linkListIndex++;
-				}
-				$index++;
-			}
-			if($linkListIndex>0)
-			{
-				/*
-				 * I had to query each id at a time because there could be a possiblity that a link may not be provided
-				 *
-				 */
-				for($i=0; $i<$linkListIndex; $i++)
-				{
-					$query = db_select("field_data_field_link", "n");
-					$query->fields("n");
-					$or = db_or();
-					$or->condition("entity_id",$linkList[$i][1],"=");
-					$query->condition($or);
-					$result = $query->execute();
-					$count =$result->rowCount();
-					if($count!=0)
-					{
-						//Below I am getting the url of the node and setting the array.
-						while($record = $result->fetchAssoc())
-						{
-							$url[$linkList[$i][0]]=$record["field_link_url"];
-						}
-					}
-				}
-			}
-			//Below I am changing the title to hyperlink title that points to the node.
-				for($i=0; $i<$size; $i++)
-				{
-					if(isset($view->result[$i]->field_field_title))
-					{
-						if($view->result[$i]->field_field_title!=NULL)
-						{
-							$title = $view->result[$i]->field_field_title[0]['rendered']['#markup'];
-							if($url[$i]!=null)
-							{
-								$href = "<a href=\"".$url[$i]."\">$title</a>";
-								$view->result[$i]->field_field_title[0]['rendered']['#markup'] =$href;
-							}
-							else
-							{
-								$view->result[$i]->field_field_title[0]['rendered']['#markup'] = "<div class=\"calendar-title-non-url\"> $title </div>";
-							}
-						}
-					}
-				}
-			}
-		}
-		elseif ($view->name=="libraries")//I am in the library pages.
-		{
-			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/library_hours.js',
-					array(
-							'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
-					));
-			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/departments_views_feature.js',
-					array(
-							'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
-					));
+            //Below I am getting the url of the node and setting the array.
+            while ($record = $result->fetchAssoc()) {
+                if ($record["bundle"] == "event")//Making sure its an event to get the correct url
+                {
+                    $url[$index] = "/node/" . $record["entity_id"];
+                } else//the link list is there incase for the calendar type there is a link
+                {
+                    $linkList[$linkListIndex][0] = $index;//I am keeping the index of url because we are going to put the calendar url back
+                    $linkList[$linkListIndex][1] = $record["field_event_date_links_value"];//THis is the id that I will use to query the database so that I can get the title
+                    $linkListIndex++;
+                }
+                $index++;
+            }
+            if ($linkListIndex > 0) {
+                /*
+                 * I had to query each id at a time because there could be a possiblity that a link may not be provided
+                 *
+                 */
+                for ($i = 0; $i < $linkListIndex; $i++) {
+                    $query = db_select("field_data_field_link", "n");
+                    $query->fields("n");
+                    $or = db_or();
+                    $or->condition("entity_id", $linkList[$i][1], "=");
+                    $query->condition($or);
+                    $result = $query->execute();
+                    $count = $result->rowCount();
+                    if ($count != 0) {
+                        //Below I am getting the url of the node and setting the array.
+                        while ($record = $result->fetchAssoc()) {
+                            $url[$linkList[$i][0]] = $record["field_link_url"];
+                        }
+                    }
+                }
+            }
+            //Below I am changing the title to hyperlink title that points to the node.
+            for ($i = 0; $i < $size; $i++) {
+                if (isset($view->result[$i]->field_field_title)) {
+                    if ($view->result[$i]->field_field_title != NULL) {
+                        $title = $view->result[$i]->field_field_title[0]['rendered']['#markup'];
+                        if ($url[$i] != null) {
+                            $href = "<a href=\"" . $url[$i] . "\">$title</a>";
+                            $view->result[$i]->field_field_title[0]['rendered']['#markup'] = $href;
+                        } else {
+                            $view->result[$i]->field_field_title[0]['rendered']['#markup'] = "<div class=\"calendar-title-non-url\"> $title </div>";
+                        }
+                    }
+                }
+            }
+        }
+    } elseif ($view->name == "libraries")//I am in the library pages.
+    {
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/library_hours.js',
+            array(
+                'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+            ));
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/departments_views_feature.js',
+            array(
+                'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+            ));
 
 
-		}
-		elseif($view->name=="library_collections")
-		{
-			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/collection_views.js',
-					array(
-							'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
-					));
+    } elseif ($view->name == "library_collections") {
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/collection_views.js',
+            array(
+                'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+            ));
 
-		}
-		elseif($view->name=="subject_specialists")
-		{
-			$size = sizeof($view->result);
-			$weight = array($size);
-			for($i=0; $i<$size; $i++)
-			{
-				$weight[$i] = $view->result[$i]->field_field_subject_specialties[0]['raw']['taxonomy_term']->weight;
-			}
-			array_multisort($weight, SORT_ASC, SORT_NUMERIC,$view->result);
-		}
-		elseif($view->name=="faqs")
-		{
-			/*
-			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/faq.js',
-					array(
-							'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
-					));*/
+    } elseif ($view->name == "subject_specialists") {
+        $size = sizeof($view->result);
+        $weight = array($size);
+        for ($i = 0; $i < $size; $i++) {
+            $weight[$i] = $view->result[$i]->field_field_subject_specialties[0]['raw']['taxonomy_term']->weight;
+        }
+        array_multisort($weight, SORT_ASC, SORT_NUMERIC, $view->result);
+    } elseif ($view->name == "faqs") {
+        /*
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/faq.js',
+                array(
+                        'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+                ));*/
 
-		}
+    }
 }
 
 /*
@@ -256,769 +233,752 @@ function ucrlib_custom_views_pre_render(&$view) {
 function ucrlib_custom_page_alter(&$page)
 {
 
-	$keys = 0;
-	if(array_key_exists("content",$page))
-	{
-		if(array_key_exists("system_main",$page["content"]))
-		{
-			if(array_key_exists("nodes",$page["content"]["system_main"]))
-			{
-				$keys = array_keys($page['content']['system_main']['nodes']);
-				$id=(string)$keys[0];
+    $keys = 0;
+    if (array_key_exists("content", $page)) {
+        if (array_key_exists("system_main", $page["content"])) {
+            if (array_key_exists("nodes", $page["content"]["system_main"])) {
+                $keys = array_keys($page['content']['system_main']['nodes']);
+                $id = (string)$keys[0];
 
-				if(array_key_exists($id,$page['content']['system_main']['nodes']))
-				{
-					if(array_key_exists("body",$page['content']['system_main']['nodes'][$keys[0]]))
-					{
-						if(array_key_exists("#object",$page['content']['system_main']['nodes'][$keys[0]]["body"]))
-						{
-							if(array_key_exists("und",$page['content']['system_main']['nodes'][$keys[0]]["body"]['#object']->body))
-							{
-								if(array_key_exists("0",$page['content']['system_main']['nodes'][$keys[0]]["body"]['#object']->body["und"]))
-								{
-									$raw_html = $page['content']['system_main']['nodes'][$keys[0]]['body'][0]['#markup'];
-									if(!strpos($raw_html,"tablesaw"))
-									{
-										$html = $page['content']['system_main']['nodes'][$keys[0]]['body']['#object']->body['und'][0]['value'];
-										$page['content']['system_main']['nodes'][$keys[0]]['body'][0]['#markup'] = $html;
-									}
-								}
+                if (array_key_exists($id, $page['content']['system_main']['nodes'])) {
+                    if (array_key_exists("body", $page['content']['system_main']['nodes'][$keys[0]])) {
+                        if (array_key_exists("#object", $page['content']['system_main']['nodes'][$keys[0]]["body"])) {
+                            if (array_key_exists("und", $page['content']['system_main']['nodes'][$keys[0]]["body"]['#object']->body)) {
+                                if (array_key_exists("0", $page['content']['system_main']['nodes'][$keys[0]]["body"]['#object']->body["und"])) {
+                                    $raw_html = $page['content']['system_main']['nodes'][$keys[0]]['body'][0]['#markup'];
+                                    if (!strpos($raw_html, "tablesaw")) {
+                                        $html = $page['content']['system_main']['nodes'][$keys[0]]['body']['#object']->body['und'][0]['value'];
+                                        $page['content']['system_main']['nodes'][$keys[0]]['body'][0]['#markup'] = $html;
+                                    }
+                                }
 
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
 /**
  * Implements hook_form_alter().
  */
-function ucrlib_custom_form_alter(&$form, &$form_state, $form_id) {
+function ucrlib_custom_form_alter(&$form, &$form_state, $form_id)
+{
 
-  // Until https://www.drupal.org/node/1919338 is fixed, manually replace
-  // "&amp;" with "&" in all fields rendered as a select.
+    // Until https://www.drupal.org/node/1919338 is fixed, manually replace
+    // "&amp;" with "&" in all fields rendered as a select.
 
-  foreach(element_children($form) as $key) {
-    if (isset($form[$key][LANGUAGE_NONE]['#options'])) {
-      foreach ($form[$key][LANGUAGE_NONE]['#options'] as $key2 => $value2) {
-        $form[$key][LANGUAGE_NONE]['#options'][$key2] = str_replace('&amp;', '&', $value2);
-      }
+    foreach (element_children($form) as $key) {
+        if (isset($form[$key][LANGUAGE_NONE]['#options'])) {
+            foreach ($form[$key][LANGUAGE_NONE]['#options'] as $key2 => $value2) {
+                $form[$key][LANGUAGE_NONE]['#options'][$key2] = str_replace('&amp;', '&', $value2);
+            }
+        }
     }
-  }
-  if("department_contact_form_entityform_edit_form"==$form_id)
-  {
-  	$form['#submit'] = 'ucrlib_custom_submit';
-  	$form['actions']['submit']['#submit'][1]= 'ucrlib_custom_submit';
-  }
-  if(array_key_exists('#node',$form))
-  {
-  	if(isset($form['#node']->vid))
-  	{
-  		if($form['#node']->vid=="360")//Request a Library Instruction Session
-  		{
-  			$description = "";
-  			$description_NoStartStrong = "";
-  			$description_completed = "";
-  			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/request_library_instruction_session.js',
-  					array(
-				  'scope' => 'footer',
-			));
-  			$description  = $form['submitted']['assignment']['#description'];
-  			$description_NoStartStrong = str_replace("<strong>","",$description);
-  			$description_completed = str_replace("</strong>","",$description_NoStartStrong);
-  			$form['submitted']['assignment']['#description'] ="<small>".$description_completed."</small>";
-  			$description  =$form['submitted']['class_syllabus']['#description'];
-  			$description_NoStartStrong = str_replace("<strong>","",$description);
-  			$description_completed = str_replace("</strong>","",$description_NoStartStrong);
-  			$form['submitted']['class_syllabus']['#description'] = "<small>".$description_completed."</small>" ;
-  		}
+    if ("department_contact_form_entityform_edit_form" == $form_id) {
+        $form['#submit'] = 'ucrlib_custom_submit';
+        $form['actions']['submit']['#submit'][1] = 'ucrlib_custom_submit';
+    }
+    if (array_key_exists('#node', $form)) {
+        if (isset($form['#node']->vid)) {
+            if ($form['#node']->vid == "360")//Request a Library Instruction Session
+            {
+                $description = "";
+                $description_NoStartStrong = "";
+                $description_completed = "";
+                drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/request_library_instruction_session.js',
+                    array(
+                        'scope' => 'footer',
+                    ));
+                $description = $form['submitted']['assignment']['#description'];
+                $description_NoStartStrong = str_replace("<strong>", "", $description);
+                $description_completed = str_replace("</strong>", "", $description_NoStartStrong);
+                $form['submitted']['assignment']['#description'] = "<small>" . $description_completed . "</small>";
+                $description = $form['submitted']['class_syllabus']['#description'];
+                $description_NoStartStrong = str_replace("<strong>", "", $description);
+                $description_completed = str_replace("</strong>", "", $description_NoStartStrong);
+                $form['submitted']['class_syllabus']['#description'] = "<small>" . $description_completed . "</small>";
+            }
 
-  	}
+        }
 
-  }
+    }
 
 }
 
 /**
  * Implements hook_preprocess_page().
  */
-function ucrlib_custom_preprocess_page(&$vars) {
+function ucrlib_custom_preprocess_page(&$vars)
+{
 // 	dpm($vars);
-  	// Homepage banner.
-  if ($vars['is_front'] && isset($vars['page']['banner'])) {
+    // Homepage banner.
+    if ($vars['is_front'] && isset($vars['page']['banner'])) {
 
-    // Create the background image url variable.
-    $banner_image = NULL;
-    if (variable_get('ucrlib_custom_banner_image', NULL) != NULL) {
-      $fid = variable_get('ucrlib_custom_banner_image', NULL);
-      $file = file_load($fid);
-      if ($file != NULL) {
-        $banner_image = image_style_url('homepage_banner', $file->uri);
-      }
+        // Create the background image url variable.
+        $banner_image = NULL;
+        if (variable_get('ucrlib_custom_banner_image', NULL) != NULL) {
+            $fid = variable_get('ucrlib_custom_banner_image', NULL);
+            $file = file_load($fid);
+            if ($file != NULL) {
+                $banner_image = image_style_url('homepage_banner', $file->uri);
+            }
+        }
+
+        if (isset($banner_image)) {
+            $css = '.banner__wrapper { background: url(' . $banner_image . ') no-repeat center; }';
+            drupal_add_css($css, 'inline');
+        }
     }
+    drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/external_footer.js',
+        array(
+            'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+        ));
+    drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/external_header.js',
+        array(
+            'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
+        ));
 
-    if (isset($banner_image)) {
-      $css = '.banner__wrapper { background: url(' . $banner_image . ') no-repeat center; }';
-      drupal_add_css($css, 'inline');
+
+    // Inject alerts.
+    global $theme;
+    if (variable_get('ucrlib_custom_alert_enabled', FALSE) == TRUE && $theme == 'ucrlib') {
+
+        $text = variable_get('ucrlib_custom_alert_text', '');
+        drupal_add_js(array('ucrlibCustom' => array('alertText' => $text)), 'setting');
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/ucrlib_custom.js');
+
+
+        drupal_add_css(drupal_get_path('module', 'ucrlib_custom') . '/ucrlib_custom.css');
     }
-  }
-  drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/external_footer.js',
-  		array(
-  				'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
-  		));
-  drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/external_header.js',
-  		array(
-  				'scope' => 'footer',//If this isn't here, then the slicknav_menu won't work with my javascripts
-  		));
-
-
-  // Inject alerts.
-  global $theme;
-  if (variable_get('ucrlib_custom_alert_enabled', FALSE) == TRUE && $theme == 'ucrlib') {
-
-  	$text = variable_get('ucrlib_custom_alert_text', '');
-    drupal_add_js(array('ucrlibCustom' => array('alertText' => $text)), 'setting');
-    drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/ucrlib_custom.js');
-
-
-    drupal_add_css(drupal_get_path('module', 'ucrlib_custom') . '/ucrlib_custom.css');
-  }
 }
 
 /**
  * Implements hook_image_default_styles().
  */
-function ucrlib_custom_image_default_styles() {
-  $styles = array();
+function ucrlib_custom_image_default_styles()
+{
+    $styles = array();
 
-  $styles['homepage_banner'] = array(
-    'label' => 'Homepage banner (1500x400)',
-    'effects' => array(
-      10 => array(
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => 1500,
-          'height' => 400,
+    $styles['homepage_banner'] = array(
+        'label' => 'Homepage banner (1500x400)',
+        'effects' => array(
+            10 => array(
+                'name' => 'image_scale_and_crop',
+                'data' => array(
+                    'width' => 1500,
+                    'height' => 400,
+                ),
+                'weight' => 1,
+            ),
         ),
-        'weight' => 1,
-      ),
-    ),
-  );
+    );
 
-  return $styles;
+    return $styles;
 }
 
 /**
  * Implements hook_FORM_ID_form_alter().
  */
-function ucrlib_custom_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
-  if ($form['#id'] == 'views-exposed-form-equipment-page-1') {
-    $form['nid'] = array(
-      // '#type' => 'textfield',
-      '#type' => 'hidden',
-      '#attributes' => array(
-        // Set an id for jQuery.
-        'id' => 'equipment-filter-nid',
-      ),
-    );
+function ucrlib_custom_form_views_exposed_form_alter(&$form, &$form_state, $form_id)
+{
+    if ($form['#id'] == 'views-exposed-form-equipment-page-1') {
+        $form['nid'] = array(
+            // '#type' => 'textfield',
+            '#type' => 'hidden',
+            '#attributes' => array(
+                // Set an id for jQuery.
+                'id' => 'equipment-filter-nid',
+            ),
+        );
 
-    $nodes = array();
-    $result = db_select('node', 'n')
-      ->fields('n')
-      ->condition('type', 'library')
-      ->execute();
-    while($record = $result->fetchAssoc()) {
-      $nodes[] = array(
-        'nid' => $record['nid'],
-        'title' => $record['title'],
-      );
+        $nodes = array();
+        $result = db_select('node', 'n')
+            ->fields('n')
+            ->condition('type', 'library')
+            ->execute();
+        while ($record = $result->fetchAssoc()) {
+            $nodes[] = array(
+                'nid' => $record['nid'],
+                'title' => $record['title'],
+            );
+        }
+        drupal_add_js(array('ucrlibCustom' => array('equipmentViewLibraries' => $nodes)), 'setting');
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/equipment.js');
     }
-    drupal_add_js(array('ucrlibCustom' => array('equipmentViewLibraries' => $nodes)), 'setting');
-    drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/equipment.js');
-  }
 }
 
 /**
  * Implements hook_views_query_alter().
  */
-function ucrlib_custom_views_query_alter(&$view, &$query) {
+function ucrlib_custom_views_query_alter(&$view, &$query)
+{
 
-	if($view->name == 'departments')
-	{
-		drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/quicktabs_directory.js');
-	}
-	if(isset($view->args[0]))
-	{
-		if($view->args[0]=="150")
-		{
-			drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/quicktabs_collection.js');
-		}
-
-	}
-
-  if ($view->name == 'equipment' && $view->current_display == 'page_1' && $view->exposed_raw_input['nid']) {
-
-    // Get the nids to show.
-    $nids = explode(',', $view->exposed_raw_input['nid']);
-
-    // Remove the default condition set in the Views UI.
-    unset($query->where[2]['conditions'][0]);
-
-    foreach ($nids as $nid){
-      // The 'where[2]' array is an 'OR' filter.
-      $query->where[2]['conditions'][] = array(
-        'field' => 'node.nid',
-        'value' => $nid,
-        'operator' => '=',
-      );
+    if ($view->name == 'departments') {
+        drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/quicktabs_directory.js');
     }
-  }
+    if (isset($view->args[0])) {
+        if ($view->args[0] == "150") {
+            drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/quicktabs_collection.js');
+        }
+
+    }
+
+    if ($view->name == 'equipment' && $view->current_display == 'page_1' && $view->exposed_raw_input['nid']) {
+
+        // Get the nids to show.
+        $nids = explode(',', $view->exposed_raw_input['nid']);
+
+        // Remove the default condition set in the Views UI.
+        unset($query->where[2]['conditions'][0]);
+
+        foreach ($nids as $nid) {
+            // The 'where[2]' array is an 'OR' filter.
+            $query->where[2]['conditions'][] = array(
+                'field' => 'node.nid',
+                'value' => $nid,
+                'operator' => '=',
+            );
+        }
+    }
 }
 
 /**
  * Implements hook_theme().
  */
-function ucrlib_custom_theme($existing, $type, $theme, $path) {
-  return array(
-    'ucrlib_custom_tab' => array(
-      'variables' => array(
-        'open' => NULL,
-        'week' => NULL,
-      ),
-      'path' => $path . '/templates',
-      'template' => 'ucrlib_custom_tab',
-    ),
-    'ucrlib_custom_week' => array(
-      'variables' => array(
-        'nid' => NULL,
-        'nodes' => NULL,
-        'hours' => array(),
-        'date' => NULL,
-      ),
-      'path' => $path . '/templates',
-      'template' => 'ucrlib_custom_week',
-    ),
-    'ucrlib_custom_hour' => array(
-      'variables' => array(
-        'hour' => NULL,
-      ),
-      'path' => $path . '/templates',
-      'template' => 'ucrlib_custom_hour',
-    ),
-    'ucrlib_custom_open' => array(
-      'variables' => array(
-        'nid' => NULL,
-        'node' => NULL,
-        'hours' => array(),
-        'date' => NULL,
-      ),
-      'path' => $path . '/templates',
-      'template' => 'ucrlib_custom_open',
-    ),
-  );
+function ucrlib_custom_theme($existing, $type, $theme, $path)
+{
+    return array(
+        'ucrlib_custom_tab' => array(
+            'variables' => array(
+                'open' => NULL,
+                'week' => NULL,
+            ),
+            'path' => $path . '/templates',
+            'template' => 'ucrlib_custom_tab',
+        ),
+        'ucrlib_custom_week' => array(
+            'variables' => array(
+                'nid' => NULL,
+                'nodes' => NULL,
+                'hours' => array(),
+                'date' => NULL,
+            ),
+            'path' => $path . '/templates',
+            'template' => 'ucrlib_custom_week',
+        ),
+        'ucrlib_custom_hour' => array(
+            'variables' => array(
+                'hour' => NULL,
+            ),
+            'path' => $path . '/templates',
+            'template' => 'ucrlib_custom_hour',
+        ),
+        'ucrlib_custom_open' => array(
+            'variables' => array(
+                'nid' => NULL,
+                'node' => NULL,
+                'hours' => array(),
+                'date' => NULL,
+            ),
+            'path' => $path . '/templates',
+            'template' => 'ucrlib_custom_open',
+        ),
+    );
 }
 
 /**
  * Implements hook_block_info().
  */
-function ucrlib_custom_block_info() {
-  $blocks['hours'] = array(
-    'info' => t('Library hours: All'),
-    'cache' => DRUPAL_NO_CACHE,
-  );
-  $blocks['today'] = array(
-    'info' => t('Library hours: Today'),
-    'cache' => DRUPAL_NO_CACHE,
-  );
-  $blocks['librarians'] = array(
-    'info' => t('Library hours: Librarians'),
-    'cache' => DRUPAL_NO_CACHE,
-  );
-  $blocks['library'] = array(
-    'info' => t('Library hours: Library'),
-    'cache' => DRUPAL_NO_CACHE,
-  );
+function ucrlib_custom_block_info()
+{
+    $blocks['hours'] = array(
+        'info' => t('Library hours: All'),
+        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['today'] = array(
+        'info' => t('Library hours: Today'),
+        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['librarians'] = array(
+        'info' => t('Library hours: Librarians'),
+        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['library'] = array(
+        'info' => t('Library hours: Library'),
+        'cache' => DRUPAL_NO_CACHE,
+    );
 
-  return $blocks;
+    return $blocks;
 }
 
 /**
  * Implements hook_block_view().
  */
-function ucrlib_custom_block_view($delta = '') {
-  $block = array();
-  $size = 0;
-  $i=0;
-  $nodeID = 0;
-  $linkList = array();
-  switch ($delta) {
-    case 'hours':
-      $block['subject'] = t('Opening hours');
-      $block['content'] = array();
+function ucrlib_custom_block_view($delta = '')
+{
+    $block = array();
+    $size = 0;
+    $i = 0;
+    $nodeID = 0;
+    $linkList = array();
+    switch ($delta) {
+        case 'hours':
+            $block['subject'] = t('Opening hours');
+            $block['content'] = array();
 
-      $query = new EntityFieldQuery();
-      $query->entityCondition('entity_type', 'node')
-        ->entityCondition('bundle', 'library')
-        ->propertyCondition('status', NODE_PUBLISHED);
+            $query = new EntityFieldQuery();
+            $query->entityCondition('entity_type', 'node')
+                ->entityCondition('bundle', 'library')
+                ->propertyCondition('status', NODE_PUBLISHED);
 
-      $result = $query->execute();
-      if (isset($result['node'])) {
-        $nodes = entity_load('node', array_keys($result['node']));
-        $size = count($nodes);
-        foreach ($nodes as $node) {
-        	$nodeID = $node->nid;
-        	if(105==$nodeID)//Tomas
-        	{
-        		$linkList[0]=$nodeID;
-        	}
-        	else if(107==$nodeID)//Orbach
-        	{
-        		$linkList[1]=$nodeID;
-        	}
-        	else if(65==$nodeID)//Multimedia
-        	{
-        		$linkList[2]=$nodeID;
-        	}
-        	else if(106==$nodeID)//Music
-        	{
-        		$linkList[3]=$nodeID;
-        	}
-        	else if(108==$nodeID)//SCUA
-        	{
-        		$linkList[4]=$nodeID;
-        	}
-        	else //The new library will append to the bottom.
-        	{
-        		$linkList[$i]=$nodeID;
-        	}
-        	$i++;
-        }
-        for($i=0; $i<$size; $i++)
-        {
-        	$open = _ucrlib_custom_block_open($nodes[$linkList[$i]]);
-        	$week = _ucrlib_custom_block_hours($nodes[$linkList[$i]]);
+            $result = $query->execute();
+            if (isset($result['node'])) {
+                $nodes = entity_load('node', array_keys($result['node']));
+                $size = count($nodes);
+                foreach ($nodes as $node) {
+                    $nodeID = $node->nid;
+                    if (105 == $nodeID)//Tomas
+                    {
+                        $linkList[0] = $nodeID;
+                    } else if (107 == $nodeID)//Orbach
+                    {
+                        $linkList[1] = $nodeID;
+                    } else if (65 == $nodeID)//Multimedia
+                    {
+                        $linkList[2] = $nodeID;
+                    } else if (106 == $nodeID)//Music
+                    {
+                        $linkList[3] = $nodeID;
+                    } else if (108 == $nodeID)//SCUA
+                    {
+                        $linkList[4] = $nodeID;
+                    } else //The new library will append to the bottom.
+                    {
+                        $linkList[$i] = $nodeID;
+                    }
+                    $i++;
+                }
+                for ($i = 0; $i < $size; $i++) {
+                    $open = _ucrlib_custom_block_open($nodes[$linkList[$i]]);
+                    $week = _ucrlib_custom_block_hours($nodes[$linkList[$i]]);
 
-        	$block['content'][$nodes[$linkList[$i]]->nid] = array(
-        			'#theme' => 'ucrlib_custom_tab',
-        			'#open' => drupal_render($open),
-        			'#week' => drupal_render($week),
-        	);
+                    $block['content'][$nodes[$linkList[$i]]->nid] = array(
+                        '#theme' => 'ucrlib_custom_tab',
+                        '#open' => drupal_render($open),
+                        '#week' => drupal_render($week),
+                    );
 
-        }
-      }
+                }
+            }
 
-      // Add ajax.
-      drupal_add_js('misc/ajax.js');
-      drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/hours.js');
-      drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/library.js',array(
-      	 'scope' => 'footer',
-      ));
+            // Add ajax.
+            drupal_add_js('misc/ajax.js');
+            drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/hours.js');
+            drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/library.js', array(
+                'scope' => 'footer',
+            ));
 
-      break;
+            break;
 
-    case 'today':
-      $block['subject'] = t("Today's hours");
-      $block['content'] = array();
-      $block['content']['more'] = array(
-        '#markup' => '<div class="read-more">' . l(t('See all'), 'about/hours') . '</div>',
-      );
+        case 'today':
+            $block['subject'] = t("Today's hours");
+            $block['content'] = array();
+            $block['content']['more'] = array(
+                '#markup' => '<div class="read-more">' . l(t('See all'), 'about/hours') . '</div>',
+            );
 
-      $query = new EntityFieldQuery();
-      $query->entityCondition('entity_type', 'node')
-        ->entityCondition('bundle', 'library')
-        ->propertyCondition('status', NODE_PUBLISHED);
+            $query = new EntityFieldQuery();
+            $query->entityCondition('entity_type', 'node')
+                ->entityCondition('bundle', 'library')
+                ->propertyCondition('status', NODE_PUBLISHED);
 
-      $result = $query->execute();
-      if (isset($result['node'])) {
-        $nodes = entity_load('node', array_keys($result['node']));
-        $size = count($nodes);
-        foreach ($nodes as $node) {
-        	$nodeID = $node->nid;
-        	if(105==$nodeID)//Tomas
-        	{
-        		$linkList[0]=$nodeID;
-        	}
-        	else if(107==$nodeID)//Orbach
-        	{
-        		$linkList[1]=$nodeID;
-        	}
-        	else if(65==$nodeID)//Multimedia
-        	{
-        		$linkList[2]=$nodeID;
-        	}
-        	else if(106==$nodeID)//Music
-        	{
-        		$linkList[3]=$nodeID;
-        	}
-        	else if(108==$nodeID)//SCUA
-        	{
-        		$linkList[4]=$nodeID;
-        	}
-        	else //The new library will append to the bottom.
-        	{
-        		$linkList[$i]=$nodeID;
-        	}
-        	$i++;
-        }
-        for($i=0; $i<$size; $i++)
-        {
-        	$block['content'][$linkList[$i]] = _ucrlib_custom_block_open($nodes[$linkList[$i]]);
-        }
-      }
+            $result = $query->execute();
+            if (isset($result['node'])) {
+                $nodes = entity_load('node', array_keys($result['node']));
+                $size = count($nodes);
+                foreach ($nodes as $node) {
+                    $nodeID = $node->nid;
+                    if (105 == $nodeID)//Tomas
+                    {
+                        $linkList[0] = $nodeID;
+                    } else if (107 == $nodeID)//Orbach
+                    {
+                        $linkList[1] = $nodeID;
+                    } else if (65 == $nodeID)//Multimedia
+                    {
+                        $linkList[2] = $nodeID;
+                    } else if (106 == $nodeID)//Music
+                    {
+                        $linkList[3] = $nodeID;
+                    } else if (108 == $nodeID)//SCUA
+                    {
+                        $linkList[4] = $nodeID;
+                    } else //The new library will append to the bottom.
+                    {
+                        $linkList[$i] = $nodeID;
+                    }
+                    $i++;
+                }
+                for ($i = 0; $i < $size; $i++) {
+                    $block['content'][$linkList[$i]] = _ucrlib_custom_block_open($nodes[$linkList[$i]]);
+                }
+            }
 
-      // Add ajax.
-      drupal_add_js('misc/ajax.js');
-      drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/hours.js');
+            // Add ajax.
+            drupal_add_js('misc/ajax.js');
+            drupal_add_js(drupal_get_path('module', 'ucrlib_custom') . '/js/hours.js');
 
-      break;
+            break;
 
-    case 'librarians':
-      $block['subject'] = t('See us in person');
+        case 'librarians':
+            $block['subject'] = t('See us in person');
 
-      // Rivera library.
-      $nids[] = 105;
-      // Orbach Science library.
-      $nids[] = 107;
+            // Rivera library.
+            $nids[] = 105;
+            // Orbach Science library.
+            $nids[] = 107;
 
-      foreach ($nids as $nid) {
-        $block['content'][$nid] = _ucrlib_custom_block_open($nid);
-      }
+            foreach ($nids as $nid) {
+                $block['content'][$nid] = _ucrlib_custom_block_open($nid);
+            }
 
-      break;
+            break;
 
-    case 'library':
-      $block['subject'] = t('Today\'s Hours');
+        case 'library':
+            $block['subject'] = t('Today\'s Hours');
 
-      $block['content']['more'] = array(
-        '#markup' => '<div class="read-more">' . l(t('See all'), 'libraries') . '</div>',
-      );
+            $block['content']['more'] = array(
+                '#markup' => '<div class="read-more">' . l(t('See all'), 'libraries') . '</div>',
+            );
 
-      if ($node = menu_get_object()) {
-        $nid = $node->nid;
-        $block['content'][$nid] = _ucrlib_custom_block_open($nid);
-      }
+            if ($node = menu_get_object()) {
+                $nid = $node->nid;
+                $block['content'][$nid] = _ucrlib_custom_block_open($nid);
+            }
 
-      break;
-  }
+            break;
+    }
 
-  return $block;
+    return $block;
 }
 
 /**
  * Helper function that generates a render array for a single library's hours.
  */
-function _ucrlib_custom_block_open($node, $date = NULL) {
-  if (is_numeric($node)) {
-    $node = node_load($node);
-  }
-  if ($date === NULL) {
-    $date = time();
-    $date = strtotime('now');
-  }
-
-  $today = date('Y-m-d', $date);
-  $today_is_blocked = FALSE;
-  $blocked_days = variable_get('opening_hours_blocked_days', array());
-  // Handle blocked days.
-  foreach ($blocked_days as $blocked_day) {
-    if ($blocked_day == $today) {
-      $today_is_blocked = TRUE;
-      break;
+function _ucrlib_custom_block_open($node, $date = NULL)
+{
+    if (is_numeric($node)) {
+        $node = node_load($node);
     }
-  }
+    if ($date === NULL) {
+        $date = time();
+        $date = strtotime('now');
+    }
 
-  $hours = array();
-  if (!$today_is_blocked) {
-    $hours = opening_hours_instance_load_multiple($node->nid, $today, $today);
-  }
+    $today = date('Y-m-d', $date);
+    $today_is_blocked = FALSE;
+    $blocked_days = variable_get('opening_hours_blocked_days', array());
+    // Handle blocked days.
+    foreach ($blocked_days as $blocked_day) {
+        if ($blocked_day == $today) {
+            $today_is_blocked = TRUE;
+            break;
+        }
+    }
 
-  return array(
-    '#theme' => 'ucrlib_custom_open',
-    '#nid' => $node->nid,
-    '#node' => $node,
-    '#hours' => $hours,
-    '#date' => $date,
-  );
+    $hours = array();
+    if (!$today_is_blocked) {
+        $hours = opening_hours_instance_load_multiple($node->nid, $today, $today);
+    }
+
+    return array(
+        '#theme' => 'ucrlib_custom_open',
+        '#nid' => $node->nid,
+        '#node' => $node,
+        '#hours' => $hours,
+        '#date' => $date,
+    );
 }
 
 /**
  * Helper function that generates a render array for a single library's hours.
  */
-function _ucrlib_custom_block_hours($node, $date = NULL) {
-  if (is_numeric($node)) {
-    $node = node_load($node);
-  }
-  if ($date === NULL) {
-    $date = time();
-  }
-
-  $day = date('w', $date);
-  $week_start_ts = strtotime('-' . $day . ' days', $date);
-  $week_start = date('Y-m-d', $week_start_ts);
-  $week_end_ts = strtotime('+' . (6 - $day) . ' days', $date);
-  $week_end = date('Y-m-d', $week_end_ts);
-
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'library_sub_location')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->fieldCondition('field_library', 'target_id', $node->nid);
-  $result = $query->execute();
-
-  $nids = array((int)$node->nid);
-  $subnodes = array();
-  if (isset($result['node'])) {
-    $nids = array_merge($nids, array_keys($result['node']));
-    $subnodes = entity_load('node', array_keys($result['node']));
-  }
-
-  $hours = opening_hours_instance_load_multiple($nids, $week_start, $week_end);
-
-  $blocked_days = variable_get('opening_hours_blocked_days', array());
-  // Handle blocked days.
-  foreach ($blocked_days as $blocked_day) {
-    $blocked_day_ts = strtotime($blocked_day);
-    if ($blocked_day_ts >= $week_start_ts || $blocked_day_ts < $week_end_ts) {
-      // We have a blocked day.
-      foreach ($hours as $key => $hour) {
-        if ($hour->date == $blocked_day) {
-          unset($hours[$key]);
-        }
-      }
+function _ucrlib_custom_block_hours($node, $date = NULL)
+{
+    if (is_numeric($node)) {
+        $node = node_load($node);
     }
-  }
+    if ($date === NULL) {
+        $date = time();
+    }
 
-  return array(
-    '#theme' => 'ucrlib_custom_week',
-    '#nid' => $node->nid,
-    '#nodes' => array($node->nid => $node) + $subnodes,
-    '#hours' => $hours,
-    '#date' => $date,
-  );
+    $day = date('w', $date);
+    $week_start_ts = strtotime('-' . $day . ' days', $date);
+    $week_start = date('Y-m-d', $week_start_ts);
+    $week_end_ts = strtotime('+' . (6 - $day) . ' days', $date);
+    $week_end = date('Y-m-d', $week_end_ts);
+
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'library_sub_location')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->fieldCondition('field_library', 'target_id', $node->nid);
+    $result = $query->execute();
+
+    $nids = array((int)$node->nid);
+    $subnodes = array();
+    if (isset($result['node'])) {
+        $nids = array_merge($nids, array_keys($result['node']));
+        $subnodes = entity_load('node', array_keys($result['node']));
+    }
+
+    $hours = opening_hours_instance_load_multiple($nids, $week_start, $week_end);
+
+    $blocked_days = variable_get('opening_hours_blocked_days', array());
+    // Handle blocked days.
+    foreach ($blocked_days as $blocked_day) {
+        $blocked_day_ts = strtotime($blocked_day);
+        if ($blocked_day_ts >= $week_start_ts || $blocked_day_ts < $week_end_ts) {
+            // We have a blocked day.
+            foreach ($hours as $key => $hour) {
+                if ($hour->date == $blocked_day) {
+                    unset($hours[$key]);
+                }
+            }
+        }
+    }
+
+    return array(
+        '#theme' => 'ucrlib_custom_week',
+        '#nid' => $node->nid,
+        '#nodes' => array($node->nid => $node) + $subnodes,
+        '#hours' => $hours,
+        '#date' => $date,
+    );
 }
 
 /**
  * Preprocess variables for the week template.
  */
-function template_preprocess_ucrlib_custom_week(&$vars) {
-  // Process hours.
+function template_preprocess_ucrlib_custom_week(&$vars)
+{
+    // Process hours.
 
-  // Calculate start of the week.
-  $week_start = strtotime('midnight', date('U', strtotime('-' . date('w', $vars['date']) . ' days', $vars['date'])));
+    // Calculate start of the week.
+    $week_start = strtotime('midnight', date('U', strtotime('-' . date('w', $vars['date']) . ' days', $vars['date'])));
 
-  // Today.
-  $current_week = (strtotime('midnight', date('U', strtotime('-' . date('w') . ' days'))) == $week_start);
-  $today = date('w');
+    // Today.
+    $current_week = (strtotime('midnight', date('U', strtotime('-' . date('w') . ' days'))) == $week_start);
+    $today = date('w');
 
-  // Set week label.
-  $vars['week'] = date('M j', $week_start) . ' - ' . date('M j', strtotime('+6 days', $week_start));
+    // Set week label.
+    $vars['week'] = date('M j', $week_start) . ' - ' . date('M j', strtotime('+6 days', $week_start));
 
-  // Set days of the week headers.
-  $vars['header'] = array();
-  $vars['header_classes'] = array();
-  for ($i = 0; $i <= 6; $i++) {
-    $vars['header'][$i] = date('D j', strtotime('+' . $i . ' days', $week_start));
-    $vars['header_classes'][$i] = array();
-  }
-  if ($current_week) {
-    $vars['header_classes'][$today][] = 'today';
-  }
-
-  // Closed label.
-  $closed = t('closed');
-
-  // Set weekday hours.
-  $vars['locations'] = array();
-  $vars['location_classes'] = array();
-  $vars['day_classes'] = array();
-
-  $days = array();
-  foreach ($vars['header'] as $header_key => $day) {
-    $days[] = array(
-      'status' => $closed,
-      'label' => $day,
-    );
-  }
-
-  $count = 0;
-  foreach ($vars['nodes'] as $node) {
-    $vars['locations'][$node->nid] = array(
-      'title' => check_plain($node->title),
-      'days' => $days,
-    );
-
-   if($count!=0 )
-    {
-    	$vars['location_classes'][$node->nid][] = ($count++ % 2 == 0) ? 'odd' : 'even';
+    // Set days of the week headers.
+    $vars['header'] = array();
+    $vars['header_classes'] = array();
+    for ($i = 0; $i <= 6; $i++) {
+        $vars['header'][$i] = date('D j', strtotime('+' . $i . ' days', $week_start));
+        $vars['header_classes'][$i] = array();
     }
-    else
-    {
-    	$vars['location_classes'][$node->nid][] = 'odd odd_first';
-    	$count++;
-    }
-    $vars['day_classes'][$node->nid] = array_fill(0, 7, array());
-
     if ($current_week) {
-      $vars['day_classes'][$node->nid][$today][] = 'today';
-    }
-  }
-
-  foreach ($vars['hours'] as $hour) {
-    $day = date('w', strtotime($hour->date));
-
-    if ($vars['locations'][$hour->nid]['days'][$day]['status'] == $closed) {
-      $vars['locations'][$hour->nid]['days'][$day]['status'] = '';
+        $vars['header_classes'][$today][] = 'today';
     }
 
-    $vars['locations'][$hour->nid]['days'][$day]['status'] .= theme('ucrlib_custom_hour', array('hour' => $hour));
+    // Closed label.
+    $closed = t('closed');
 
-    if (!in_array('open', $vars['day_classes'][$node->nid][$day])) {
-      $vars['day_classes'][$node->nid][$day][] = 'open';
+    // Set weekday hours.
+    $vars['locations'] = array();
+    $vars['location_classes'] = array();
+    $vars['day_classes'] = array();
+
+    $days = array();
+    foreach ($vars['header'] as $header_key => $day) {
+        $days[] = array(
+            'status' => $closed,
+            'label' => $day,
+        );
     }
-  }
+
+    $count = 0;
+    foreach ($vars['nodes'] as $node) {
+        $vars['locations'][$node->nid] = array(
+            'title' => check_plain($node->title),
+            'days' => $days,
+        );
+
+        if ($count != 0) {
+            $vars['location_classes'][$node->nid][] = ($count++ % 2 == 0) ? 'odd' : 'even';
+        } else {
+            $vars['location_classes'][$node->nid][] = 'odd odd_first';
+            $count++;
+        }
+        $vars['day_classes'][$node->nid] = array_fill(0, 7, array());
+
+        if ($current_week) {
+            $vars['day_classes'][$node->nid][$today][] = 'today';
+        }
+    }
+
+    foreach ($vars['hours'] as $hour) {
+        $day = date('w', strtotime($hour->date));
+
+        if ($vars['locations'][$hour->nid]['days'][$day]['status'] == $closed) {
+            $vars['locations'][$hour->nid]['days'][$day]['status'] = '';
+        }
+
+        $vars['locations'][$hour->nid]['days'][$day]['status'] .= theme('ucrlib_custom_hour', array('hour' => $hour));
+
+        if (!in_array('open', $vars['day_classes'][$node->nid][$day])) {
+            $vars['day_classes'][$node->nid][$day][] = 'open';
+        }
+    }
 }
 
 /**
  * Preprocess variables for the hour template.
  */
-function template_preprocess_ucrlib_custom_hour(&$vars) {
-  $hour = $vars['hour'];
+function template_preprocess_ucrlib_custom_hour(&$vars)
+{
+    $hour = $vars['hour'];
 
-  $vars['start_time'] = _ucrlib_custom_format_time(check_plain($hour->start_time));
-  $vars['end_time'] = _ucrlib_custom_format_time(check_plain($hour->end_time));
-  $vars['notice'] = check_plain($hour->notice);
-  $vars['twentyfourhours']=$hour->twentyfourhours;
-  $vars['appointment']=$hour->appointment;
-  $vars['category'] = '';
-  if ($term = taxonomy_term_load($hour->category_tid)) {
-    $vars['category'] = check_plain($term->name);
-  }
+    $vars['start_time'] = _ucrlib_custom_format_time(check_plain($hour->start_time));
+    $vars['end_time'] = _ucrlib_custom_format_time(check_plain($hour->end_time));
+    $vars['notice'] = check_plain($hour->notice);
+    $vars['twentyfourhours'] = $hour->twentyfourhours;
+    $vars['appointment'] = $hour->appointment;
+    $vars['category'] = '';
+    if ($term = taxonomy_term_load($hour->category_tid)) {
+        $vars['category'] = check_plain($term->name);
+    }
 }
 
 /**
  * Preprocess variables for the open template.
  */
-function template_preprocess_ucrlib_custom_open(&$vars) {
-  $node_uri = node_uri($vars['node']);
+function template_preprocess_ucrlib_custom_open(&$vars)
+{
+    $node_uri = node_uri($vars['node']);
 
-  $vars['title'] = l($vars['node']->title, $node_uri['path']);
-  $vars['status'] = t('closed');
+    $vars['title'] = l($vars['node']->title, $node_uri['path']);
+    $vars['status'] = t('closed');
+    $vars['day'] = '';
 
-  $vars['day'] = '';
+    foreach ($vars['hours'] as $hour) {
+        $start_time = strtotime($hour->start_time);
+        $end_time = strtotime($hour->end_time);
 
-  foreach ($vars['hours'] as $hour) {
-    $start_time = strtotime($hour->start_time);
-    $end_time = strtotime($hour->end_time);
-    $twentyfourhours = $hour->twentyfourhours;
-    $appointment = $hour->appointment;
-    if ($start_time >= $end_time) {
-      // Account for midnight being the next day.
-      $end_time = strtotime($hour->end_time . ' +1 day');
+        // Account for midnight being the next day.
+        if ($start_time >= $end_time) {
+            $end_time = strtotime($hour->end_time . ' +1 day');
+        }
+        
+        if ($start_time <= $vars['date'] && $end_time > $vars['date']) {
+            $vars['status'] = t('open');
+        }
+
+        $vars['day'] .= theme('ucrlib_custom_hour', array('hour' => $hour));
     }
-
-    if ($start_time <= $vars['date'] && $end_time > $vars['date']) {
-      $vars['status'] = t('open');
-    }
-    $vars['day'] .= theme('ucrlib_custom_hour', array('hour' => $hour));
-  }
 }
 
 /**
  * Ajax callback that outputs a single library's hours for a given week.
  */
-function ucrlib_custom_ajax_callback($type, $node, $date = NULL) {
-  $content = _ucrlib_custom_block_hours($node, $date);
+function ucrlib_custom_ajax_callback($type, $node, $date = NULL)
+{
+    $content = _ucrlib_custom_block_hours($node, $date);
 
-  if ($type != 'ajax') {
-    return $content;
-  }
+    if ($type != 'ajax') {
+        return $content;
+    }
 
-  // Trim the rendered content to prevent ajax from wrapping it in an
-  // additional div.
-  $rendered = trim(drupal_render($content));
+    // Trim the rendered content to prevent ajax from wrapping it in an
+    // additional div.
+    $rendered = trim(drupal_render($content));
 
-  $commands = array();
-  $commands[] = ajax_command_replace('.ucrlib-opening-hours-week[data-nid="' . $node->nid . '"]', $rendered);
-  ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
+    $commands = array();
+    $commands[] = ajax_command_replace('.ucrlib-opening-hours-week[data-nid="' . $node->nid . '"]', $rendered);
+    ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
 }
 
 /**
  * Helper function to format time.
  */
-function _ucrlib_custom_format_time($time) {
-  $timestamp = strtotime($time);
+function _ucrlib_custom_format_time($time)
+{
+    $timestamp = strtotime($time);
 
-  // Hour
-  $date = date('g', $timestamp);
-  // Minutes, if not 0
-  if (date('i', $timestamp) !== '00') {
-    $date .= ':' . date('i', $timestamp);
-  }
-  // am/pm
-  $date .= ' ' . date('a', $timestamp);
-  // Remove "m" from am/pm to add ".m." as in "6:30 a.m."
-  $date = substr_replace($date, '', -1);
-  $date .= '.m.';
+    // Hour
+    $date = date('g', $timestamp);
+    // Minutes, if not 0
+    if (date('i', $timestamp) !== '00') {
+        $date .= ':' . date('i', $timestamp);
+    }
+    // am/pm
+    $date .= ' ' . date('a', $timestamp);
+    // Remove "m" from am/pm to add ".m." as in "6:30 a.m."
+    $date = substr_replace($date, '', -1);
+    $date .= '.m.';
 
 
-  return $date;
+    return $date;
 }
+
 function getIDFromURL($url)
 {
-	$pos = (string)strpos($url,"=",0)+1;
-	return substr($url, $pos);
+    $pos = (string)strpos($url, "=", 0) + 1;
+    return substr($url, $pos);
 }
 
-function ucrlib_custom_submit(&$form, &$form_state) {
-	$id = getIDFromURL($form['#action']);
-	$email = $form_state['input']['field_email']['und'][0]['email'];
-	$body = $form_state['input']['field_body2']['und'][0]['value'];
-	$name = $form_state['input']['field_first_last_name']['und'][0]['value'];
-	$department_id = $form_state['input']['field_department']['und'];
-	if("_none"!=$department_id )
-	{
-		$id=$department_id;
-	}
+function ucrlib_custom_submit(&$form, &$form_state)
+{
+    $id = getIDFromURL($form['#action']);
+    $email = $form_state['input']['field_email']['und'][0]['email'];
+    $body = $form_state['input']['field_body2']['und'][0]['value'];
+    $name = $form_state['input']['field_first_last_name']['und'][0]['value'];
+    $department_id = $form_state['input']['field_department']['und'];
+    if ("_none" != $department_id) {
+        $id = $department_id;
+    }
 
-	$subject = "Message from ".$name." .";
-	$txt = $body;
+    $subject = "Message from " . $name . " .";
+    $txt = $body;
 
-	$result = db_query("SELECT field_revision_field_email.field_email_email FROM field_revision_field_email WHERE field_revision_field_email.entity_id = '$id'");
-	$items = array();
-	foreach($result as $row)
-	{
-		$items[] = $row->field_email_email;
-	}
-	$deparment_email =$items[0];
-	$to = $deparment_email;
-	$txt = $body;
-	$headers = "From: ".$email;
-	mail($to,$subject,$txt,$headers);
+    $result = db_query("SELECT field_revision_field_email.field_email_email FROM field_revision_field_email WHERE field_revision_field_email.entity_id = '$id'");
+    $items = array();
+    foreach ($result as $row) {
+        $items[] = $row->field_email_email;
+    }
+    $deparment_email = $items[0];
+    $to = $deparment_email;
+    $txt = $body;
+    $headers = "From: " . $email;
+    mail($to, $subject, $txt, $headers);
 }
+
 function ucrlib_custom_block_view_alter(&$data, $block)
 {
 
-	/*
-	 *The logic below is more of a patch.  For whatever reason,
-	 *drupal will distort the text.  I was unable to figure out the problem
-	 *so I created this patch.  At this time, there wasn't many blocks
-	 *that were custom.
-	 */
+    /*
+     *The logic below is more of a patch.  For whatever reason,
+     *drupal will distort the text.  I was unable to figure out the problem
+     *so I created this patch.  At this time, there wasn't many blocks
+     *that were custom.
+     */
 
-	if(isset($block->bid) && isset($block->module))
-	{
+    if (isset($block->bid) && isset($block->module)) {
 // 		dpm($block);
-		if($block->module=="block")
-		{
-			$result = db_query("SELECT body FROM block_custom WHERE bid ='$block->delta'");
-			$items = array();
-			foreach($result as $row)
-			{
-				$items[] = $row->body;
-			}
-			$data['content']=$items[0];
-		}
-	}
+        if ($block->module == "block") {
+            $result = db_query("SELECT body FROM block_custom WHERE bid ='$block->delta'");
+            $items = array();
+            foreach ($result as $row) {
+                $items[] = $row->body;
+            }
+            $data['content'] = $items[0];
+        }
+    }
 }
