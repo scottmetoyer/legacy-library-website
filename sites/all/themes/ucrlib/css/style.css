@@ -4051,6 +4051,22 @@ button, a.button, a.block-demo-backlink, a.block-demo-backlink:link, a.block-dem
     text-align: center;
 }
 
+    a.button.clear {
+        padding: 10px 20px 10px 20px;
+    }
+
+    a.button.small {
+        font-size: 16px;
+        padding: 10px 20px 10px 8px;
+        vertical-align: middle;
+    }
+
+        a.button.small > .text {
+            margin-top: 8px;
+            display: inline-block;
+            margin-left: 4px;
+        }
+
     button:hover, a.button:hover, a.block-demo-backlink:hover, ul.primary li a:hover, ul.primary li.active a, .page-node-delete .confirmation .form-actions a:hover, .conference-room__reserve-room-button:hover, .event__rsvp-link a:hover, .study-space__reserve-space-button:hover, input[type="reset"]:hover, input[type="submit"]:hover, input[type="button"]:hover {
         text-decoration: none;
         background-color: #202020;
@@ -6611,7 +6627,9 @@ span.ext {
     .view-databases.view .view-filters + .view-content {
         width: 65.71429%;
         float: right;
+        clear: right;
         margin-right: 0;
+        margin-top: -120px;
     }
 }
 
@@ -6619,8 +6637,9 @@ span.ext {
     .view-databases.view .view-filters + .view-content {
         width: 71.42857%;
         float: right;
+        clear: right;
         margin-right: 0;
-        margin-top: -10px;
+        margin-top: -100px;
     }
 }
 
@@ -6637,6 +6656,7 @@ span.ext {
     .view-databases .view-header {
         width: 25.71429%;
         float: left;
+        clear: left;
         margin-right: 2.77778%;
     }
 }
@@ -6645,6 +6665,7 @@ span.ext {
     .view-databases .view-header {
         width: 20%;
         float: left;
+        clear: left;
         margin-right: 2.7027%;
     }
 }
@@ -6653,6 +6674,7 @@ span.ext {
     .view-databases.view .view-filters {
         width: 25.71429%;
         float: left;
+        clear: left;
         margin-right: 2.77778%;
     }
 }
@@ -6661,6 +6683,7 @@ span.ext {
     .view-databases.view .view-filters {
         width: 20%;
         float: left;
+        clear: left;
         margin-right: 2.7027%;
     }
 }
@@ -6675,7 +6698,7 @@ span.ext {
 
 .database__bool-legend {
     background-color: #f0f0f0;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding: 11px 0 8px 0;
 }
 
@@ -6691,10 +6714,12 @@ span.ext {
 }
 
 .database__bool-legend .database__open_access {
+    margin-right: 0;
     float: left;
 }
 
 .database__bool-legend .database__trial-database {
+    margin-right: 0;
     float: left;
 }
 
