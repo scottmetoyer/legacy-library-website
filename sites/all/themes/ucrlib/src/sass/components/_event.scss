@@ -3,147 +3,147 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 .event__content {
-  @include clearfix;
+    @include clearfix;
 
-  @include media('>medium') {
-    @include span(8 last);
-  }
+    @include media('>medium') {
+        @include span(8 last);
+    }
 
-  @include media('>large') {
-    @include span(9 last);
-  }
+    @include media('>large') {
+        @include span(9 last);
+    }
 }
 
 .event__sidebar-first {
-  @include clearfix;
+    @include clearfix;
 
-  @include media('>medium') {
-    @include span(3 wide);
-  }
+    @include media('>medium') {
+        @include span(3 wide);
+    }
 
-  @include media('>large') {
-    @include span(2 wide);
-  }
+    @include media('>large') {
+        @include span(2 wide);
+    }
 }
 
 .event__share {
-  @include clearfix;
+    @include clearfix;
 
-  div {
-    float: left;
-  }
+    div {
+        float: left;
+    }
 }
 
 .event__share-label {
-  font-weight: 700;
-  color: #999;
-  text-transform: uppercase;
-  padding-top: 3px;
-  margin-right: 10px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    padding-top: 3px;
+    margin-right: 10px;
 }
 
 .event__attributes {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .event_attribute-label {
-  font-weight: 700;
-  color: palette(grey, 1);
+    font-weight: 700;
+    color: palette(grey, 1);
 }
 
 .event__instructor {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .event__instructor-name {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .event__contact-person-email,
 .event__instructor-email {
-  a {
-    @include email-link;
-  }
+    a {
+        @include email-link;
+    }
 }
 
 .event__sidebar-section-title {
-  font-size: 18px;
-  font-family: $trade-gothic;
-  text-transform: uppercase;
-  font-weight: 700;
-  padding-bottom: 5px;
-  border-bottom: 1px solid palette(grey, -2);
-  margin-bottom: 10px;
+    font-size: 18px;
+    font-family: $trade-gothic;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-bottom: 5px;
+    border-bottom: 1px solid palette(grey, -2);
+    margin-bottom: 10px;
 }
 
 .event__rsvp-text {
-  font-weight: 600;
-  line-height: 1.1;
-  color: #666;
+    font-weight: 600;
+    line-height: 1.1;
+    color: #666;
 }
 
 .event__rsvp-text--multiple,
 .event__rsvp-text--grouped {
-  padding-bottom: 10px;
-  border-bottom: 1px solid palette(grey, -2);
+    padding-bottom: 10px;
+    border-bottom: 1px solid palette(grey, -2);
 }
 
 .event__rsvp-text--grouped {
-  .event__rsvp-link {
-    padding: 15px 0 5px 0;
-  }
+    .event__rsvp-link {
+        padding: 15px 0 5px 0;
+    }
 }
 
 .event__rsvp-row {
-  padding-top: 15px;
+    padding-top: 15px;
 }
 
 .event__rsvp-row--grouped {
-  @include clearfix;
-  border-bottom: 1px solid palette(grey, -2);
-  padding-bottom: 15px;
+    @include clearfix;
+    border-bottom: 1px solid palette(grey, -2);
+    padding-bottom: 15px;
 }
 
 .event__rsvp-row--multiple {
-  @include clearfix;
-  border-bottom: 1px solid palette(grey, -2);
-  padding-bottom: 15px;
+    @include clearfix;
+    border-bottom: 1px solid palette(grey, -2);
+    padding-bottom: 15px;
 
-  .event__rsvp-date-hours {
-    float: left;
-    padding-top: 4px;
-  }
-
-  .event__rsvp-link {
-    float: right;
-
-    @include media('>=medium', '<wide') {
-      clear: left;
-      float: left;
-      padding-top: 10px;
+    .event__rsvp-date-hours {
+        float: left;
+        padding-top: 4px;
     }
-  }
+
+    .event__rsvp-link {
+        float: right;
+
+        @include media('>=medium', '<wide') {
+            clear: left;
+            float: left;
+            padding-top: 10px;
+        }
+    }
 }
 
 .event__rsvp-date,
 .event__rsvp-hours {
-  text-transform: uppercase;
-  font-weight: 700;
-  color: palette(grey, 1);
-  line-height: 1.1;
-  font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: palette(grey, 1);
+    line-height: 1.1;
+    font-size: 14px;
 }
 
 .event__rsvp-link {
-  a {
-    @extend a.button;
-    padding: 10px 16px 8px 16px;
-    margin-right: 0;
+    a {
+        @extend a.button;
+        padding: 10px 16px 8px 16px;
+        margin-right: 0;
 
-    .ext {
-      display: none;
+        .ext {
+            display: none;
+        }
     }
-  }
 }
 
 .event__attributes,
@@ -151,81 +151,81 @@
 .event__image,
 .event__sidebar-section,
 .event__instructors {
-  margin-bottom: 35px;
+    margin-bottom: 35px;
 }
 
 .event--teaser {
-  position: relative;
+    position: relative;
 }
 
 .event--teaser__title,
 .event--teaser__title h3,
 .event--teaser .event__attributes,
 .event--teaser__image {
-  margin-bottom: 0;
-  margin-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .event--teaser__title {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 
-  @include media('>medium') {
-    margin-left: 135px;
-  }
+    @include media('>medium') {
+        margin-left: 135px;
+    }
 
-  @include media('>large') {
-    margin-right: 165px;
-  }
+    @include media('>large') {
+        margin-right: 165px;
+    }
 }
 
 .event--teaser__image {
-  margin-bottom: 10px;
-  line-height: 0;
+    margin-bottom: 10px;
+    line-height: 0;
 
-  @include media('>medium') {
-    float: left;
-    margin-bottom: 0;
-    position: relative;
-    top: 3px;
-  }
+    @include media('>medium') {
+        float: left;
+        margin-bottom: 0;
+        position: relative;
+        top: 3px;
+    }
 
-  img {
-    max-width: 110px;
-  }
+    img {
+        max-width: 110px;
+    }
 }
 
 .event--teaser .event__attributes {
-  @include media('>medium') {
-    margin-left: 135px;
-  }
+    @include media('>medium') {
+        margin-left: 135px;
+    }
 
-  @include media('>large') {
-    margin-right: 165px;
-  }
+    @include media('>large') {
+        margin-right: 165px;
+    }
 }
 
 .event--teaser .event__type {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  width: 130px;
-  text-align: center;
-  border-radius: 4px;
-  margin-top: 15px;
-  min-height: 21px;
-  line-height: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 130px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 15px;
+    min-height: 21px;
+    line-height: 20px;
 
-  @include media('>medium') {
-    margin-left: 130px;
-  }
+    @include media('>medium') {
+        margin-left: 130px;
+    }
 
-  @include media('>large') {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 0;
-  }
+    @include media('>large') {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 0;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -234,67 +234,66 @@
 
 .page-id-about-workshops-events,
 .page-id-about-workshops-events-past {
-  .title--page {
-    @include media('>=medium') {
-      @include span(9 last of 12);
+    .title--page {
+        @include media('>=medium') {
+            @include span(9 last of 12);
+        }
     }
-  }
 }
 
 .view-events {
-  .views-row {
-    padding: 30px 35px 35px 35px;
-  }
+    .views-row {
+        padding: 30px 35px 35px 35px;
+    }
 
-  .views-row-odd {
-    background-color: palette(grey, -3);
-  }
+    .views-row-odd {
+        background-color: palette(grey, -3);
+    }
 }
 
 .view-events--homepage-block {
-  .view-header {
-    position: absolute;
-    top: 16px;
-    right: 15px;
-  }
-
-  .views-row {
-    padding: 0;
-    margin-bottom: 10px;
-
-    @include media('>=small') {
-      margin-bottom: 5px;
+    .view-header {
+        position: absolute;
+        top: 16px;
+        right: 15px;
     }
-  }
 
-  .views-row-last {
-    margin-bottom: 0;
-  }
+    .views-row {
+        padding: 0;
+        margin-bottom: 10px;
 
-  .views-row-odd {
-    background-color: transparent;
-  }
-
-  .event__date {
-    padding-top: 5px;
-    line-height: 1;
-
-    @include media('>=small') {
-      float: left;
-      width: 105px;
-      padding: 0 0 10px 0;
+        @include media('>=small') {
+            margin-bottom: 5px;
+        }
     }
-  }
 
-  .event__title {
-    line-height: 1;
-    padding-top: 5px;
-
-    @include media('>=small') {
-      margin-left: 125px;
-      padding: 0 0 10px 0;
+    .views-row-last {
+        margin-bottom: 0;
     }
-  }
+
+    .views-row-odd {
+        background-color: transparent;
+    }
+
+    .event__date {
+        padding-top: 5px;
+        line-height: 1;
+
+        @include media('>=small') {
+            float: left;
+            width: 175px;
+            padding: 0 0 10px 0;
+        }
+    }
+
+    .event__title {
+        line-height: 1;
+        padding-top: 5px;
+
+        @include media('>=small') {
+            padding: 0 0 10px 0;
+        }
+    }
 }
 
 
@@ -303,28 +302,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 .events-tabs {
-  @include clearfix;
-  clear: both;
-  position: relative;
-  z-index: 1;
-  border-bottom: 1px solid palette(grey, 2);
-  margin-bottom: 40px;
+    @include clearfix;
+    clear: both;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid palette(grey, 2);
+    margin-bottom: 40px;
 
-  @include media('>=medium') {
-    @include span(9 last of 12);
-  }
-
-  .nav-item {
-    @extend %in-page-tab;
-    padding-bottom: 0;
-  }
-
-  .nav-link {
-    @extend %in-page-tab__link;
-
-    &.active {
-      @extend %in-page-tab__link--active;
+    @include media('>=medium') {
+        @include span(9 last of 12);
     }
-  }
 
+    .nav-item {
+        @extend %in-page-tab;
+        padding-bottom: 0;
+    }
+
+    .nav-link {
+        @extend %in-page-tab__link;
+
+        &.active {
+            @extend %in-page-tab__link--active;
+        }
+    }
 }
