@@ -201,11 +201,11 @@ function ajax_course_reserves($search) {
 	$urlInstructor = $instructor->getUrl();
 	$htmlCode = formatToHTML($arrCourseContent,$arrInstructorContent);
 
-	$output = "<div id=\"numberOfResultsCourse\">$countCourse</div>
+	$output = "<div><div id=\"numberOfResultsCourse\">$countCourse</div>
 			<div id=\"urlCourse\">$urlCourse</div>
 			<div id=\"numberOfResultsInstructor\">$countInstructor</div>
 			<div id=\"urlInstructor\">$urlInstructor</div>
-			$htmlCode";
+			$htmlCode</div>";
 	print $output;
 }
 
