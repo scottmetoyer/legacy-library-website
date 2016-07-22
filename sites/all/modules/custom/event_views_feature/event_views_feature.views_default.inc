@@ -110,12 +110,14 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
+  
   /* Relationship: Content: Date and links (field_event_date_links) */
   $handler->display->display_options['relationships']['field_event_date_links_value']['id'] = 'field_event_date_links_value';
   $handler->display->display_options['relationships']['field_event_date_links_value']['table'] = 'field_data_field_event_date_links';
   $handler->display->display_options['relationships']['field_event_date_links_value']['field'] = 'field_event_date_links_value';
   $handler->display->display_options['relationships']['field_event_date_links_value']['label'] = 'Date';
   $handler->display->display_options['relationships']['field_event_date_links_value']['delta'] = '-1';
+  
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -123,6 +125,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  
   /* Field: Content: Date and links */
   $handler->display->display_options['fields']['field_event_date_links']['id'] = 'field_event_date_links';
   $handler->display->display_options['fields']['field_event_date_links']['table'] = 'field_data_field_event_date_links';
@@ -132,6 +135,7 @@ function event_views_feature_views_default_views() {
     'view_mode' => 'full',
   );
   $handler->display->display_options['fields']['field_event_date_links']['delta_offset'] = '0';
+  
   /* Field: Content: Hours */
   $handler->display->display_options['fields']['field_hours']['id'] = 'field_hours';
   $handler->display->display_options['fields']['field_hours']['table'] = 'field_data_field_hours';
@@ -146,6 +150,7 @@ function event_views_feature_views_default_views() {
       'period_separator' => '',
     ),
   );
+ 
   /* Field: Content: Library */
   $handler->display->display_options['fields']['field_library']['id'] = 'field_library';
   $handler->display->display_options['fields']['field_library']['table'] = 'field_data_field_library';
@@ -153,10 +158,12 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['fields']['field_library']['settings'] = array(
     'link' => 0,
   );
+  
   /* Field: Content: Room */
   $handler->display->display_options['fields']['field_room']['id'] = 'field_room';
   $handler->display->display_options['fields']['field_room']['table'] = 'field_data_field_room';
   $handler->display->display_options['fields']['field_room']['field'] = 'field_room';
+  
   /* Field: Field: Image */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
@@ -173,6 +180,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['relationship'] = 'field_event_date_links_value';
+  
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -180,6 +188,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -187,6 +196,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'event' => 'event',
   );
+  
   /* Filter criterion: Field: Date (field_date) */
   $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
@@ -194,6 +204,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['filters']['field_date_value']['relationship'] = 'field_event_date_links_value';
   $handler->display->display_options['filters']['field_date_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_date_value']['default_date'] = '12AM today';
+  
   /* Filter criterion: Content: Event type (field_event_type) */
   $handler->display->display_options['filters']['field_event_type_tid']['id'] = 'field_event_type_tid';
   $handler->display->display_options['filters']['field_event_type_tid']['table'] = 'field_data_field_event_type';
@@ -231,6 +242,7 @@ function event_views_feature_views_default_views() {
   $handler = $view->new_display('page', 'Past page', 'page_1');
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
+  
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -238,6 +250,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -245,6 +258,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'event' => 'event',
   );
+  
   /* Filter criterion: Field: Date (field_date) */
   $handler->display->display_options['filters']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['filters']['field_date_value']['table'] = 'field_data_field_date';
@@ -252,6 +266,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['filters']['field_date_value']['relationship'] = 'field_event_date_links_value';
   $handler->display->display_options['filters']['field_date_value']['operator'] = '<';
   $handler->display->display_options['filters']['field_date_value']['default_date'] = '12AM today';
+  
   /* Filter criterion: Content: Event type (field_event_type) */
   $handler->display->display_options['filters']['field_event_type_tid']['id'] = 'field_event_type_tid';
   $handler->display->display_options['filters']['field_event_type_tid']['table'] = 'field_data_field_event_type';
@@ -274,6 +289,7 @@ function event_views_feature_views_default_views() {
   );
   $handler->display->display_options['filters']['field_event_type_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_event_type_tid']['vocabulary'] = 'event_types';
+  
   /* Filter criterion: Content: Popular item (field_is_featured) */
   $handler->display->display_options['filters']['field_is_featured_value']['id'] = 'field_is_featured_value';
   $handler->display->display_options['filters']['field_is_featured_value']['table'] = 'field_data_field_is_featured';
@@ -303,6 +319,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['row_options']['view_mode'] = 'teaser2';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
+  
   /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
@@ -310,6 +327,7 @@ function event_views_feature_views_default_views() {
   $handler->display->display_options['header']['area']['content'] = '<div class="read-more"><a href="/about/workshops-events">See All</a></div>';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
