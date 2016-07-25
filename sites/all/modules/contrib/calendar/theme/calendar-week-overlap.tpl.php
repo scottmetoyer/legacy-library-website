@@ -25,7 +25,7 @@
  */
 $header_ids = array();
 foreach ($day_names as $key => $value) {
-  $header_ids[$key] = $value['header_id'];
+    $header_ids[$key] = $value['header_id'];
 }
 //dsm('Display: '. $display_type .': '. $min_date_formatted .' to '. $max_date_formatted);
 ?>
@@ -53,14 +53,14 @@ foreach ($day_names as $key => $value) {
   <tr class="holder"><td class="calendar-time-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td></tr>
     <?php for ($i = 0; $i < $multiday_rows; $i++): ?>
     <?php 
-      $colpos = 0; 
-      $rowclass = "all-day";
-      if ($i == 0) {
-        $rowclass .= " first";
-      }
-      if ($i == $multiday_rows - 1) {
-        $rowclass .= " last";
-      }
+              $colpos = 0; 
+              $rowclass = "all-day";
+              if ($i == 0) {
+                  $rowclass .= " first";
+              }
+              if ($i == $multiday_rows - 1) {
+                  $rowclass .= " last";
+              }
     ?>
     <tr class="<?php print $rowclass?>">
       <?php if($i == 0 && ($by_hour_count > 0 || !empty($start_times))) :?>
@@ -73,24 +73,24 @@ foreach ($day_names as $key => $value) {
         <?php if($cell != NULL && $cell['filled'] && $cell['wday'] == $j): ?>
           <?php for($colpos; $colpos < $cell['wday']; $colpos++) : ?>
           <?php 
-            $colclass = "calendar-agenda-items multi-day";
-            if ($colpos == 0) {
-              $colclass .= " first";
-            }
-            if ($colpos == 6) {
-              $colclass .= " last";
-            }
+                    $colclass = "calendar-agenda-items multi-day";
+                    if ($colpos == 0) {
+                        $colclass .= " first";
+                    }
+                    if ($colpos == 6) {
+                        $colclass .= " last";
+                    }
           ?>
           <td class="<?php print $colclass?>"><div class="inner">&nbsp;</div></td>
           <?php endfor;?>
           <?php 
-            $colclass = "calendar-agenda-items multi-day";
-            if ($colpos == 0) {
-              $colclass .= " first";
-            }
-            if ($colpos == 6) {
-              $colclass .= " last";
-            }
+                  $colclass = "calendar-agenda-items multi-day";
+                  if ($colpos == 0) {
+                      $colclass .= " first";
+                  }
+                  if ($colpos == 6) {
+                      $colclass .= " last";
+                  }
           ?>
           <td colspan="<?php print $cell['colspan']?>" class="<?php print $colclass?>">
             <div class="inner">
@@ -102,13 +102,13 @@ foreach ($day_names as $key => $value) {
       <?php endfor; ?>  
       <?php while($colpos < 7) : ?>
       <?php 
-        $colclass = "calendar-agenda-items multi-day no-entry";
-        if ($colpos == 0) {
-          $colclass .= " first";
-        }
-        if ($colpos == 6) {
-          $colclass .= " last";
-        }
+                $colclass = "calendar-agenda-items multi-day no-entry";
+                if ($colpos == 0) {
+                    $colclass .= " first";
+                }
+                if ($colpos == 6) {
+                    $colclass .= " last";
+                }
       ?>
       <td class="<?php print $colclass?>"><div class="inner">&nbsp;</div></td>
       <?php $colpos++; ?>
@@ -122,13 +122,13 @@ foreach ($day_names as $key => $value) {
       </td>
       <?php for($j = 0; $j < 7; $j++): ?>
       <?php 
-        $colclass = "calendar-agenda-items multi-day no-entry";
-        if ($j == 0) {
-          $colclass .= " first";
-        }
-        if ($j == 6) {
-          $colclass .= " last";
-        }
+                $colclass = "calendar-agenda-items multi-day no-entry";
+                if ($j == 0) {
+                    $colclass .= " first";
+                }
+                if ($j == 6) {
+                    $colclass .= " last";
+                }
       ?>
       <td class="<?php print $colclass?>"><div class="inner">&nbsp;</div></td>
       <?php endfor; ?>
@@ -140,13 +140,13 @@ foreach ($day_names as $key => $value) {
       </td>
       <?php for($j = 0; $j < 7; $j++): ?>
       <?php 
-        $colclass = "calendar-agenda-items multi-day no-entry";
-        if ($j == 0) {
-          $colclass .= " first";
-        }
-        if ($j == 6) {
-          $colclass .= " last";
-        }
+                $colclass = "calendar-agenda-items multi-day no-entry";
+                if ($j == 0) {
+                    $colclass .= " first";
+                }
+                if ($j == 6) {
+                    $colclass .= " last";
+                }
       ?>
       <td class="<?php print $colclass?>"><div class="inner">&nbsp;</div></td>
       <?php endfor; ?>
@@ -166,6 +166,10 @@ foreach ($day_names as $key => $value) {
       }
     </script>
     <?php endif; ?>
+      <?php 
+      // Slice out the times earlier than 7AM to force the calendar to only display 7AM to midnight.
+      $start_times = array_slice($start_times, 7); 
+      ?>
     <table class="full">
       <tbody>
         <tr class="holder"><td class="calendar-time-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td><td class="calendar-day-holder"></td></tr>
@@ -180,15 +184,15 @@ foreach ($day_names as $key => $value) {
           <?php endif; ?>
             <?php foreach ($start_times as $time_cnt => $start_time): ?>
               <?php 
-                if ($time_cnt == 0) {
-                  $class = 'first ';
-                }
-                elseif ($time_cnt == count($start_times) - 1) {
-                  $class = 'last ';
-                }
-                else {
-                  $class = '';
-                } ?>
+                      if ($time_cnt == 0) {
+                          $class = 'first ';
+                      }
+                      elseif ($time_cnt == count($start_times) - 1) {
+                          $class = 'last ';
+                      }
+                      else {
+                          $class = '';
+                      } ?>
               <?php if( $index == 0 ): ?>
               <?php $time = $items[$start_time];?>
               <div class="<?php print $class?>calendar-agenda-hour">

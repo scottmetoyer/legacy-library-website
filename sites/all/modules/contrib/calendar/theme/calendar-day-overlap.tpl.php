@@ -65,6 +65,10 @@
     }
   </script>
   <?php endif; ?>
+    <?php 
+    // Slice out the times earlier than 7AM to force the calendar to only display 7AM to midnight.
+    $rows['items'] = array_slice($rows['items'], 7); 
+    ?>
   <table class="full">
     <tbody>
       <tr class="holder">
