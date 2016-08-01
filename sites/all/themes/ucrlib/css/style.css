@@ -4059,6 +4059,7 @@ button, a.button, a.block-demo-backlink, a.block-demo-backlink:link, a.block-dem
         font-size: 16px;
         padding: 10px 20px 10px 8px;
         vertical-align: middle;
+        width: 190px;
     }
 
         a.button.small > .text {

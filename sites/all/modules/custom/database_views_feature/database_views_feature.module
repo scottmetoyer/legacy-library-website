@@ -5,3 +5,11 @@
  */
 
 include_once 'database_views_feature.features.inc';
+
+function database_views_feature_form_alter(&$form, &$form_state, $form_id) {
+    if($form_id == "views_exposed_form"){
+        if (isset($form['popular'])) {
+        
+        }
+    }
+}
