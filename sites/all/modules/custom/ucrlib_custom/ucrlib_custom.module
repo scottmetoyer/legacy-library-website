@@ -540,25 +540,7 @@ function ucrlib_custom_block_view($delta = '')
                 $size = count($nodes);
                 foreach ($nodes as $node) {
                     $nodeID = $node->nid;
-                    if (105 == $nodeID)//Tomas
-                    {
-                        $linkList[0] = $nodeID;
-                    } else if (107 == $nodeID)//Orbach
-                    {
-                        $linkList[1] = $nodeID;
-                    } else if (65 == $nodeID)//Multimedia
-                    {
-                        $linkList[2] = $nodeID;
-                    } else if (106 == $nodeID)//Music
-                    {
-                        $linkList[3] = $nodeID;
-                    } else if (108 == $nodeID)//SCUA
-                    {
-                        $linkList[4] = $nodeID;
-                    } else //The new library will append to the bottom.
-                    {
-                        $linkList[$i] = $nodeID;
-                    }
+                    $linkList[$i] = $nodeID;
                     $i++;
                 }
                 for ($i = 0; $i < $size; $i++) {
@@ -596,30 +578,15 @@ function ucrlib_custom_block_view($delta = '')
                 ->propertyCondition('status', NODE_PUBLISHED);
 
             $result = $query->execute();
+
             if (isset($result['node'])) {
                 $nodes = entity_load('node', array_keys($result['node']));
                 $size = count($nodes);
+
                 foreach ($nodes as $node) {
                     $nodeID = $node->nid;
-                    if (105 == $nodeID)//Tomas
-                    {
-                        $linkList[0] = $nodeID;
-                    } else if (107 == $nodeID)//Orbach
-                    {
-                        $linkList[1] = $nodeID;
-                    } else if (65 == $nodeID)//Multimedia
-                    {
-                        $linkList[2] = $nodeID;
-                    } else if (106 == $nodeID)//Music
-                    {
-                        $linkList[3] = $nodeID;
-                    } else if (108 == $nodeID)//SCUA
-                    {
-                        $linkList[4] = $nodeID;
-                    } else //The new library will append to the bottom.
-                    {
-                        $linkList[$i] = $nodeID;
-                    }
+                    $linkList[$i] = $nodeID;
+
                     $i++;
                 }
                 for ($i = 0; $i < $size; $i++) {
