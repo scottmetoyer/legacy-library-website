@@ -538,11 +538,29 @@ function ucrlib_custom_block_view($delta = '')
             if (isset($result['node'])) {
                 $nodes = entity_load('node', array_keys($result['node']));
                 $size = count($nodes);
+
                 foreach ($nodes as $node) {
                     $nodeID = $node->nid;
-                    $linkList[$i] = $nodeID;
+                    if (105 == $nodeID)//Tomas
+                    {
+                        $linkList[0] = $nodeID;
+                    } else if (107 == $nodeID)//Orbach
+                    {
+                        $linkList[1] = $nodeID;
+                    }
+                    else if (106 == $nodeID)//Music
+                    {
+                        $linkList[2] = $nodeID;
+                    } else if (108 == $nodeID)//SCUA
+                    {
+                        $linkList[3] = $nodeID;
+                    } else //The new library will append to the bottom.
+                    {
+                        $linkList[$i] = $nodeID;
+                    }
                     $i++;
                 }
+
                 for ($i = 0; $i < $size; $i++) {
                     $open = _ucrlib_custom_block_open($nodes[$linkList[$i]]);
                     $week = _ucrlib_custom_block_hours($nodes[$linkList[$i]]);
@@ -585,10 +603,26 @@ function ucrlib_custom_block_view($delta = '')
 
                 foreach ($nodes as $node) {
                     $nodeID = $node->nid;
-                    $linkList[$i] = $nodeID;
-
+                    if (105 == $nodeID)//Tomas
+                    {
+                        $linkList[0] = $nodeID;
+                    } else if (107 == $nodeID)//Orbach
+                    {
+                        $linkList[1] = $nodeID;
+                    }
+                    else if (106 == $nodeID)//Music
+                    {
+                        $linkList[2] = $nodeID;
+                    } else if (108 == $nodeID)//SCUA
+                    {
+                        $linkList[3] = $nodeID;
+                    } else //The new library will append to the bottom.
+                    {
+                        $linkList[$i] = $nodeID;
+                    }
                     $i++;
                 }
+
                 for ($i = 0; $i < $size; $i++) {
                     $block['content'][$linkList[$i]] = _ucrlib_custom_block_open($nodes[$linkList[$i]]);
                 }
@@ -630,6 +664,10 @@ function ucrlib_custom_block_view($delta = '')
     }
 
     return $block;
+}
+
+function sortLibraryList($libraries) {
+
 }
 
 /**
@@ -843,7 +881,7 @@ function template_preprocess_ucrlib_custom_open(&$vars)
         if ($start_time >= $end_time) {
             $end_time = strtotime($hour->end_time . ' +1 day');
         }
-        
+
         if ($start_time <= $vars['date'] && $end_time > $vars['date']) {
             $vars['status'] = t('open');
         }
