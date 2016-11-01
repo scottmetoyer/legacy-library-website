@@ -465,7 +465,7 @@ class scrapper
 	}
 
 	/**
-	 * The function below gets the number of results when LibGuide scrapped.  Returns a string.
+	 * The function below gets the number of results when LibGuide is scraped.  Returns a string.
 	 */
 	public function getLibGuideNumberOfResults()
 	{
