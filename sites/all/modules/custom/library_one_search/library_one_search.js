@@ -56,7 +56,6 @@
                     });
                     //This ajax below scrapes the libguide website
                     $.ajax({
-
                         url: url + '/onesearch/get/libguide/' + search,
                         success: function (data) {
                             //Sets the headers
@@ -140,8 +139,9 @@
                 var str = "";
                 var href = "";
                 var myDivResource = "";
-                var title = ""; // Header title.
+                var title = "";
                 var url = "";
+                
                 var numberOfResults = $(data).find('#numberOfResults').text();
                 intNumbOfResults = parseInt(numberOfResults.replace(",", ""));
 
@@ -172,6 +172,7 @@
                         }
 
                         htmlCode = htmlCode + "<div id='results'>";
+
                         //Below is where I extract the the title and href from the data variable and put 
                         //the info on to the main web page.
                         for (var i = 0; i < intNumbOfResults; i++) {
@@ -184,6 +185,7 @@
                             htmlCode = htmlCode + '</div>';
                         }
                         htmlCode = htmlCode + '</div>';
+
                         document.getElementById(resource + '_progress').style.display = 'none';
                         document.getElementById(resource + '_results').style.display = '';
                         document.getElementById(resource + "_results").innerHTML = htmlCode;
@@ -487,4 +489,40 @@
             })();
         }
     }
+})(jQuery);
+
+(function($){
+  var feedback = $(".feedback-box");
+  
+  $("#feedback").on("click" , function(){
+    feedback.addClass("show");
+  });
+  
+  $(".close").on("click" , function(){
+    feedback.removeClass("show");
+    setTimeout(function(){ 
+      feedback.removeClass("show-confirm").find("textarea").val('');
+      console.log("reset")
+    }, 1000);
+  });
+
+  $("#submit").on("click" , function(){
+     if( !$("textarea").val() ) {
+       feedback.addClass("error");
+       setTimeout(function(){
+         feedback.removeClass("error");
+       }, 500)
+    }else{
+      feedback.addClass("show-confirm");
+      $(".feedback-box h1 strong").text("Thank you!");
+      
+      setTimeout(function(){
+         feedback.removeClass("show").find("textarea").val('').delay(1000);
+      },2000);
+      
+       setTimeout(function(){
+         feedback.removeClass("show-confirm");
+      },2200);
+    }
+  })
 })(jQuery);

@@ -1,10 +1,10 @@
 <?php
 /**
- *
- * @file
- * Drupal Onesearch
- * Searches external sites give an Onesearch Description Document
- */
+*
+* @file
+* Drupal Onesearch
+* Searches external sites give an Onesearch Description Document
+*/
 
 define("LIBRARY_ONE_SEARCH_ROOT", drupal_get_path('module', 'library_one_search'));
 define("SCRAPPER", LIBRARY_ONE_SEARCH_ROOT .'/scrapper');
@@ -15,501 +15,527 @@ $url; //This is an array that contains all the URL that I plan to replace in the
 $entity;//This is the really the node id.  So instead of the page going to the node, I want to replace with the correct link.
 
 /**
- * The function below basically changes the hyperlink to the actual database.
- *
- *
- */
+* The function below basically changes the hyperlink to the actual database.
+*
+*
+*/
 function library_one_search_block_view_alter(&$data, $block)
 {
-	global $url;
-	global $entity;
-
-	if(54==$block->bid && sizeof($url) != 0)
-	{
-		$size = count($url);
-		$html = "";
-		$final_html = "";
-
-		for($i=0; $i<$size; $i++)
-		{
-			$html = $data['content']['main']['#markup'];
-			$search = "href=\"/node/".$entity[$i]."\"";
-			$replace = "href=\"".$url[$i]."\"";
-			$final_html  = str_replace($search, $replace, $html);
-			$data['content']['main']['#markup'] = $final_html;
-		}
-	}
+    global $url;
+    global $entity;
+    
+    if(54==$block->bid && sizeof($url) != 0)
+    {
+        $size = count($url);
+        $html = "";
+        $final_html = "";
+        
+        for($i=0; $i<$size; $i++)
+        {
+            $html = $data['content']['main']['#markup'];
+            $search = "href=\"/node/".$entity[$i]."\"";
+            $replace = "href=\"".$url[$i]."\"";
+            $final_html  = str_replace($search, $replace, $html);
+            $data['content']['main']['#markup'] = $final_html;
+        }
+    }
 }
 
 /**
- * The preprocess executes first, here is were I set the link list ready to use in the view alter.
- *
- *
- */
+* The preprocess executes first, here is were I set the link list ready to use in the view alter.
+*
+*
+*/
 function library_one_search_preprocess(&$variables, $hook)
 {
-	global $url;
-	global $entity;
-	//dpm($variables);
-	if(array_key_exists('view',$variables))
-	{
-		$size = 0;
-		$j=0;
-		if(array_key_exists('view',$variables))
-		{
-			if(property_exists($variables['view'],'result'))
-			{
-				if(array_key_exists(0,$variables['view']->result))
-				{
-					if(property_exists($variables['view']->result[0],'_entity_properties'))
-					{
-						$size = count($variables['view']->result);
-
-						for($i=0; $i<$size; $i++)
-						{
-							if(property_exists($variables['view']->result[$i]->_entity_properties['entity object'],"field_link"))
-							{
-								if(array_key_exists('und',$variables['view']->result[$i]->_entity_properties['entity object']->field_link))
-								{
-									$url[$j]=$variables['view']->result[$i]->_entity_properties['entity object']->field_link['und'][0]['url'];
-									$entity[$j]=$variables['view']->result[$i]->entity;
-									$j++;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    global $url;
+    global $entity;
+    //dpm($variables);
+    if(array_key_exists('view',$variables))
+    {
+        $size = 0;
+        $j=0;
+        if(array_key_exists('view',$variables))
+        {
+            if(property_exists($variables['view'],'result'))
+            {
+                if(array_key_exists(0,$variables['view']->result))
+                {
+                    if(property_exists($variables['view']->result[0],'_entity_properties'))
+                    {
+                        $size = count($variables['view']->result);
+                        
+                        for($i=0; $i<$size; $i++)
+                        {
+                            if(property_exists($variables['view']->result[$i]->_entity_properties['entity object'],"field_link"))
+                            {
+                                if(array_key_exists('und',$variables['view']->result[$i]->_entity_properties['entity object']->field_link))
+                                {
+                                    $url[$j]=$variables['view']->result[$i]->_entity_properties['entity object']->field_link['und'][0]['url'];
+                                    $entity[$j]=$variables['view']->result[$i]->entity;
+                                    $j++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 function library_one_search_init()
 {
-	drupal_add_js(drupal_get_path('module', 'library_one_search') . '/library_one_search.js',
-			array(
-				  'scope' => 'footer', //If this isn't here, then the slicknav_menu won't work with my javascripts
-			));
+    drupal_add_js(drupal_get_path('module', 'library_one_search') . '/library_one_search.js',
+    array(
+    'scope' => 'footer', //If this isn't here, then the slicknav_menu won't work with my javascripts
+    ));
 }
 
 // Set up module routes
 function library_one_search_menu()
 {
-	$items = array();
-
-	$items['onesearch'] = array(
-			'title'=>'search',
-			'page callback' => 'block',
-			'page arguments' => array(1),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	$items['onesearch/get/calisphere'] = array(
-			'page callback' => 'ajax_calisphere',
-			'page arguments' => array(3),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	$items['onesearch/get/course_reserves'] = array(
-			'page callback' => 'ajax_course_reserves',
-			'page arguments' => array(3),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	$items['onesearch/get/scotty'] = array(
- 			'page callback' => 'ajax_scotty',
-			'page arguments' => array(3),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	$items['onesearch/get/libguide'] = array(
-			'page callback' => 'ajax_libguide',
-			'page arguments' => array(3),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	$items['onesearch/get/melvyl'] = array(
-			'page callback' => 'ajax_melvyl',
-			'page arguments' => array(3),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	$items['onesearch/get/thiswebsite'] = array(
-			'page callback' => 'ajax_thiswebsite',
-			'page arguments' => array(3),
-			'access callback'=>TRUE,
-			'weight'=>3,
-	);
-
-	return $items;
+    $items = array();
+    
+    $items['onesearch'] = array(
+    'title'=>'search',
+    'page callback' => 'block',
+    'page arguments' => array(1),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    $items['onesearch/get/calisphere'] = array(
+    'page callback' => 'ajax_calisphere',
+    'page arguments' => array(3),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    $items['onesearch/get/course_reserves'] = array(
+    'page callback' => 'ajax_course_reserves',
+    'page arguments' => array(3),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    $items['onesearch/get/scotty'] = array(
+    'page callback' => 'ajax_scotty',
+    'page arguments' => array(3),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    $items['onesearch/get/libguide'] = array(
+    'page callback' => 'ajax_libguide',
+    'page arguments' => array(3),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    $items['onesearch/get/melvyl'] = array(
+    'page callback' => 'ajax_melvyl',
+    'page arguments' => array(3),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    $items['onesearch/get/thiswebsite'] = array(
+    'page callback' => 'ajax_thiswebsite',
+    'page arguments' => array(3),
+    'access callback'=>TRUE,
+    'weight'=>3,
+    );
+    
+    return $items;
 }
 
 // *** AJAX callback functions ***/
 // *** These output raw HTML directly to the requester, bypassing the Drupal page construction mechanisms ***/
 function ajax_melvyl($search)
 {
-	$melvyl = new scrapper($search,"melvyl");
-	$numberOfResults = $melvyl->getMelvylNumberOfResults();
-	$html = $melvyl->getMelvylContents();
-	$url = $melvyl->getUrl();
-	printRawHtmlResponse($numberOfResults, $url, $html);
+    $melvyl = new scrapper($search,"melvyl");
+    $numberOfResults = $melvyl->getMelvylNumberOfResults();
+    $html = $melvyl->getMelvylContents();
+    $url = $melvyl->getUrl();
+    printRawHtmlResponse($numberOfResults, $url, $html);
 }
 
 function ajax_libguide($search)
 {
-	$libguide = new scrapper($search,"libguide");
-	$numberOfResults = $libguide->getLibGuideNumberOfResults();
-	$html = $libguide->getLibGuideContents();
-	$url = $libguide->getUrl();
-	printRawHtmlResponse($numberOfResults, $url, $html);
+    $libguide = new scrapper($search, "libguide");
+    $numberOfResults = $libguide->getLibGuideNumberOfResults();
+    $html = $libguide->getLibGuideContents();
+    $url = $libguide->getUrl();
+    printRawHtmlResponse($numberOfResults, $url, $html);
 }
 
 function ajax_scotty($search) {
-	$scotty = new scrapper($search,"scotty");
-	$numberOfResults = $scotty->getScottyNumberOfResults();
-	$html = $scotty->getScottyContents();
-	$url = $scotty->getUrl();
-	printRawHtmlResponse($numberOfResults, $url, $html);
+    $scotty = new scrapper($search,"scotty");
+    $numberOfResults = $scotty->getScottyNumberOfResults();
+    $html = $scotty->getScottyContents();
+    $url = $scotty->getUrl();
+    printRawHtmlResponse($numberOfResults, $url, $html);
 }
 
 function ajax_course_reserves($search) {
-	$htmlCode = "";
-	$countCourse 		= 0;
-	$countInstructor 	= 0;
-	$numberOfResults 	= 0;
-	$urlCourse = "";
-	$urlInstructor = "";
-
-	$arrCourseContent = array();$arrInstructorContent = array();
-
-	$course = new scrapper($search,"course_reserves_course");
-	$instructor = new scrapper($search,"course_reserves_instructor");
-
-	$arrCourseContent = $course->getCourseReservesContentsArr();
-	$arrInstructorContent = $instructor->getCourseReservesContentsArr();
-
-	$countCourse = $course->getCourseReservesNumberOfResults();
-	$countInstructor =$instructor->getCourseReservesNumberOfResults();
-
-	$urlCourse = $course->getUrl();
-	$urlInstructor = $instructor->getUrl();
-	$htmlCode = formatToHTML($arrCourseContent,$arrInstructorContent);
-
-	$output = "<div><div id=\"numberOfResultsCourse\">$countCourse</div>
-			<div id=\"urlCourse\">$urlCourse</div>
-			<div id=\"numberOfResultsInstructor\">$countInstructor</div>
-			<div id=\"urlInstructor\">$urlInstructor</div>
-			$htmlCode</div>";
-	print $output;
+    $htmlCode = "";
+    $countCourse 		= 0;
+    $countInstructor 	= 0;
+    $numberOfResults 	= 0;
+    $urlCourse = "";
+    $urlInstructor = "";
+    
+    $arrCourseContent = array();$arrInstructorContent = array();
+    
+    $course = new scrapper($search,"course_reserves_course");
+    $instructor = new scrapper($search,"course_reserves_instructor");
+    
+    $arrCourseContent = $course->getCourseReservesContentsArr();
+    $arrInstructorContent = $instructor->getCourseReservesContentsArr();
+    
+    $countCourse = $course->getCourseReservesNumberOfResults();
+    $countInstructor =$instructor->getCourseReservesNumberOfResults();
+    
+    $urlCourse = $course->getUrl();
+    $urlInstructor = $instructor->getUrl();
+    $htmlCode = formatToHTML($arrCourseContent,$arrInstructorContent);
+    
+    $output = "<div><div id=\"numberOfResultsCourse\">$countCourse</div>
+    <div id=\"urlCourse\">$urlCourse</div>
+    <div id=\"numberOfResultsInstructor\">$countInstructor</div>
+    <div id=\"urlInstructor\">$urlInstructor</div>
+    $htmlCode</div>";
+    print $output;
 }
 
 function ajax_calisphere($search)
 {
-	$html = "";
-	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-	//The url address below was provided by calisphere
-	curl_setopt($curl, CURLOPT_URL, "https://solr.calisphere.org/solr/query/?q=".urlencode($search)."&rows=5&wt=json&indent=true&mm=100%25&pf3=title&pf=text,title&qs=12&ps=12");
-	curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-Authentication-Token: 82dbd622-32c4-4169-b25f-5435ef337a93')); //setting custom header, furthermore the security key was given by Calisphere
-	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,  0);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
-	$result = curl_exec($curl);
-	if($result===false)
-	{
-		$result = curl_error($curl);
-
-		// Need to put error handling
-		curl_close($curl);
-	}
-	else
-	{
-		curl_close($curl);
-		$calisphere = new scrapper("","");
-		$json = json_decode($result, true);
-		$numberOfResults = $calisphere->formatNumber($json["response"]["numFound"]);
-
-		if($numberOfResults >0)
-		{
-			$html = parse_JSON_Calisphere_Return_HTML($json);
-		}
-
-		$url = "https://calisphere.org/search/?q=".urlencode($search);
-
-		printRawHtmlResponse($numberOfResults, $url, $html);
-	}
+    $html = "";
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    //The url address below was provided by calisphere
+    curl_setopt($curl, CURLOPT_URL, "https://solr.calisphere.org/solr/query/?q=".urlencode($search)."&rows=5&wt=json&indent=true&mm=100%25&pf3=title&pf=text,title&qs=12&ps=12");
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-Authentication-Token: 82dbd622-32c4-4169-b25f-5435ef337a93')); //setting custom header, furthermore the security key was given by Calisphere
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,  0);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
+    $result = curl_exec($curl);
+    if($result===false)
+    {
+        $result = curl_error($curl);
+        
+        // Need to put error handling
+        curl_close($curl);
+    }
+    else
+    {
+        curl_close($curl);
+        $calisphere = new scrapper("","");
+        $json = json_decode($result, true);
+        $numberOfResults = $calisphere->formatNumber($json["response"]["numFound"]);
+        
+        if($numberOfResults >0)
+        {
+            $html = parse_JSON_Calisphere_Return_HTML($json);
+        }
+        
+        $url = "https://calisphere.org/search/?q=".urlencode($search);
+        
+        printRawHtmlResponse($numberOfResults, $url, $html);
+    }
 }
 
 function ajax_thiswebsite($search)
 {
-	global $base_url;
-	$b_url="";
-	$strHTML = "";
-	$strURL = "";
-	//The logic below is a patch for the beta, for whatever reason the ajax fails.
-	//Since betalib is the same as the ul-lib, actually betalib points to ul-lib this is a work around.
-	if("http://betalib.ucr.edu"==$base_url)
-	{
-		$b_url="http://ul-lib.ul.ucr.edu";
-	}
-	else
-	{
-		$b_url=$base_url;
-	}
-
-	$searchEncoded = urlencode($search);
-	$thiswebsite = new scrapper($search,"thiswebsite");
-	$thiswebsite->setDrupalUrl($b_url);
-	$numberOfResults = $thiswebsite->getThiswebsiteNumberOfResults();
-
-	$str = $thiswebsite->getThiswebsiteContents();
-	$strURL= $thiswebsite->getUrl().'/search?search_api_views_fulltext='.$searchEncoded;
-
-	//	I am putting back the beta otherwise the public won't be able to access the data.
-	if("http://betalib.ucr.edu"==$base_url)
-	{
-		$html = str_replace("http://ul-lib.ul.ucr.edu", "http://betalib.ucr.edu", $str);
-		$url = str_replace("http://ul-lib.ul.ucr.edu", "http://betalib.ucr.edu", $strURL);
-	}
-	else
-	{
-		$html = $str;
-		$url = $strURL;
-	}
-
-	printRawHtmlResponse($numberOfResults, $url, $html);
+    global $base_url;
+    $b_url="";
+    $strHTML = "";
+    $strURL = "";
+    //The logic below is a patch for the beta, for whatever reason the ajax fails.
+    //Since betalib is the same as the ul-lib, actually betalib points to ul-lib this is a work around.
+    if("http://betalib.ucr.edu"==$base_url)
+    {
+        $b_url="http://ul-lib.ul.ucr.edu";
+    }
+    else
+    {
+        $b_url=$base_url;
+    }
+    
+    $searchEncoded = urlencode($search);
+    $thiswebsite = new scrapper($search,"thiswebsite");
+    $thiswebsite->setDrupalUrl($b_url);
+    $numberOfResults = $thiswebsite->getThiswebsiteNumberOfResults();
+    
+    $str = $thiswebsite->getThiswebsiteContents();
+    $strURL= $thiswebsite->getUrl().'/search?search_api_views_fulltext='.$searchEncoded;
+    
+    //	I am putting back the beta otherwise the public won't be able to access the data.
+    if("http://betalib.ucr.edu"==$base_url)
+    {
+        $html = str_replace("http://ul-lib.ul.ucr.edu", "http://betalib.ucr.edu", $str);
+        $url = str_replace("http://ul-lib.ul.ucr.edu", "http://betalib.ucr.edu", $strURL);
+    }
+    else
+    {
+        $html = $str;
+        $url = $strURL;
+    }
+    
+    printRawHtmlResponse($numberOfResults, $url, $html);
 }
 // *** *** //
 
 function printRawHtmlResponse($resultCount, $requestedUrl, $html) {
-	$output = "<div><div id=\"numberOfResults\">$resultCount</div>
-			<div id=\"url\">$requestedUrl</div>$html</div>";
-	print($output);
+    $output = "<div><div id=\"numberOfResults\">$resultCount</div>
+    <div id=\"url\">$requestedUrl</div>$html</div>";
+    print($output);
 }
 
 function block($search)
 {
-	$html="";
-	$resource[0]="scotty";			$resource[1]="thiswebsite";		$resource[2]="melvyl";
-	$resource[3]="coursereserves";		$resource[4]="calisphere";	$resource[5]="libguide";
+    $html = "";
+    $resource[0] = "scotty";
+    $resource[1] = "thiswebsite";
+    $resource[2] = "melvyl";
+    $resource[3] = "coursereserves";
+    $resource[4] = "calisphere";
+    $resource[5] = "libguide";
+    
+    $title[0] = "OUR CATALOG (SCOTTY)";
+    $title[1] = "THIS WEBSITE";
+    $title[2] = "UC CATALOG (MELVYL)";
+    $title[3] = "COURSE RESERVES";
+    $title[4] = "CALISPHERE";
+    $title[5] = "LIBGUIDES";
+    
+    $i = 0;
+    
+    if(null != $search)
+    {
+        $size = count($resource);
 
-	$title[0]="OUR CATALOG (SCOTTY)";$title[1]="THIS WEBSITE";$title[2]="UC CATALOG (MELVYL)";
-	$title[3]="COURSE RESERVES";$title[4]="CALISPHERE";$title[5]="LIBGUIDES";
+        // Add the feedback popup HTML 
+        $html = "
+            <div class='feedback-box'>
+                <div class='content'><a class='close' href='#'>x</a>
+                    <div class='confirm'>
+                        <h1><strong>BOOOM!</strong><span>We will get right on that for ya</span></h1>
+                    </div>
+                    <header>What can we Improve here for you!</header>
+                    <section>
+                        <textarea name='feedback'></textarea>
+                        <button id='submit'>Send Feedback</button>
+                    </section>
+                </div>
+            </div>
+            <button id=\"feedback\"><i class='fa fa-bullhorn'></i>&nbsp;&nbsp;How do you like the new search?</button>
+            ";
 
-	$i=0;
+        $html .= "<div class='onesearch'>";
+        for($i=0; $i<$size; $i++)
+        {
+            if("coursereserves" !=$resource[$i])
+            { 
+                $html .="<div class='onesearch-block'>
+                <div class='onesearch-content'>
+                <div class='header-table'>
+                <div class='float-left'>
+                <h2 class='onesearch-title'>".$title[$i]."</h2>
+                </div>
+                <div class='float-right'>
+                <div class='read-more' id='".$resource[$i]."_totalresults'>
+                <a href=''>
+                See All
+                </a>
+                </div>
+                </div>
+                <div class='clear-both'>
+                </div>
+                </div>
+                <div class='onesearch-view-content'>".
+                coreTags($resource[$i])."
+                </div>
+                </div>
+                </div>
+                ";
+            }
+            else
+            {
+                $html .="
+                <div class='onesearch-block'>
+                <div class='onesearch-content'>
+                <div class='header-table'>
+                <div class='float-left'>
+                <h2 class='onesearch-title'>".$title[$i]."</h2>
+                </div>
+                <div class='float-right'>
+                <div class='read-more' id='".$resource[$i]."_totalresults'>
+                </div>
+                </div>
+                <div class='clear-both'>
+                </div>
+                </div>
+                <div class='onesearch-view-content'>
+                <div class='coursereserve-view'>
+                <div class='course-reserves-float-left'>
+                <div class='course-reserves-header'>
+                <div class='course-reserves-title-float-left'>
+                <h2 class='coursereserves-title'>Professor</h2>
+                </div>
+                <div class='course-reserves-title-float-right'>
+                <div class='coursereserves-read-more' id='coursereservesinstructor_totalresults'>
+                <a href=''>
+                See All
+                </a>
+                </div>
+                </div>
+                <div class='clear-both'>
+                </div>
+                
+                </div>
+                <div class='onesearch-view-content'>"
+                .coreTags('coursereservesinstructor')."
+                </div>
+                </div>
+                
+                <div class='course-reserves-float-right'>
+                <div class='course-reserves-header'>
+                <div class='course-reserves-title-float-left'>
+                <h2 class='coursereserves-title'>Course</h2>
+                </div>
+                <div class='course-reserves-title-float-right'>
+                <div class='coursereserves-read-more' id='coursereservescourse_totalresults'>
+                <a href=''>
+                See All
+                </a>
+                </div>
+                </div>
+                <div class='clear-both'>
+                </div>
+                </div>
+                <div class='onesearch-view-content'> "
+                .coreTags('coursereservescourse')."
+                </div>
+                </div>
+                <div class='clear-both'>
+                </div>
+                </div>
+                
+                </div>
+                </div>
+                </div>
+                ";
+                
+            }
+        }
+        $html .="</div>";
+    }
+    else
+    {
+        $html = '<div class="emptysearch"><h1>Not Sure Where to Start? </h1> Enter your search terms, and we\'ll grab results from multiple systems for you at once.</div>';
+    }
+    
+    $form['myDivTag'] = array(
+        '#markup'=>$html,
+        );
 
-	if(null!=$search)
-	{
-		$size =  count($resource);
-		$html="<div class='onesearch'>";
-		for($i=0; $i<$size; $i++)
-		{
-			if("coursereserves" !=$resource[$i])
-			{
-
-				$html .="<div class='onesearch-block'>
-			 <div class='onesearch-content'>
-				<div class='header-table'>
-				  <div class='float-left'>
-					<h2 class='onesearch-title'>".$title[$i]."</h2>
-				  </div>
-				    <div class='float-right'>
-					<div class='read-more' id='".$resource[$i]."_totalresults'>
-					 <a href=''>
-					   See All
-					 </a>
-					</div>
-				  </div>
-				 <div class='clear-both'>
-				 </div>
-				</div>
-			    <div class='onesearch-view-content'>".
-					    coreTags($resource[$i])."
-			</div>
-			 </div>
-			</div>
-			";
-			}
-			else
-			{
-				$html .="
-<div class='onesearch-block'>
-	<div class='onesearch-content'>
-		<div class='header-table'>
-			<div class='float-left'>
-				<h2 class='onesearch-title'>".$title[$i]."</h2>
-			</div>
-			<div class='float-right'>
-				<div class='read-more' id='".$resource[$i]."_totalresults'>
-				</div>
-			</div>
-			<div class='clear-both'>
-			</div>
-		</div>
-		<div class='onesearch-view-content'>
-			<div class='coursereserve-view'>
-				<div class='course-reserves-float-left'>
-					<div class='course-reserves-header'>
-						<div class='course-reserves-title-float-left'>
-							<h2 class='coursereserves-title'>Professor</h2>
-						</div>
-						<div class='course-reserves-title-float-right'>
-							<div class='coursereserves-read-more' id='coursereservesinstructor_totalresults'>
-								<a href=''>
-								See All
-								</a>
-							</div>
-						</div>
-						<div class='clear-both'>
-						</div>
-
-					</div>
-					<div class='onesearch-view-content'>"
-								.coreTags('coursereservesinstructor')."
-					</div>
-				</div>
-
-				<div class='course-reserves-float-right'>
-					<div class='course-reserves-header'>
-						<div class='course-reserves-title-float-left'>
-							<h2 class='coursereserves-title'>Course</h2>
-						</div>
-						<div class='course-reserves-title-float-right'>
-							<div class='coursereserves-read-more' id='coursereservescourse_totalresults'>
-								<a href=''>
-								See All
-								</a>
-							</div>
-						</div>
-						<div class='clear-both'>
-						</div>
-					</div>
-					<div class='onesearch-view-content'> "
-										.coreTags('coursereservescourse')."
-					</div>
-				</div>
-				<div class='clear-both'>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</div>
-					";
-
-			}
-		}
-		$html .="</div>";
-	}
-	else
-	{
-		$html = '<div class="emptysearch"><h1>Not Sure Where to Start? </h1> Enter your search terms, and we\'ll grab results from multiple systems for you at once.</div>';
-	}
-
-	$form['myDivTag'] = array(
-			'#markup'=>$html,
-	);
-	return $form;
+    return $form;
 }
 
 /**
- *
- * @param $arrCourseContent - 2d array  index [0] contains url; [1] contains
- * @param $arrInstructorContent - 2d array index [0] contains url; [1] contains
- * @return htmlCode  = string returns the html code in a format which i can manipulate easy.
- */
+*
+* @param $arrCourseContent - 2d array  index [0] contains url; [1] contains
+* @param $arrInstructorContent - 2d array index [0] contains url; [1] contains
+* @return htmlCode  = string returns the html code in a format which i can manipulate easy.
+*/
 function formatToHTML($arrCourseContent,$arrInstructorContent)
 {
-	$htmlCode = "";
-	$i=0;			$sizeOfCourse = 0;	$sizeOfInstructor = 0;
-	$count = 0;		$countCourse = 0;	$countInstructor = 0;
-
-	$sizeOfCourse = sizeof($arrCourseContent);
-	$sizeOfInstructor = sizeof($arrInstructorContent);
-
-	if($sizeOfCourse>5)//I want to get the first five should there be more entries
-	{
-		$countCourse = 5;
-	}
-	else
-	{
-		$countCourse = $sizeOfCourse;//If there is less than 5 entries, we'll go from entres.
-	}
-
-	if($sizeOfInstructor>5)//I want to get the first five should there be more entries
-	{
-		$countInstructor = 5;
-	}
-	else//If there is less than 5 entries, we'll go from entres.
-	{
-		$countInstructor = $sizeOfInstructor;
-	}
-
-	for($i=0; $i<$countInstructor; $i++)
-	{
-		$htmlCode .= "<div id=\"coursereservesinstructor_".$i."\"><a target='_blank' href='".$arrInstructorContent[$i][0]."'>".$arrInstructorContent[$i][1]."</a> </div>";
-	}
-	for($i=0; $i<$countCourse; $i++)
-	{
-		$htmlCode .= "<div id=\"coursereservescourse_".$i."\"><a target='_blank' href='".$arrCourseContent[$i][0]."'>".$arrCourseContent[$i][1]."</a> </div>";
-	}
-
-	return $htmlCode;
+    $htmlCode = "";
+    $i=0;			$sizeOfCourse = 0;	$sizeOfInstructor = 0;
+    $count = 0;		$countCourse = 0;	$countInstructor = 0;
+    
+    $sizeOfCourse = sizeof($arrCourseContent);
+    $sizeOfInstructor = sizeof($arrInstructorContent);
+    
+    if($sizeOfCourse>5)//I want to get the first five should there be more entries
+    {
+        $countCourse = 5;
+    }
+    else
+    {
+        $countCourse = $sizeOfCourse;//If there is less than 5 entries, we'll go from entres.
+    }
+    
+    if($sizeOfInstructor>5)//I want to get the first five should there be more entries
+    {
+        $countInstructor = 5;
+    }
+    else//If there is less than 5 entries, we'll go from entres.
+    {
+        $countInstructor = $sizeOfInstructor;
+    }
+    
+    for($i=0; $i<$countInstructor; $i++)
+    {
+        $htmlCode .= "<div id=\"coursereservesinstructor_".$i."\"><a target='_blank' href='".$arrInstructorContent[$i][0]."'>".$arrInstructorContent[$i][1]."</a> </div>";
+    }
+    for($i=0; $i<$countCourse; $i++)
+    {
+        $htmlCode .= "<div id=\"coursereservescourse_".$i."\"><a target='_blank' href='".$arrCourseContent[$i][0]."'>".$arrCourseContent[$i][1]."</a> </div>";
+    }
+    
+    return $htmlCode;
 }
 
 function coreTags($resource)
 {
-	global $base_url;
-	$htmlCode = "";
-	$url =$base_url."\\";
-	$href = $url."research-services\ask-a-librarian";
-	$htmlCode =  "<div class=\"progress\"  id=\"".$resource."_progress\">
-	<div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\" style=\"width: 100%\">Loading ...
-	</div>
-	</div>
-	<div style=\"display: none;\" id=\"".$resource."_disabled\"  class=\"disabled\"><ul><li>Sorry, results for this category have been temporarily disabled.</li></ul>
-	</div>
-	<div class=\"results\" style=\"display: none;\" id=\"".$resource."_results\">
-	</div>
-	<div class=\"no-results\" style=\"display: none;\" id=\"".$resource."_no-results\"><ul><li><a href=$href>No results - Ask a Librarian</a></li></ul>
-	</div>
-	<div class=\"problem\" style=\"display:none;\" id=\"".$resource."_problem\"><ul><li>
-	Sorry, there was an error retrieving results for this category! Please try reloading the page.</li></ul>
-	</div>";
-
-	return $htmlCode;
+    global $base_url;
+    $htmlCode = "";
+    $url =$base_url."\\";
+    $href = $url."research-services\ask-a-librarian";
+    $htmlCode =  "<div class=\"progress\"  id=\"".$resource."_progress\">
+    <div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\" style=\"width: 100%\">Loading ...
+    </div>
+    </div>
+    <div style=\"display: none;\" id=\"".$resource."_disabled\"  class=\"disabled\"><ul><li>Sorry, results for this category have been temporarily disabled.</li></ul>
+        </div>
+    <div class=\"results\" style=\"display: none;\" id=\"".$resource."_results\">
+    </div>
+    <div class=\"no-results\" style=\"display: none;\" id=\"".$resource."_no-results\"><ul><li><a href=$href>No results - Ask a Librarian</a></li></ul>
+    </div>
+    <div class=\"problem\" style=\"display:none;\" id=\"".$resource."_problem\"><ul><li>
+    Sorry, there was an error retrieving results for this category! Please try reloading the page.</li></ul>
+        </div>";
+    
+    return $htmlCode;
 }
 
 function parse_JSON_Calisphere_Return_HTML($json)
 {
-	$numberOfResults = $json["response"]["numFound"];
-	$link = "";
-	$title = "";
-	$size = 0;
-	$htmlCode = "";
-	if($numberOfResults>0 && $numberOfResults<5)
-	{
-		$size = $numberOfResults;
-	}
-	else if($numberOfResults>0)
-	{
-		$size = 5;
-	}
-	else
-	{
-		$size = 0;
-	}
-	for($i=0; $i<$size; $i++)
-	{
-		$link = $json["response"]["docs"][$i]["url_item"];//This is my url link
-		$title =$json["response"]["docs"][$i]["title_ss"][0]; //This returns the title that is displayed in calisphere.
-		$htmlCode .=  "<div id='calisphere_".$i."'> <a target='_blank' href='".$link."'>".$title."</a></div>";
-	}
-	return  $htmlCode;
-
+    $numberOfResults = $json["response"]["numFound"];
+    $link = "";
+    $title = "";
+    $size = 0;
+    $htmlCode = "";
+    if($numberOfResults>0 && $numberOfResults<5)
+    {
+        $size = $numberOfResults;
+    }
+    else if($numberOfResults>0)
+    {
+        $size = 5;
+    }
+    else
+    {
+        $size = 0;
+    }
+    for($i=0; $i<$size; $i++)
+    {
+        $link = $json["response"]["docs"][$i]["url_item"];//This is my url link
+        $title =$json["response"]["docs"][$i]["title_ss"][0]; //This returns the title that is displayed in calisphere.
+        $htmlCode .=  "<div id='calisphere_".$i."'> <a target='_blank' href='".$link."'>".$title."</a></div>";
+    }
+    return  $htmlCode;
+    
 }

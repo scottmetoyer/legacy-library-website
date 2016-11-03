@@ -22,6 +22,7 @@ class scrapper
 	{
 		$this->search = $search;
 		$searchEncoded = urlencode($this->search);
+
 		if($selector =="scotty")
 		{
 			$this->url = "http://scotty.ucr.edu/search/Y?SEARCH=$searchEncoded&searchscope=5";
@@ -35,8 +36,8 @@ class scrapper
 		elseif($selector =="libguide")
 		{
 			$this->url = "http://guides.lib.ucr.edu/srch.php?q=$searchEncoded";
-			$this->urlPageContents = "http://search-platform.libapps.com/lg2/select?json.wrf=jQuery110005554798529483378_1438719680760&wt=json&facet=true&json.nl=map&rows=5&facet.limit=20&facet.mincount=1&fq=s%3A534&start=0&group=true&group.field=g&group.ngroups=true&group.limit=4&q=(guide%3A($searchEncoded))%5E6%20(page%3A($searchEncoded))%5E5%20(subject%3A($searchEncoded))%5E4%20(tag%3A($searchEncoded))%5E4%20(allInOne%3A($searchEncoded))%5E1%20&sort=score%20desc&_=1438719680761";
-			$this->urlNumberOfResults = "http://search-platform.libapps.com/lg2/select?json.wrf=jQuery1100024504698789678514_1438814865548&wt=json&facet=true&json.nl=map&rows=0&group=true&group.field=g&group.truncate=true&group.ngroups=true&group.limit=4&facet.limit=20&facet.mincount=1&facet.field=subject&facet.field=tag&facet.field=guide_type&facet.field=group&facet.field=content_type&fq=s%3A534&q=(guide%3A($searchEncoded))%5E6%20(page%3A($searchEncoded))%5E5%20(subject%3A($searchEncoded))%5E4%20(tag%3A($searchEncoded))%5E4%20(allInOne%3A($searchEncoded))%5E1%20&_=1438814865550";
+			$apiUrl = "http://lgapi.libapps.com/1.1/guides?site_id=534&key=97115ae9b0880f4833252d4049715874&sort_by=relevance&search_terms=$searchEncoded";
+			$this->htmlPage = file_get_html($apiUrl);
 		}
 		elseif($selector =="course_reserves_instructor")
 		{
@@ -48,7 +49,6 @@ class scrapper
 			$this->url ="http://scotty.ucr.edu/search/a?searchtype=r&searcharg=$searchEncoded&SORT=D&submit=Search";
 			$this->htmlPage = file_get_html($this->url);
 		}
-
 	}
 
 	/**
@@ -435,33 +435,18 @@ class scrapper
 	 */
 	public function getLibGuideContents()
 	{
-		$htmlCode = "";
-		$url ="";
-		$searchUrl    = $this->urlPageContents;
-		$myResults = @file_get_contents($searchUrl);
-		if($myResults != FALSE)
-		{
-			$myResultsCorrectLeftSide = strstr($myResults,"[");
-			$posOfLastOccurance = strrpos($myResultsCorrectLeftSide,"]")+1;
-			$JSON =substr($myResultsCorrectLeftSide,0,$posOfLastOccurance);
-			$arrScrappedPage = json_decode($JSON, true);
-			$numberOfPages = count($arrScrappedPage);
-			for($i=0; $i<$numberOfPages; $i++)
-			{
-				$url = $arrScrappedPage[$i]["doclist"]["docs"][0]["h"] ."\\";
-				if(isset($arrScrappedPage[$i]["doclist"]["docs"][0]["slug"]))
-				{
-					$url .= $arrScrappedPage[$i]["doclist"]["docs"][0]["slug"];//this gives me the link
-				}
-				else
-				{
-					$url .= 'c.php?g='.$arrScrappedPage[$i]["doclist"]["docs"][0]["g"];//this gives me the link
-				}
-				$title = $arrScrappedPage [$i]["doclist"]["docs"][0]["guide"];//this gives me the title
-				$htmlCode .=  '<div id="libguide_'.$i.'"> <a target="_blank"  href=http://'.$url.'>' . $title . '</a></div>';
-			}
+		$html = '';
+		$i = 0;
+		$jsonData = json_decode($this->htmlPage, true);
+
+		foreach($jsonData as $element) {
+			$title = $element['name'];
+			$url = $element['url'];
+			$html .=  '<div id="libguide_'.$i.'"> <a target="_blank" href="'.$url.'">'.$title.'</a></div>';
+			$i++;
 		}
-		return $htmlCode;
+
+		return $html;
 	}
 
 	/**
@@ -469,22 +454,8 @@ class scrapper
 	 */
 	public function getLibGuideNumberOfResults()
 	{
-		$searchUrl    = $this->urlNumberOfResults;
-		$totalResultsOfSearch = 0;
-		if(strlen($this->search)>0)
-		{
-			$myResults = @file_get_contents ($searchUrl);
-			if($myResults != FALSE)
-			{
-				$myResultsCorrectLeftSide= strstr($myResults,"{");
-				$posOfLastOccurance = strrpos($myResultsCorrectLeftSide,"}")+1;
-				$JSON =substr($myResultsCorrectLeftSide,0,$posOfLastOccurance);
-				$JSON = "[" . $JSON ."]";
-				$arrScrappedPage = json_decode($JSON,true);
-				$totalResultsOfSearch = $arrScrappedPage[0]["grouped"]["g"]["ngroups"];
-			}
-		}
-		return $this->formatNumber($totalResultsOfSearch);
+		$jsonData = json_decode($this->htmlPage, true);
+		$count = count($jsonData);
+		return $this->formatNumber($count);
 	}
-
 }
