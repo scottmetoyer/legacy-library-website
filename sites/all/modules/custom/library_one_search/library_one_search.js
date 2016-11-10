@@ -104,7 +104,7 @@
                     });
 
                 }
-                    //	This tells the enduser that they've entered a blank search.
+                //	This tells the enduser that they've entered a blank search.
                 else if ("" == search && null != search) {
                     document.getElementById("emptysearch").style.display = "";
                 }
@@ -141,7 +141,7 @@
                 var myDivResource = "";
                 var title = "";
                 var url = "";
-                
+
                 var numberOfResults = $(data).find('#numberOfResults').text();
                 intNumbOfResults = parseInt(numberOfResults.replace(",", ""));
 
@@ -331,7 +331,6 @@
 
                 if (total > 0) {
                     results = false;
-
                 }
 
                 return results;
@@ -349,8 +348,8 @@
                 if ("search" != iAmOnThisPage) {
                     if ("onesearch" === iAmOnThisPage) {
                         innerHTML = "<span class=\"breadcrumb__link\"><a href=\"/\">Home</a></span>" +
-                        "<span class=\"breadcrumb__separator\"> / </span>" +
-                        "<span class=\"breadcrumb__page-title\">search</span>";
+                            "<span class=\"breadcrumb__separator\"> / </span>" +
+                            "<span class=\"breadcrumb__page-title\">search</span>";
 
                         document.getElementsByClassName("breadcrumb")[0].innerHTML = innerHTML;
                     }
@@ -400,7 +399,7 @@
                 var curIdx = divs.index(this);
 
                 if (13 == e.which && "edit-search-api-views-fulltext" == e.target.id &&
-                        !("search" == iAmOnThisPage && 2 == curIdx)) //This is when the user hits enter and is in the textarea. 
+                    !("search" == iAmOnThisPage && 2 == curIdx)) //This is when the user hits enter and is in the textarea. 
                 {
 
                     /*
@@ -425,7 +424,7 @@
                 var curIdx = divs.index($(this));
 
                 if ("edit-search-api-views-fulltext" == theIDIamIn &&
-                        !("search" == iAmOnThisPage && 2 == curIdx)) {
+                    !("search" == iAmOnThisPage && 2 == curIdx)) {
                     makeAllTextBoxTheSame(this.value);
                 }
             });
@@ -444,7 +443,7 @@
                 var curIdx = divs.index($(this));
 
                 if ("edit-submit-search-page" == whatIamClicking &&
-                        !("search" == iAmOnThisPage && 2 == curIdx)) {
+                    !("search" == iAmOnThisPage && 2 == curIdx)) {
                     var text = document.querySelectorAll('#edit-search-api-views-fulltext'); //This is the shadow DOM
                     var url = getUrl();
 
@@ -491,38 +490,47 @@
     }
 })(jQuery);
 
-(function($){
-  var feedback = $(".feedback-box");
-  
-  $("#feedback").on("click" , function(){
-    feedback.addClass("show");
-  });
-  
-  $(".close").on("click" , function(){
-    feedback.removeClass("show");
-    setTimeout(function(){ 
-      feedback.removeClass("show-confirm").find("textarea").val('');
-      console.log("reset")
-    }, 1000);
-  });
+(function ($) {
+    var feedback = $(".feedback-box");
 
-  $("#submit").on("click" , function(){
-     if( !$("textarea").val() ) {
-       feedback.addClass("error");
-       setTimeout(function(){
-         feedback.removeClass("error");
-       }, 500)
-    }else{
-      feedback.addClass("show-confirm");
-      $(".feedback-box h1 strong").text("Thank you!");
-      
-      setTimeout(function(){
-         feedback.removeClass("show").find("textarea").val('').delay(1000);
-      },2000);
-      
-       setTimeout(function(){
-         feedback.removeClass("show-confirm");
-      },2200);
-    }
-  })
+    $("#feedback").on("click", function () {
+        feedback.addClass("show");
+    });
+
+    $(".close").on("click", function () {
+        feedback.removeClass("show");
+        setTimeout(function () {
+            feedback.removeClass("show-confirm").find("textarea").val('');
+        }, 1000);
+    });
+
+    $("#submit").on("click", function () {
+        if (!$("textarea").val()) {
+            feedback.addClass("error");
+            setTimeout(function () {
+                feedback.removeClass("error");
+            }, 500)
+        } else {
+            // Ajax post + email
+            $.ajax({
+                type: "POST",
+                url: "https://libapps.ucr.edu/library/feedback/save",
+                data: {
+                    text : $("textarea").val()}
+                }).done(function(response) { 
+                    console.log(response);
+                });
+
+            feedback.addClass("show-confirm");
+            $(".feedback-box h1 strong").text("Thank you!");
+
+            setTimeout(function () {
+                feedback.removeClass("show").find("textarea").val('').delay(1000);
+            }, 2000);
+
+            setTimeout(function () {
+                feedback.removeClass("show-confirm");
+            }, 2200);
+        }
+    })
 })(jQuery);

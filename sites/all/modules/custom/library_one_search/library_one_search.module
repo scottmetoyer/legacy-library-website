@@ -318,11 +318,11 @@ function block($search)
         // Add the feedback popup HTML 
         $html = "
             <div class='feedback-box'>
-                <div class='content'><a class='close' href='#'>x</a>
+                <div class='content'><a class='close' href='#'><i class=\"fa fa-times\"></i></a>
                     <div class='confirm'>
-                        <h1><strong>BOOOM!</strong><span>We will get right on that for ya</span></h1>
+                        <h1><strong>Thank you!</strong><span> Your feedback will help make the next version even better.</span></h1>
                     </div>
-                    <header>What can we Improve here for you!</header>
+                    <header>Tell us what you think about the new Library search!</header>
                     <section>
                         <textarea name='feedback'></textarea>
                         <button id='submit'>Send Feedback</button>

@@ -408,7 +408,7 @@ button#feedback {
         position: absolute;
         height: 100%;
         width: 100%;
-        background-color: #41C289;
+        background-color: #f0f0f0;
         -moz-transform: scale(0, 0);
         -ms-transform: scale(0, 0);
         -webkit-transform: scale(0, 0);
@@ -427,7 +427,8 @@ button#feedback {
         .feedback-box .confirm h1 {
             text-align: center;
             font-weight: 600;
-            Text-transform: uppercase;
+            text-transform: uppercase;
+            color: #2d6cc0;
             font-size: 70px;
             margin-top: 115px;
             letter-spacing: -.08em;
@@ -523,3 +524,21 @@ button#feedback {
             text-align: center;
             width: 100%;
         }
+
+a.close {
+  z-index: 10;
+  color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-weight: 600;
+  padding: 15px;
+  display: inline-block;
+  -moz-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  -webkit-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+}
+a.close:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
