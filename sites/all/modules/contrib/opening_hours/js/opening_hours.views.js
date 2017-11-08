@@ -316,7 +316,7 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
       category_tid: model.get('category_tid') || '',
       notice: model.get('notice') || '',
       appointment: model.get('appointment') || '',
-      twentyfourhours: model.get('twentyfourhours') || ''      
+      twentyfourhours: model.get('twentyfourhours') || ''
     }));
 
     // Set the placeholder text from the title on all text fields.
@@ -337,7 +337,7 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
     });
 
     this.editFormDialog.addButton(Drupal.t('Save'), this.saveButton);
-    
+
     this.editFormDialog.addButton(Drupal.t('Discard changes'), this.remove);
 
     // For existing instances, we also offer a delete button.
@@ -369,31 +369,10 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
       .change();
 
     this.$('.start_time')
-    .val(view.model.get('end_time'));
-    
-    this.$('.start_time')
     .change(function () {
-     var $elem = $(this);    	
-      if ($elem.val() == '00:00' && $elem.siblings('.end_time').val()== '00:00') 
-      {    	  
-    	  $('.twentyfourhours').prop('disabled',false);    	  
-      }
-      else
+     var $elem = $(this);
+      if ($elem.val() == '00:00' && $elem.siblings('.end_time').val()== '00:00')
       {
-    	  $('.twentyfourhours').attr('checked', false);
-    	  $('.twentyfourhours').prop('disabled',true);    	  
-      }
-    })
-    .change();
-    
-    this.$('.end_time')
-    .val(view.model.get('start_time'));
-    
-    this.$('.end_time')
-    .change(function () {
-    	var $elem = $(this); 
-      if ($elem.val() == '00:00' && $elem.siblings('.start_time').val()=='00:00') 
-      {    	  
     	  $('.twentyfourhours').prop('disabled',false);
       }
       else
@@ -402,11 +381,26 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
     	  $('.twentyfourhours').prop('disabled',true);
       }
     })
-    .change();  
+    .change();
+
+    this.$('.end_time')
+    .change(function () {
+    	var $elem = $(this);
+      if ($elem.val() == '00:00' && $elem.siblings('.start_time').val()=='00:00')
+      {
+    	  $('.twentyfourhours').prop('disabled',false);
+      }
+      else
+      {
+    	  $('.twentyfourhours').attr('checked', false);
+    	  $('.twentyfourhours').prop('disabled',true);
+      }
+    })
+    .change();
 
 
     this.$('.appointment')
-    .change(function () { 
+    .change(function () {
       var $elem = $(this);
       if ($elem.is(':checked') ) {
       	$('.start_time').val("00:00");
@@ -414,37 +408,37 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
       	$('.end_time').val("00:00");
       	$('.end_time').prop('disabled',true);
       	$('.twentyfourhours').attr('checked', false);
-      	$('.twentyfourhours').prop('disabled',true);        	
+      	$('.twentyfourhours').prop('disabled',true);
       }
-      else {      	
+      else {
       	$('.start_time').prop('disabled',false);
       	$('.end_time').prop('disabled',false);
       	$('.twentyfourhours').prop('disabled',false);
       }
     })
-    .change();    
+    .change();
 
     if(this.$('.appointment').is(':checked') )
     {
     	this.$('.twentyfourhours').attr('checked', false);
-    	this.$('.twentyfourhours').prop('disabled',true);       
+    	this.$('.twentyfourhours').prop('disabled',true);
     }
     else
     {
-        if (this.$('.start_time').val() == '00:00' && this.$('.end_time').val()== '00:00') 
-        {    	  
-        	this.$('.twentyfourhours').prop('disabled',false);    	  
+        if (this.$('.start_time').val() == '00:00' && this.$('.end_time').val()== '00:00')
+        {
+        	this.$('.twentyfourhours').prop('disabled',false);
         }
         else
         {
         	this.$('.twentyfourhours').attr('checked', false);
-        	this.$('.twentyfourhours').prop('disabled',true);      	  
+        	this.$('.twentyfourhours').prop('disabled',true);
         }
 
     }
-    
-    
-    
+
+
+
     // Repeat end date must be between today and in two years.
     this.$('.repeat-end-date').datepicker({
       minDate: today,
@@ -529,7 +523,7 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
     // Add a header with our propagateChanges verdict, if any.
     // This due to the sad fact that setting it as data on a DELETE
     // request does not currently work with jQuery.
-	
+
     if (options && options.propagateChanges) {
       this.model.set({propagateChanges: options.propagateChanges});
     }
@@ -543,8 +537,8 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
 
   /**
    * Callback for when a save succeeds.
-   * The saveError is the same as success error.  
-   */  
+   * The saveError is the same as success error.
+   */
   saveError: function (model, response, options) {
 //     console.log("response : " +response['status']);
     if("201" == response['status'] || "200" == response['status'] )
@@ -553,13 +547,13 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
     }
     else
     {
-    	this.remove();  
+    	this.remove();
     	alert("Something has gone wrong, please contact the system administrator.");
     }
 
     return this;
   },
-  
+
   // Callback for when a save succeeds.
   saveSucceeded: function () {
     this.remove();
